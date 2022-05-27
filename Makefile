@@ -36,10 +36,15 @@ $(OBJF)	:
 
 clean	:
 			$(RM) -r $(OBJ_DIR)
+			make -C $(LIBFT_DIR) clean
 			$(RM) $(OBJF)
 
 fclean	:	clean
 			$(RM) $(NAME)
+			make -C $(LIBFT_DIR) fclean
+
+norm	:	
+			norminette $(SRC) | grep -v Norme -B1 || true
 
 re		: fclean all
 
