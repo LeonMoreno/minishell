@@ -25,7 +25,7 @@ all	: $(NAME)
 
 $(NAME):	$(OBJ)
 			make -C $(LIBFT_DIR)
-			$(CC) $(OBJ) $(LIBFT) -o $(NAME)
+			$(CC) $(OBJ) $(LIBFT) -lreadline -o $(NAME)
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c | $(OBJF)
 				$(CC) $(CFLAGS) -c $< -o $@
