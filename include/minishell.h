@@ -10,6 +10,7 @@
 typedef struct s_sh
 {
 	char	*line;
+	char	**line_split;
 }	t_sh;
 
 
