@@ -12,7 +12,7 @@ enum
 	CMD,
 	ARG,
 	OPER,
-}
+};
 
 typedef struct s_tokens
 {
