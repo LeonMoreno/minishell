@@ -7,11 +7,25 @@
 // Include readline
 #include <readline/readline.h>
 
+enum 
+{
+	CMD,
+	ARG,
+	OPER,
+}
+
+typedef struct s_tokens
+{
+	int		type;
+	char	*str;
+	char	**argve;
+	char	*path;
+}	t_tokens;
+
 typedef struct s_sh
 {
-	char	*line;
-	char	**line_split;
+	char		*line;
+	t_tokens	**tokens;
 }	t_sh;
-
 
 #endif
