@@ -1,52 +1,33 @@
-# Prerequisites
-*.d
+# Ignora archivos del sistema Mac 
+.DS_store
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+# Ignora la carpeta node_modules
+node_modules
 
-# Linker output
-*.ilk
-*.map
-*.exp
+# Ignora todos los archivos de texto
+*.txt
 
-# Precompiled Headers
-*.gch
-*.pch
+# Ignora los archivos relacionados a API keys
+.env
+
+# Ignora archivos de configuración SASS
+.sass-cache
+
+# todos los main
+#*main.c
+
+# Ejecutables .out
+*.out
+
+#Temp Files
+*.swp
+
+# Debug files
+*.dSYM/
 
 # Libraries
 *.lib
 *.a
-*.la
-*.lo
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
-
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+# Object files
+*.o
