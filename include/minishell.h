@@ -28,4 +28,10 @@ typedef struct s_sh
 	t_tokens	**tokens;
 }	t_sh;
 
+//Functions builtins
+void ft_exit(char *str);
+void ft_getpwd(void);
+void ft_echo(char *str);
+
+
 #endif
