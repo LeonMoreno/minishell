@@ -27,8 +27,9 @@ typedef struct s_tokens
 
 typedef struct s_sh
 {
-	char		*line;
-	char		**envs;
+	char	*line;
+	char	**line_split;
+	char	**envs;
 	t_tokens	**tokens;
 }	t_sh;
 
