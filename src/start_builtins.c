@@ -43,9 +43,19 @@ void ft_cd(char **line_split)
 
 void ft_export(void)
 {
-	if (setenv("HOEO", "107", 1) != 0)
+	ft_printf("haciendo EXPORT\n");
+	if (setenv("LEOOOOHOEO", "107", 0) != 0)
 		perror("setenv");
 }
 
-void ft_env(:wq
+void ft_env(t_sh *sh)
+{
+	int i;
 
+	i = 0;
+	while (sh->envs[i] != NULL)
+	{
+		ft_printf("%s\n", sh->envs[i]);
+		i++;
+	}
+}

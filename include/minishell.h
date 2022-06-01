@@ -40,6 +40,7 @@ void ft_getpwd(void);
 void ft_echo(char **line_split);
 void ft_cd(char **line_split);
 void ft_export(void);
+void ft_env(t_sh *sh);
 
 
 #endif

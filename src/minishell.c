@@ -5,7 +5,7 @@ void start_shell(t_sh *sh)
 	while (1)
 	{
 		sh->line = readline("miniShell$ ");
-		check_builtins(sh->line);
+		check_builtins(sh);
 		if (sh->line)
 			add_history(sh->line);
 		//exec_cmd(sh);
@@ -28,12 +28,12 @@ int main(int argc, char **argv, char **env)
 	sh->tokens[0]->argve[2] = NULL;
 //fin de l'initialization du TOKEN TEST
 //	testt_built(sh); //fonction built-in test
-	start_shell(sh); //fonction shell
 	argc = 0;
 	argv = NULL;
 	sh->envs = env;
-
-	start_shell(&sh);
+	
+	//printf("env = %s\n", env[0]);
+	start_shell(sh);
 	return (0);
 }
 
