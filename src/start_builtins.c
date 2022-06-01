@@ -40,3 +40,12 @@ void ft_cd(char **line_split)
 	else if (chdir(line_split[1]) == -1)
 		perror("cd");
 }
+
+void ft_export(void)
+{
+	if (setenv("HOEO", "107", 1) != 0)
+		perror("setenv");
+}
+
+void ft_env(:wq
+

@@ -7,6 +7,9 @@
 // Include readline
 #include <readline/readline.h>
 
+// Variable global env
+extern char **environ;
+
 enum 
 {
 	CMD,
@@ -25,15 +28,17 @@ typedef struct s_tokens
 typedef struct s_sh
 {
 	char		*line;
+	char		**envs;
 	t_tokens	**tokens;
 }	t_sh;
 
 //Functions builtins
-void check_builtins(char *line);
+void check_builtins(t_sh *sh);
 void ft_exit(char *line);
 void ft_getpwd(void);
 void ft_echo(char **line_split);
 void ft_cd(char **line_split);
+void ft_export(void);
 
 
 #endif
