@@ -10,7 +10,7 @@ void start_shell(t_sh *sh)
 	while (1)
 	{
 		sh->line = readline("miniShell$ ");
-		if (sh->line)
+		if (sh)
 			add_history(sh->line);
 		line_parser(sh);
 		//exec_cmd(sh);
@@ -18,9 +18,13 @@ void start_shell(t_sh *sh)
 	}
 }
 
-int main(void)
+int main(int argc, char **argv, char **env)
 {
 	t_sh sh;
+
+	argc = 0;
+	argv = NULL;
+	sh.envs = env;
 
 	start_shell(&sh);
 	

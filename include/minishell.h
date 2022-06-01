@@ -11,6 +11,7 @@ typedef struct s_sh
 {
 	char	*line;
 	char	**line_split;
+	char	**envs;
 }	t_sh;
 
 
