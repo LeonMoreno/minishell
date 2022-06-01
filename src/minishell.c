@@ -7,12 +7,7 @@ void start_shell(t_sh *sh)
 		sh->line = readline("miniShell$ ");
 //		if (sh->line)
 //			line_parser(sh);
-		
-		if (!(ft_strncmp(sh->line, "exit", 5)))
-		{
-			free(sh->line);
-			break;
-		}
+		check_builtins(sh->line);
 		//exec_cmd(sh);
 		free(sh->line);
 	}

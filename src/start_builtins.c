@@ -8,13 +8,35 @@ void ft_getpwd(void)
 	printf("%s\n", pwd);
 }
 
-void ft_exit(char *str)
+void ft_exit(char *line)
 {
-	free(str);
+	free(line);
 	exit (EXIT_SUCCESS);
 }
 
-void ft_echo(char *str)
+void ft_echo(char **line_split)
 {
-	printf("%s \n", str);
+	int i;
+
+	i = 1;
+	while (line_split[i] != NULL)
+	{
+		ft_printf("%s", line_split[i]);
+		if (line_split[i + 1] != NULL)
+			ft_printf(" ");
+		i++;
+	}
+	write(1, "%", 1);
+	write(1, "\n", 1);
+}
+
+void ft_cd(char **line_split)
+{
+	if (line_split[1][0] == '~')
+	{
+		if (chdir(getenv("HOME")) == -1)
+			perror("cd");
+	}
+	else if (chdir(line_split[1]) == -1)
+		perror("cd");
 }
