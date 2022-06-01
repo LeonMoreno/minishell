@@ -44,18 +44,18 @@ void ft_cd(char **line_split)
 void ft_export(void)
 {
 	ft_printf("haciendo EXPORT\n");
-	if (setenv("LEOOOOHOEO", "107", 0) != 0)
+	if (setenv("LEOOOOHOEO", "107", 1) != 0)
 		perror("setenv");
 }
 
-void ft_env(t_sh *sh)
+void ft_env(void)
 {
 	int i;
 
 	i = 0;
-	while (sh->envs[i] != NULL)
+	while (environ[i] != NULL)
 	{
-		ft_printf("%s\n", sh->envs[i]);
+		ft_printf("%s\n", environ[i]);
 		i++;
 	}
 }
