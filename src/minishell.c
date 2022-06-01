@@ -5,9 +5,9 @@ void start_shell(t_sh *sh)
 	while (1)
 	{
 		sh->line = readline("miniShell$ ");
-//		if (sh->line)
-//			line_parser(sh);
 		check_builtins(sh->line);
+		if (sh->line)
+			add_history(sh->line);
 		//exec_cmd(sh);
 		free(sh->line);
 	}
