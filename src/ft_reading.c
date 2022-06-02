@@ -27,17 +27,18 @@ t_tokens	*ft_create_token(t_sh *sh)
 }
 
 //Creates a token according to no specific rule
-void	ft_next_token(t_sh *sh, int i, char *temp)
+void	ft_next_token(t_sh *sh, int i, char **temp)
 {
 	int			len;
 	t_tokens	*token;
 	
 	len  = i - sh->start;
 	token = ft_create_token(sh);
-	token->str = temp;
+	token->str = *temp;
 	//printf("TOKEN created: %p string: %s\n", token, token->str);
 	sh->n_tokens++;
 	sh->start = -1;
+	*temp = NULL;
 }
 
 //Joins a new character to the string that will become the token
@@ -46,14 +47,12 @@ char	*ft_prep_string(t_sh *sh, char *temp, int *i)
 	char	this_char[2];
 	char	*new_temp;
 
-	//printf("TEMP: %s\n", temp);
 	this_char[0] = sh->line[*i];
 	this_char[1] = '\0';
 	if (!temp)
 		new_temp = ft_strdup(this_char);
 	else
 		new_temp = ft_strjoin(temp, this_char);
-	//printf("new_tEMP: %s\n", new_temp);
 	free(temp);
 	return (new_temp);
 }
@@ -65,10 +64,7 @@ void	ft_parsing(t_sh *sh, int *i)
 	static char *temp = NULL;
 
 	if (sh->line[*i] < 33 && sh->start >= 0 )
-	{
-		ft_next_token(sh, *i, temp);
-		temp = NULL;
-	}
+		ft_next_token(sh, *i, &temp);
 	else if (sh->line[*i] == 39 && ft_quote_real(sh, *i, 0)) 
 		temp = ft_single_quoting(sh, i, temp);
 	else if (sh->line[*i] == 34 && ft_quote_real(sh, *i, 1))
@@ -77,10 +73,7 @@ void	ft_parsing(t_sh *sh, int *i)
 		temp = ft_prep_string(sh, temp, i);
 	if (sh->line[*i + 1] == '\0' && sh->line[*i] > 32 &&
 		   	sh->line[*i] < 127)
-	{
-		ft_next_token(sh, *i + 1, temp);
-		temp = NULL;
-	}
+		ft_next_token(sh, *i + 1, &temp);
 }
 
 //Loops and parse the line received and stored in sh->line.
@@ -99,6 +92,5 @@ void	line_parser(t_sh *sh)
 		ft_parsing(sh, &i);
 		i++;
 	}
-	//ft_printf("number of words: %d\n", sh->n_tokens);
 	return ; 
 }
