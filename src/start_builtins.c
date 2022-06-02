@@ -47,8 +47,10 @@ void ft_export(char **s)
 	char **new_env;
 	char **key_s;
 	char **key_env;
+	int	ctrl;
 
 	i = 0;
+	ctrl = 0;
 	key_s = ft_split(s[1], '=');
 	while (environ[i] != NULL)
 		i++;
@@ -61,6 +63,7 @@ void ft_export(char **s)
 		{
 			new_env[i] = malloc(sizeof(char) * ft_strlen(s[1])); 
 			new_env[i] = s[1];
+			ctrl = 1;
 		}
 		else
 		{
@@ -69,10 +72,12 @@ void ft_export(char **s)
 		}
 		i++;
 	}
-
-	new_env[i] = malloc(sizeof(char) * ft_strlen(s[1])); 
-	new_env[i] = s[1];	
-	new_env[i + 1] = NULL;
+	if (!ctrl)
+	{
+		new_env[i] = malloc(sizeof(char) * ft_strlen(s[1])); 
+		new_env[i] = s[1];	
+		new_env[i + 1] = NULL;
+	}
 	environ = new_env;
 }
 

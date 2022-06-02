@@ -34,7 +34,7 @@ void	ft_argvec_init(t_tokens *cmd)
 		begin = begin->next;
 		i++;
 	}
-	printf("argvec0: %s argvec1: %s\n", cmd->argve[0], cmd->argve[1]);	
+	//printf("argvec0: %s argvec1: %s\n", cmd->argve[0], cmd->argve[1]);
 }
 
 void check_builtins(t_sh *sh)
