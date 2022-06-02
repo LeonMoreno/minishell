@@ -66,7 +66,7 @@ void ft_export(char **s)
 	while (environ[i] != NULL)
 	{
 		key_env = ft_split(environ[i], '=');
-		if(!ft_strncmp(key_s[0], key_env[0], ft_strlen(key_s[0])))
+		if(!ft_strncmp(key_s[0], key_env[0], ft_strlen(key_s[0]) + 1))
 		{
 			new_env[i] = malloc(sizeof(char) * ft_strlen(s[1])); 
 			new_env[i] = s[1];
