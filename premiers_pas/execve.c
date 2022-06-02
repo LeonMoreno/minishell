@@ -3,14 +3,15 @@
 
 int main(void)
 {
-	char *cmd[3];
+	char *cmd[4];
 
-	cmd[0]  = "ping";
-	cmd[1]	= "8.8.8.8";
-	cmd[2]  = NULL;
+	cmd[0]  = "ls";
+	cmd[1]	= "-l";
+	cmd[2]	= "*";
+	cmd[3]  = NULL;
 
 	printf("*** PROC INICIAL PID %d\n", getpid());
-	execve("/sbin/ping", cmd, NULL);
+	execve("/bin/ls", cmd, NULL);
 	printf("algo aqui\n");
 	perror("exe");
 	return (0);
