@@ -35,8 +35,7 @@ void	ft_next_token(t_sh *sh, int i, char *temp)
 	len  = i - sh->start;
 	token = ft_create_token(sh);
 	token->str = temp;
-	//token->str = ft_substr(sh->line, sh->start, len);
-	printf("TOKEN created: %p string: %s\n", token, token->str);
+	//printf("TOKEN created: %p string: %s\n", token, token->str);
 	sh->n_tokens++;
 	sh->start = -1;
 }
@@ -100,6 +99,6 @@ void	line_parser(t_sh *sh)
 		ft_parsing(sh, &i);
 		i++;
 	}
-	printf("number of words: %d\n", sh->n_tokens);
+	//ft_printf("number of words: %d\n", sh->n_tokens);
 	return ; 
 }

@@ -1,5 +1,19 @@
 #include "minishell.h"
 
+void	free_lst(t_tokens *top)
+{
+	t_tokens *begin;
+	t_tokens *temp;
+
+	begin = top;
+	while(begin)
+	{
+		temp = begin;
+		begin = begin->next;
+		free (temp);
+	}
+}
+
 void start_shell(t_sh *sh)
 {
 	while (1)
@@ -12,6 +26,8 @@ void start_shell(t_sh *sh)
 			add_history(sh->line);
 		//exec_cmd(sh);
 		free(sh->line);
+		free_lst(sh->token_top);
+		sh->token_top = NULL;
 	}
 }
 
