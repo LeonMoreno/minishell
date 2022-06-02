@@ -1,37 +1,43 @@
 #include "minishell.h"
 
-//Creates a Token and its string according to the double quoting Rule
-void    ft_double_quoting(t_sh *sh, int *i)
+//Increments token string according to the double quoting Rule
+char	*ft_double_quoting(t_sh *sh, int *i, char *temp)
 {
-    int clone;
-   /* int len;
-    t_tokens *token;
-
-   	token = ft_create_token(sh);
-    */clone =  ft_quote_real(sh, *i, 1);
-    /*len = clone - *i;
-    token->str = ft_substr(sh->line, *i + 1, len - 1);
-    printf("TOKEN created: %p string: %s\n", token, token->str);
-    sh->n_tokens++;
-    sh->start = -1;
-    */*i = clone;
+    int		clone;
+	char	*new_temp;
+	
+	*i = *i + 1;	
+	clone =  ft_quote_real(sh, *i, 1);
+	new_temp = temp;
+	if (sh->line[*i] == 34)
+		return (temp);
+	while (*i < clone)
+	{
+		if (sh->line[*i] != 34)
+			new_temp = ft_prep_string(sh, new_temp, i);
+		*i = *i + 1;
+	}	
+	return (new_temp);
 }
 
-//Creates a Token and its string  according to the single quoting Rule.
-void	ft_single_quoting(t_sh *sh, int *i)
+//Increment token string according to the single quoting Rule.
+char	*ft_single_quoting(t_sh *sh, int *i, char *temp)
 {
-	int	clone;
-/*	int	len;
-	t_tokens *token;
+	int		clone;
+	char	*new_temp;
 
-	token = ft_create_token(sh);
-	*/clone =  ft_quote_real(sh, *i, 0);
-	/*len = clone - *i;
-	token->str = ft_substr(sh->line, *i + 1, len - 1);
-	printf("TOKEN created: %p string: %s\n", token, token->str);
-	sh->n_tokens++;
-    sh->start = -1;
-*/	*i = clone;
+	*i = *i + 1;
+	clone =  ft_quote_real(sh, *i, 0);
+	new_temp = temp;
+	if (sh->line[*i] == 39)
+		return (temp);
+	while (*i < clone)
+	{
+		if (sh->line[*i] != 39)
+			new_temp = ft_prep_string(sh, new_temp, i);
+		*i = *i + 1;
+	}
+	return (new_temp);
 }
 
 //Search for next " or ' index. Returns 0 if none.  
