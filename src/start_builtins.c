@@ -88,6 +88,38 @@ void ft_export(char **s)
 	environ = new_env;
 }
 
+void ft_unset(char **s)
+{
+	int	i;
+	int	j;
+	char **new_env;
+	char **key_s;
+	char **key_env;
+
+	i = 0;
+	key_s = ft_split(s[1], '=');
+	while (environ[i] != NULL)
+		i++;
+	new_env = malloc(sizeof(char) * i + 1);
+	i = 0;
+	j = 0;
+	while (environ[i] != NULL)
+	{
+		key_env = ft_split(environ[i], '=');
+		if(ft_strncmp(key_s[0], key_env[0], ft_strlen(key_s[0]) + 1))
+		{
+			printf("Aqui tou key_env = %s \n", key_env[0]);
+			new_env[j] = malloc(sizeof(char) * ft_strlen(environ[i]));
+			new_env[j] = environ[i];
+			j++;
+		}
+		i++;
+	}
+	new_env[j] = NULL;
+	environ = new_env;
+}
+
+
 void ft_env(void)
 {
 	int i;

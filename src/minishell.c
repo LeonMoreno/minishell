@@ -21,7 +21,8 @@ void start_shell(t_sh *sh)
 		sh->line = readline("miniShell$ ");
 		if (sh->line && sh->line[0] != '\n')
 			line_parser(sh);	
-		check_builtins(sh);
+		if (sh->token_top)
+			check_builtins(sh);
 		if (sh->line)
 			add_history(sh->line);
 		//exec_cmd(sh);
