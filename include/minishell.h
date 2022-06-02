@@ -44,6 +44,7 @@ void ft_echo(char **line_split);
 void ft_cd(char **line_split);
 void ft_export(char **s);
 void ft_env(void);
+void ft_unset(char **s);
 
 //Functions parser
 t_tokens	*ft_create_token(t_sh *sh);
