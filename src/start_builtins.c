@@ -32,7 +32,9 @@ void ft_echo(char **line_split)
 
 void ft_cd(char **line_split)
 {
-	if (line_split[1][0] == '~')
+	if (!line_split[1]) 
+		chdir(getenv("HOME"));
+	else if (line_split[1][0] == '~')
 	{
 		if (chdir(getenv("HOME")) == -1)
 			perror("cd");
