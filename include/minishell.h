@@ -8,6 +8,8 @@
 #include <readline/readline.h>
 
 #include <stdbool.h>
+// Variable global env
+extern char **environ;
 
 enum 
 {
@@ -29,16 +31,18 @@ typedef struct s_sh
 {
 	char		*line;
 	t_tokens	*token_top;
-	
 	int			n_tokens;
 	int			start;
-	int			len;
 }	t_sh;
 
 //Functions builtins
-void ft_exit(char *str);
+void check_builtins(t_sh *sh);
+void ft_exit(char *line);
 void ft_getpwd(void);
-void ft_echo(char *str);
+void ft_echo(char **line_split);
+void ft_cd(char **line_split);
+void ft_export(char **s);
+void ft_env(void);
 
 //Functions parser
 t_tokens	*ft_create_token(t_sh *sh);
