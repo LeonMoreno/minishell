@@ -13,7 +13,7 @@ void start_shell(t_sh *sh)
 	}
 }
 
-int main(int argc, char **argv, char **env)
+int main()
 {
 	t_sh *sh;
 // INITIALIZATION D'UN TEST TOKEN
@@ -28,9 +28,9 @@ int main(int argc, char **argv, char **env)
 	sh->tokens[0]->argve[2] = NULL;
 //fin de l'initialization du TOKEN TEST
 //	testt_built(sh); //fonction built-in test
-	argc = 0;
-	argv = NULL;
-	sh->envs = env;
+	//argc = 0;
+	//argv = NULL;
+	//sh->envs = env;
 	
 	//printf("env = %s\n", env[0]);
 	start_shell(sh);

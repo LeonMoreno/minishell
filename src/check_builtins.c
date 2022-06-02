@@ -14,7 +14,7 @@ void check_builtins(t_sh *sh)
 	else if (!ft_strncmp(line_split[0], "cd", 3))
 		ft_cd(line_split);
 	else if (!ft_strncmp(line_split[0], "export", 7))
-		ft_export();
+		ft_export(line_split);
 	else if (!ft_strncmp(line_split[0], "env", 4))
-		ft_env(sh);
+		ft_env();
 }

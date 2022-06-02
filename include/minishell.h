@@ -29,7 +29,6 @@ typedef struct s_sh
 {
 	char	*line;
 	char	**line_split;
-	char	**envs;
 	t_tokens	**tokens;
 }	t_sh;
 
@@ -39,7 +38,7 @@ void ft_exit(char *line);
 void ft_getpwd(void);
 void ft_echo(char **line_split);
 void ft_cd(char **line_split);
-void ft_export(void);
+void ft_export(char **s);
 void ft_env(void);
 
 

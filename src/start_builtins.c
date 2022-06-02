@@ -41,11 +41,16 @@ void ft_cd(char **line_split)
 		perror("cd");
 }
 
-void ft_export(void)
+void ft_export(char **s)
 {
-	ft_printf("haciendo EXPORT\n");
-	if (setenv("LEOOOOHOEO", "107", 1) != 0)
-		perror("setenv");
+	int i;
+
+	i = 0;
+	while (environ[i] != NULL)
+		i++;
+	environ[i] = malloc(sizeof(char) * ft_strlen(s[1])); 
+	environ[i] = s[1];	
+	environ[i + 1] = NULL;
 }
 
 void ft_env(void)
