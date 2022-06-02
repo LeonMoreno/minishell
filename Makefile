@@ -12,7 +12,7 @@ LIBFT_DIR	= libft/
 LIBFT		= $(addprefix $(LIBFT_DIR), $(LIBFT_A))
 
 #Sources Files
-SRC_FILES =	minishell start_builtins
+SRC_FILES =	minishell ft_reading ft_quoting start_builtins
 
 #SRC
 SRC		=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
