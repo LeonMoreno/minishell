@@ -33,8 +33,6 @@ void ft_echo(char **line_split)
 void ft_cd(char **line_split)
 {
 	if (!line_split[1]) 
-		chdir(getenv("HOME"));
-	else if (!line_split[1]) 
 	{
 		if (chdir(getenv("HOME")) == -1)
 			perror("cd");
@@ -108,7 +106,6 @@ void ft_unset(char **s)
 		key_env = ft_split(environ[i], '=');
 		if(ft_strncmp(key_s[0], key_env[0], ft_strlen(key_s[0]) + 1))
 		{
-			printf("Aqui tou key_env = %s \n", key_env[0]);
 			new_env[j] = malloc(sizeof(char) * ft_strlen(environ[i]));
 			new_env[j] = environ[i];
 			j++;
