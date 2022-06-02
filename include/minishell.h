@@ -16,6 +16,7 @@ enum
 	CMD,
 	ARG,
 	OPER,
+	PIPE,
 };
 
 typedef struct s_tokens
@@ -52,4 +53,6 @@ int		ft_quote_real(t_sh *sh, int i, int a);
 char	*ft_double_quoting(t_sh *sh, int *i, char *temp);
 char	*ft_single_quoting(t_sh *sh, int *i, char *temp);
 char	*ft_prep_string(t_sh *sh, char *temp, int *i);
+int		ft_parsing_meta(t_sh *sh, int i);
+int		ft_double_meta(t_sh *sh, int i);
 #endif

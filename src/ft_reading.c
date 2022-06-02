@@ -26,7 +26,8 @@ t_tokens	*ft_create_token(t_sh *sh)
 	return (token);
 }
 
-//Creates a token according to no specific rule
+//Initiate a token. Newly created token receives :
+//1. Its String : token->str  2.Its Type  1:arg 2:oper 3.pipe
 void	ft_next_token(t_sh *sh, int i, char **temp)
 {
 	int			len;
@@ -35,9 +36,14 @@ void	ft_next_token(t_sh *sh, int i, char **temp)
 	len  = i - sh->start;
 	token = ft_create_token(sh);
 	token->str = *temp;
-	//printf("TOKEN created: %p string: %s\n", token, token->str);
 	sh->n_tokens++;
+	token->type = ARG;
+	if (ft_parsing_meta(sh, i))
+		token->type = OPER;
+	else if (ft_parsing_meta(sh, i) == 124 && ft_double_meta(sh, i))
+		token->type = PIPE;	
 	sh->start = -1;
+	printf("TOKEN Type: %d String: [ %s ]\n", token->type, token->str);
 	*temp = NULL;
 }
 
@@ -57,8 +63,11 @@ char	*ft_prep_string(t_sh *sh, char *temp, int *i)
 	return (new_temp);
 }
 
-//Choose case that creates a new Token: 1. End of word finishing by whitespace 
-//2.SingleQuotes 3.DoubleQuotes 4. End of line
+//FT_PARSING :- Increments string temp and creates new token with it.
+// - Checks for quoting rules
+//Cases for next_token: 1. End of word 2. Presence of operator.
+// 3. end of line. 
+
 void	ft_parsing(t_sh *sh, int *i)
 {
 	static char *temp = NULL;
@@ -71,7 +80,16 @@ void	ft_parsing(t_sh *sh, int *i)
 		temp = ft_double_quoting(sh, i, temp);
 	else if (sh->line[*i] > 32 && sh->line[*i] < 127)
 		temp = ft_prep_string(sh, temp, i);
-	if (sh->line[*i + 1] == '\0' && sh->line[*i] > 32 &&
+	if ( (sh->start >= 0 && ft_parsing_meta(sh, (*i) + 1)) || ft_parsing_meta(sh, *i))
+	{
+		if (ft_double_meta(sh, *i))
+		{
+			*i = *i + 1;
+			temp = ft_prep_string(sh, temp, i);
+		}
+		ft_next_token(sh, *i, &temp);
+	}
+	else if (sh->line[*i + 1] == '\0' && sh->line[*i] > 32 &&
 		   	sh->line[*i] < 127)
 		ft_next_token(sh, *i + 1, &temp);
 }

@@ -19,7 +19,7 @@ void start_shell(t_sh *sh)
 	while (1)
 	{
 		sh->line = readline("miniShell$ ");
-		if (sh->line && sh->line[0] != '\n')
+		if (sh->line && sh->line[0] != '\0')
 			line_parser(sh);	
 		check_builtins(sh);
 		if (sh->line)
