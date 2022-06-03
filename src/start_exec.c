@@ -22,9 +22,6 @@ int check_builtins(char *s)
 
 void start_exec(t_sh *sh)
 {
-	char **l_s;
-
-	l_s = ft_split(sh->line, ' ');
-	if (check_builtins(l_s[0]))
+	if (check_builtins(sh->cmd_lst->name))
 		start_builtins(sh);
 }

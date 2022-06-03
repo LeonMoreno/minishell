@@ -40,16 +40,16 @@ typedef struct s_cmd
 {
 	t_tokens		**token_tab;
 	char			**argvec;
-	char			*str_cmd;
-	int				n_dir;
+	char			*name;
+	int				n_redir;
 	struct s_cmd	*next;
 }	t_cmd;
 
 typedef struct s_sh
 {
 	char		*line;
-	t_cmd		*cmd_top;
-	t_tokens	*token_top;
+	t_cmd		*cmd_lst;
+	t_tokens	*token_lst;
 	
 	int			n_cmd;
 	int			n_pipe;
@@ -84,7 +84,7 @@ void	ft_init_cmd_lst(t_sh *sh);
 
 //Functions utils
 void	free_lst(t_sh *sh);
-
+void	ft_print_cmds(t_sh *sh);
 
 //Functions excec_cmd
 void	start_exec(t_sh *sh);

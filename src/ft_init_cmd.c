@@ -38,17 +38,17 @@ void	ft_argvec_init(t_tokens *index, t_cmd *this_cmd)
 		else if (begin->type == ARG && !is_cmd)
 		{
 			is_cmd = true;
-			this_cmd->str_cmd = begin->str;
+			this_cmd->name = begin->str;
 			begin->type = CMD;
 		}
 		if (begin->type == ARG	|| begin->type == CMD)
 			temp[i++] = begin->str;
-		//printf("String : %s TYPE : %d\n", temp[i], begin->type);
+		if (begin->type == OPER)
+			this_cmd->n_redir++;
+		
 		begin = begin->next;
-		//i++;
 	}
 	this_cmd->argvec = temp;	
-	//printf("argvec0: %s argvec1: %s\n", temp[0], temp[1]);
 }
 
 
@@ -63,19 +63,19 @@ void	ft_init_cmd(t_cmd *cmd, t_tokens *index)
 	len_arg = ft_size(index);
 	cmd->token_tab = malloc(sizeof(t_tokens *) * len_arg + 1);
 	cmd->token_tab[len_arg] = NULL;
+	cmd->argvec = NULL;
 	while (i < len_arg)
 	{
 		cmd->token_tab[i] = begin;
-	//	printf("      -TOKEN tab[ %d ]: %s\n",i, begin->str);
+		//printf("      -TOKEN tab[ %d ]: %s   : Type %d\n",i, begin->str, begin-type);
 		begin = begin->next;
 		i++;
 	}
 	ft_argvec_init(index, cmd);
 	i = 0;
-	printf("COMMANDE: %s argve_Len: %d\n", cmd->str_cmd, len_arg);
 	while (cmd->argvec[i])
 	{
-		printf("   -Argvec[ %d ]: %s\n", i, cmd->argvec[i]);
+		//printf("   -Argvec[ %d ]: %s\n", i, cmd->argvec[i]);
 		i++;
 	}
 	
@@ -88,25 +88,23 @@ void	ft_create_cmd(t_sh *sh, bool *is_cmd, t_tokens *index)
 
 	cmd = malloc(sizeof(t_cmd));
 	cmd->next = NULL;
+	cmd->n_redir = 0;
 	*is_cmd = false;
-	if (!sh->cmd_top)
+	if (!sh->cmd_lst)
 	{
-		sh->cmd_top = cmd;
+		sh->cmd_lst = cmd;
 		ft_init_cmd(cmd, index);
-		printf("INIT_CMD: %s\n", cmd->str_cmd);
 		return ;
 	}
-	begin = sh->cmd_top;
+	begin = sh->cmd_lst;
     while (begin)
     {
 		if (!begin->next)
 			break ;
 		begin = begin->next;
 	}
-	printf("INIT_CMD: %s\n", cmd->str_cmd);
 	begin->next = cmd;
 	ft_init_cmd(cmd, index);
-	//return (cmd);
 }
 
 
@@ -117,7 +115,7 @@ void	ft_init_cmd_lst(t_sh *sh)
 
 
 	is_cmd = true;
-	begin = sh->token_top;
+	begin = sh->token_lst;
 	while (begin)
 	{
 		if (begin->type != PIPE && is_cmd)
@@ -126,6 +124,5 @@ void	ft_init_cmd_lst(t_sh *sh)
 			is_cmd = true;
 		begin = begin->next;
 	}
-	printf("INIT_CMD_LST: %s\n", sh->cmd_top->token_tab[0]->str);
 }
 

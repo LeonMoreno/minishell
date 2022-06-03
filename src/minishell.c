@@ -13,10 +13,13 @@ void start_shell(t_sh *sh)
 	{
 		start_readline(sh);
 		if (sh->line && sh->line[0] != '\0')
+		{
 			line_parser(sh);	
-		start_exec(sh);
-		free_lst(sh);
-		sh->token_top = NULL;
+			ft_print_cmds(sh); // Print basic info of all cmds in cmd_lst
+			start_exec(sh);
+			free_lst(sh);
+		}
+		sh->token_lst = NULL;
 	}
 }
 

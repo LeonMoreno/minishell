@@ -5,8 +5,8 @@ void start_builtins(t_sh *sh)
 	char *s;
 	char **line_split;
 
-	s = sh->token_top->str;
-	line_split = sh->token_top->argve;
+	s = sh->token_lst->str;
+	line_split = sh->cmd_lst->argvec;
 	
 	if (!ft_strncmp(s, "exit", 5))
 		ft_exit(sh->line);

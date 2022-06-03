@@ -8,11 +8,12 @@ t_tokens	*ft_create_token(t_sh *sh)
 	
 	token =	malloc(sizeof(t_tokens));
 	token->next = NULL;
-	if (!sh->token_top)
-		sh->token_top = token;
+	token->argve = NULL;
+	if (!sh->token_lst)
+		sh->token_lst = token;
 	else
 	{
-		begin = sh->token_top;
+		begin = sh->token_lst;
 		while (begin)
 		{
 			if (!begin->next)
@@ -27,13 +28,11 @@ t_tokens	*ft_create_token(t_sh *sh)
 }
 
 //Initiate a token. Newly created token receives :
-//1. Its String : token->str  2.Its Type  1:arg 2:oper 3.pipe
+//1. Its String : token->str  2.Its Type  a:arg (also for cmds until ft_init_cmd)  b:oper c.pipe 
 void	ft_next_token(t_sh *sh, int i, char **temp)
 {
-	//int		len;
 	t_tokens	*token;
 	
-	//len  = i - sh->start;
 	token = ft_create_token(sh);
 	token->str = *temp;
 	sh->n_tokens++;
@@ -43,7 +42,7 @@ void	ft_next_token(t_sh *sh, int i, char **temp)
 	if (ft_parsing_meta(sh, i) == 124 && !ft_double_meta(sh, i))
 		token->type = PIPE;	
 	sh->start = -1;
-	printf("TOKEN Type: %d String: [ %s ]\n", token->type, token->str);
+	//printf("TOKEN Type: %d String: [ %s ]\n", token->type, token->str);
 	*temp = NULL;
 }
 
@@ -110,7 +109,7 @@ void	line_parser(t_sh *sh)
 		ft_parsing(sh, &i);
 		i++;
 	}
-	sh->cmd_top = NULL;
+	sh->cmd_lst = NULL;
 	ft_init_cmd_lst(sh);
 	return ; 
 }
