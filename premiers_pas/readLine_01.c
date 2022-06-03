@@ -6,6 +6,12 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+typedef struct s_sh
+{
+	char	*line;
+}	t_sh;
+
+
 void handle_signals(int sing)
 {
 	if (sing == SIGINT)
@@ -16,30 +22,52 @@ void handle_signals(int sing)
 		
 }		
 
+void ft_readline(t_sh *sh)
+{
+	sh->line = readline("Myshell$ ");
+	if (sh->line != 0)
+		add_history(sh->line);
+}
+
+void init_shell()
+{
+    printf("\n******************"
+        "************************");
+    printf("\n\n\t****MINISHELL 42 PROYECT****");
+    printf("\n\t\t - ENJOY IT -");
+    printf("\n\n*******************"
+        "***********************");
+    printf("\n\nWelcome @%s \n", getenv("USER"));
+    printf("\n");
+    //printf("\e[1;1H\e[2J");
+//    printf("\e[H\e[2J\e[3J");
+    sleep(1);
+}
+
 int main(void)
 {
-	char *str;
+	t_sh *sh;
+
+	sh = malloc(sizeof(t_sh));
 	char getpwd[100];
 
 	signal(SIGINT, handle_signals);
+	init_shell();
 
 	while (1)
 	{
-		str = readline("Myshell $ ");
-		if (str)
-			add_history(str);
-		if (!strncmp(str, "pwd", 3))
+		ft_readline(sh);
+		if (!strncmp(sh->line, "pwd", 3))
 		{
 			getcwd(getpwd, sizeof(getpwd));
 			printf("%s\n", getpwd);
 		}
-		if (!str || !strncmp(str, "exit", 4))
+		if (!sh->line || !strncmp(sh->line, "exit", 4))
 		{
-			free(str);
+			free(sh->line);
 			break;
 		}
-		printf ("%s \n", str);
-	free(str);
+	free(sh->line);
 	}
 	return (0);
 }	

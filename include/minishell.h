@@ -6,6 +6,8 @@
 
 // Include readline
 #include <readline/readline.h>
+#include <readline/history.h>
+
 
 #include <stdbool.h>
 // Variable global env

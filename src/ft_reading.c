@@ -30,10 +30,10 @@ t_tokens	*ft_create_token(t_sh *sh)
 //1. Its String : token->str  2.Its Type  1:arg 2:oper 3.pipe
 void	ft_next_token(t_sh *sh, int i, char **temp)
 {
-	int			len;
+	//int		len;
 	t_tokens	*token;
 	
-	len  = i - sh->start;
+	//len  = i - sh->start;
 	token = ft_create_token(sh);
 	token->str = *temp;
 	sh->n_tokens++;
