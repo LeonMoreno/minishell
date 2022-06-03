@@ -110,5 +110,7 @@ void	line_parser(t_sh *sh)
 		ft_parsing(sh, &i);
 		i++;
 	}
+	sh->cmd_top = NULL;
+	ft_init_cmd_lst(sh);
 	return ; 
 }

@@ -18,8 +18,14 @@ enum
 	CMD,
 	ARG,
 	OPER, 
+	OPERD,
 	PIPE,
+	EXIT = 0,
+	ENV,
+	CD,
+	EXPRT,
 };
+
 
 typedef struct s_tokens
 {
@@ -32,7 +38,9 @@ typedef struct s_tokens
 
 typedef struct s_cmd
 {
-	t_tokens		*tokens;
+	t_tokens		**token_tab;
+	char			**argvec;
+	char			*str_cmd;
 	int				n_dir;
 	struct s_cmd	*next;
 }	t_cmd;
@@ -70,7 +78,12 @@ int		ft_parsing_meta(t_sh *sh, int i);
 int		ft_double_meta(t_sh *sh, int i);
 
 //Functions Commands
-void	ft_argvec_init(t_tokens *cmd);
+void	ft_argvec_init(t_tokens *index, t_cmd *this_cmd);
+void	ft_init_cmd_lst(t_sh *sh);
+
+
+//Functions utils
+void	free_lst(t_sh *sh);
 
 
 //Functions excec_cmd
