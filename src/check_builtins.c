@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void check_builtins(t_sh *sh)
+void start_builtins(t_sh *sh)
 {
 	char *s;
 	char **line_split;

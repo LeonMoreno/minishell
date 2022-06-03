@@ -50,7 +50,6 @@ typedef struct s_sh
 }	t_sh;
 
 //Functions builtins
-void check_builtins(t_sh *sh);
 void ft_exit(char *line);
 void ft_getpwd(void);
 void ft_echo(char **line_split);
@@ -72,5 +71,12 @@ int		ft_double_meta(t_sh *sh, int i);
 
 //Functions Commands
 void	ft_argvec_init(t_tokens *cmd);
+
+
+//Functions excec_cmd
+void	start_exec(t_sh *sh);
+int check_builtins(char *s);
+void start_builtins(t_sh *sh);
+
 
 #endif

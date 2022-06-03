@@ -21,16 +21,18 @@ void start_readline(t_sh *sh)
 			add_history(sh->line);
 }
 
-void start_shell(t_sh *sh)
+void start_shell(t_sh * sh)
 {
 	while (1)
 	{
 		start_readline(sh);
 		if (sh->line && sh->line[0] != '\0')
 			line_parser(sh);	
-		if (sh->token_top)
-			check_builtins(sh);
+		//if (sh->token_top)
+		//	check_builtins(sh);
 		//exec_cmd(sh);
+		start_exec(sh);
+		
 		free(sh->line);
 		free_lst(sh->token_top);
 		sh->token_top = NULL;
