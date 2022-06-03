@@ -14,17 +14,22 @@ void	free_lst(t_tokens *top)
 	}
 }
 
+void start_readline(t_sh *sh)
+{
+		sh->line = readline("miniShell$ ");
+		if (sh->line != 0)
+			add_history(sh->line);
+}
+
 void start_shell(t_sh *sh)
 {
 	while (1)
 	{
-		sh->line = readline("miniShell$ ");
+		start_readline(sh);
 		if (sh->line && sh->line[0] != '\0')
 			line_parser(sh);	
 		if (sh->token_top)
 			check_builtins(sh);
-		if (sh->line)
-			add_history(sh->line);
 		//exec_cmd(sh);
 		free(sh->line);
 		free_lst(sh->token_top);
