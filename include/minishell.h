@@ -17,7 +17,7 @@ enum
 {
 	CMD,
 	ARG,
-	OPER,
+	OPER, 
 	PIPE,
 };
 
@@ -30,10 +30,21 @@ typedef struct s_tokens
 	struct s_tokens	*next;
 }	t_tokens;
 
+typedef struct s_cmd
+{
+	t_tokens		*tokens;
+	int				n_dir;
+	struct s_cmd	*next;
+}	t_cmd;
+
 typedef struct s_sh
 {
 	char		*line;
+	t_cmd		*cmd_top;
 	t_tokens	*token_top;
+	
+	int			n_cmd;
+	int			n_pipe;
 	int			n_tokens;
 	int			start;
 }	t_sh;
@@ -58,4 +69,8 @@ char	*ft_single_quoting(t_sh *sh, int *i, char *temp);
 char	*ft_prep_string(t_sh *sh, char *temp, int *i);
 int		ft_parsing_meta(t_sh *sh, int i);
 int		ft_double_meta(t_sh *sh, int i);
+
+//Functions Commands
+void	ft_argvec_init(t_tokens *cmd);
+
 #endif
