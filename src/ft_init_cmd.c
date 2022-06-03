@@ -93,6 +93,7 @@ void	ft_create_cmd(t_sh *sh, bool *is_cmd, t_tokens *index)
 	{
 		sh->cmd_top = cmd;
 		ft_init_cmd(cmd, index);
+		printf("INIT_CMD: %s\n", cmd->str_cmd);
 		return ;
 	}
 	begin = sh->cmd_top;
@@ -102,6 +103,7 @@ void	ft_create_cmd(t_sh *sh, bool *is_cmd, t_tokens *index)
 			break ;
 		begin = begin->next;
 	}
+	printf("INIT_CMD: %s\n", cmd->str_cmd);
 	begin->next = cmd;
 	ft_init_cmd(cmd, index);
 	//return (cmd);
@@ -124,5 +126,6 @@ void	ft_init_cmd_lst(t_sh *sh)
 			is_cmd = true;
 		begin = begin->next;
 	}
+	printf("INIT_CMD_LST: %s\n", sh->cmd_top->token_tab[0]->str);
 }
 

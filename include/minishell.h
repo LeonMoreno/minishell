@@ -20,7 +20,12 @@ enum
 	OPER, 
 	OPERD,
 	PIPE,
+	EXIT = 0,
+	ENV,
+	CD,
+	EXPRT,
 };
+
 
 typedef struct s_tokens
 {
@@ -76,5 +81,9 @@ int		ft_double_meta(t_sh *sh, int i);
 //Functions Commands
 void	ft_argvec_init(t_tokens *index, t_cmd *this_cmd);
 void	ft_init_cmd_lst(t_sh *sh);
+
+
+//Functions utils
+void	free_lst(t_sh *sh);
 
 #endif
