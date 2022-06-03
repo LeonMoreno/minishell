@@ -6,7 +6,6 @@ void start_builtins(t_sh *sh)
 	char **line_split;
 
 	s = sh->token_top->str;
-	ft_argvec_init(sh->token_top);	
 	line_split = sh->token_top->argve;
 	
 	if (!ft_strncmp(s, "exit", 5))
