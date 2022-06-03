@@ -40,7 +40,7 @@ void	ft_next_token(t_sh *sh, int i, char **temp)
 	token->type = ARG;
 	if (ft_parsing_meta(sh, i))
 		token->type = OPER;
-	else if (ft_parsing_meta(sh, i) == 124 && ft_double_meta(sh, i))
+	if (ft_parsing_meta(sh, i) == 124 && !ft_double_meta(sh, i))
 		token->type = PIPE;	
 	sh->start = -1;
 	printf("TOKEN Type: %d String: [ %s ]\n", token->type, token->str);
