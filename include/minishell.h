@@ -30,10 +30,21 @@ typedef struct s_tokens
 	struct s_tokens	*next;
 }	t_tokens;
 
+typedef struct s_cmd
+{
+	t_tokens		*tokens;
+	int				n_dir;
+	struct s_cmd	*next;
+}
+
 typedef struct s_sh
 {
 	char		*line;
+	t_cmd		*cmd_top;
 	t_tokens	*token_top;
+	
+	int			n_cmd;
+	int			n_pipe;
 	int			n_tokens;
 	int			start;
 }	t_sh;
