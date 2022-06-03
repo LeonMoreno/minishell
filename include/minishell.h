@@ -71,6 +71,7 @@ t_tokens	*ft_create_token(t_sh *sh);
 void	line_parser(t_sh *sh);
 void	ft_parsing(t_sh *sh, int *i);
 int		ft_quote_real(t_sh *sh, int i, int a);
+char	*ft_expansion(t_sh *sh, int *i, char *temp);
 char	*ft_double_quoting(t_sh *sh, int *i, char *temp);
 char	*ft_single_quoting(t_sh *sh, int *i, char *temp);
 char	*ft_prep_string(t_sh *sh, char *temp, int *i);

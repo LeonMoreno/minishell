@@ -13,7 +13,9 @@ char	*ft_double_quoting(t_sh *sh, int *i, char *temp)
 		return (temp);
 	while (*i < clone)
 	{
-		if (sh->line[*i] != 34)
+		if (sh->line[*i] == '$')
+			new_temp = ft_expansion(sh, i, new_temp);
+		else if (sh->line[*i] != 34)
 			new_temp = ft_prep_string(sh, new_temp, i);
 		*i = *i + 1;
 	}	
