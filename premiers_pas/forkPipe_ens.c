@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 typedef struct s_cmd
 {
@@ -18,13 +19,33 @@ typedef struct s_sh
 	int		n_pipe;
 	int		n_cmd;
 	pid_t	*pid;
-	t_pipe	*pipe;
+	//t_pipe	*pipe;
+	int		pipe[2];
 	struct	s_cmd	*cmd;
 }	t_sh;
 
-void start_child(t_cmd *cmd)
+void start_child(t_sh *sh, int i)
 {
-	printf("Soy el Hijo %s PID = %d\n", cmd->cmd, getpid());
+	if (i == 0)
+	{
+		printf("Soy el hijo  PID = %d\n", getpid());
+		close (sh->pipe[0]);
+		dup2(sh->pipe[1], 1);
+		close(sh->pipe[1]);
+		write(1, "Hola..", 6);
+	}
+	if (i == 1)
+	{
+		char c;
+
+		printf("Soy el hijo  PID = %d\n", getpid());
+		close (sh->pipe[1]);
+		dup2(sh->pipe[0], 0);
+		close(sh->pipe[0]);
+		read(0, &c, 1);
+		printf("%c\n", c);
+	}
+
 }	
 
 void start_pipex(t_sh *sh)
@@ -32,10 +53,11 @@ void start_pipex(t_sh *sh)
 	int i;
 
 	i = 0;
-	sh->pipe = malloc(sizeof(t_pipe) * sh->n_pipe);
+	//sh->pipe = malloc(sizeof(t_pipe) * sh->n_pipe);
 	while (sh->n_pipe > i)
 	{
-		pipe(sh->pipe[i].pipe);
+		pipe(sh->pipe);
+		//pipe(sh->pipe[i].pipe);
 		i++;
 	}
 }
@@ -48,18 +70,31 @@ void start_fork(t_sh *sh)
 	sh->pid = malloc(sizeof(pid_t) * sh->n_cmd);
 	while (sh->n_cmd > i)
 	{
-		printf("Entre en el WHilE i = %d\n", i);
 		sh->pid[i] = fork();
 		if (sh->pid[i] == 0)
 		{
-			start_child(&sh->cmd[i]);
+			start_child(sh, i);
+			//start_child(&sh->cmd[i]);
 			exit(0);
 		}
 		i++;
 	}
 }
 
-void start_cmd(t_sh *sh)
+void wait_fork(t_sh *sh)
+{
+	int i;
+	int	status;
+
+	i = 0;
+	while (i < sh->n_cmd)
+	{
+		waitpid(sh->pid[i], &status, 0);
+		i++;
+	}
+}
+
+/*void start_cmd(t_sh *sh)
 {
 	sh->cmd = malloc(sizeof(t_cmd) * sh->n_cmd);
 	// Premier cmd
@@ -80,7 +115,7 @@ void start_cmd(t_sh *sh)
 	sh->cmd[1].argv[1] = malloc(sizeof(char) * 3);
 	sh->cmd[1].argv[1] = "w";
 	sh->cmd[1].argv[2] = NULL;
-}
+}*/
 
 int main(void)
 {
@@ -90,9 +125,10 @@ int main(void)
 	sh->n_pipe = 1;
 	sh->n_cmd = 2;
 
-	printf("**INI PROC %d\n", getpid());
-	start_cmd(sh);
+	printf("**INI PROC %d **\n", getpid());
+	//start_cmd(sh);
 	start_pipex(sh);
 	start_fork(sh);
+	wait_fork(sh);
 	return (0);
 }

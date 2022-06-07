@@ -7,7 +7,7 @@ void    ft_print_cmds(t_sh *sh)
 	t_cmd	*begin;
     int		i;
     int		j;
-	
+
 	i = 1;
 	begin  = sh->cmd_lst;
 	while (begin)
@@ -48,7 +48,7 @@ void    free_lst(t_sh *sh)
 	t_tokens *begin;
 	t_tokens *temp;
 
-	free(sh->line);	
+	free(sh->line);
 	begin = sh->token_lst;
 	while(begin)
 	{
@@ -61,4 +61,23 @@ void    free_lst(t_sh *sh)
 		free (temp);
     }
 	free_cmd_lst(sh);
+}
+
+/**
+ * end_fork - if we are fork - wait childs exit
+ * @status: save status child
+ * @n_f: number of forks
+ *
+ */
+void	end_fork(t_sh *sh, int n_f)
+{
+	int	i;
+	int	status;
+
+	i = 0;
+	while (i < n_f)
+	{
+		waitpid(sh->id_f[i], &status, 0);
+		i++;
+	}
 }

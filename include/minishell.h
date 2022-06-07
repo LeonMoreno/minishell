@@ -8,16 +8,18 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+//Include pout wait
+#include <sys/wait.h>
 
 #include <stdbool.h>
 // Variable global env
 extern char **environ;
 
-enum 
+enum
 {
 	CMD,
 	ARG,
-	OPER, 
+	OPER,
 	OPERD,
 	PIPE,
 	EXIT = 0,
@@ -26,6 +28,10 @@ enum
 	EXPRT,
 };
 
+typedef struct s_pip
+{
+	int		pip[2];
+}	t_pip;
 
 typedef struct s_tokens
 {
@@ -50,7 +56,9 @@ typedef struct s_sh
 	char		*line;
 	t_cmd		*cmd_lst;
 	t_tokens	*token_lst;
-	
+	t_pip		*pip;
+	pid_t		*id_f;
+
 	int			n_cmd;
 	int			n_pipe;
 	int			n_tokens;
@@ -58,13 +66,13 @@ typedef struct s_sh
 }	t_sh;
 
 //Functions builtins
-void ft_exit(char *line);
-void ft_getpwd(void);
-void ft_echo(char **line_split);
-void ft_cd(char **line_split);
-void ft_export(char **s);
-void ft_env(void);
-void ft_unset(char **s);
+void	ft_exit(char *line);
+void	ft_getpwd(void);
+void	ft_echo(char **line_split);
+void	ft_cd(char **line_split);
+void	ft_export(char **s);
+void	ft_env(void);
+void	ft_unset(char **s);
 
 //Functions parser
 t_tokens	*ft_create_token(t_sh *sh);
@@ -89,8 +97,9 @@ void	ft_print_cmds(t_sh *sh);
 
 //Functions excec_cmd
 void	start_exec(t_sh *sh);
-int check_builtins(char *s);
-void start_builtins(t_sh *sh);
+void	start_builtins(t_sh *sh);
+int		check_cmd(char *s); //int check_builtins(char *s);
+void	end_fork(t_sh *sh, int n_f);
 
 
 #endif

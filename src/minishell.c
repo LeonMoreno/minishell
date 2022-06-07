@@ -9,6 +9,7 @@ void start_readline(t_sh *sh)
 
 void start_shell(t_sh *sh)
 {
+	ft_printf("\n\t\t ** PROC INI ID %d **\n", getpid());
 	while (1)
 	{
 		start_readline(sh); // FT ReadLine
