@@ -39,12 +39,6 @@ int	init_fork(t_sh *sh)
 	return (i);
 }
 
-void	start_forkx(t_cmd *cm)
-{
-	printf("Hijo PID %d cmd exter: %s \n", getpid(), cm->name);
-	exit(0);
-}
-
 /**
  * start_cmd = begin start commands
  * if there pipe are forks builtins exec with in fork
@@ -58,20 +52,14 @@ void	start_cmd(t_cmd *cm, t_sh *sh, int i)
 		if (sh->id_f[i] == 0)
 		{
 			if (check_cmd(cm->name))
-			{
-				printf("EJECUTE cmd = %s PID %d\n", cm->name, getpid());
-				start_builtins(sh);
-				exit (0);
-			}
+				start_child_builtins(cm, sh);
 			else
-			{
-				start_forkx(cm);
-			}
+				start_child_cmdext(cm, sh);
 		}
 	}
 	else
 	{
-		start_builtins(sh);
+		start_builtins(cm, sh);
 		printf("EJECUTE cmd = %s PID %d\n", cm->name, getpid());
 	}
 }

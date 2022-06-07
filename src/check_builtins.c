@@ -23,13 +23,15 @@ int	check_cmd(char *s)
 	return (0);
 }
 
-void start_builtins(t_sh *sh)
+void start_builtins(t_cmd *cm, t_sh *sh)
 {
 	char *s;
 	char **argv;
 
-	s = sh->token_lst->str;
-	argv = sh->cmd_lst->argvec;
+	//s = sh->token_lst->str;
+	//argv = sh->cmd_lst->argvec;
+	s = cm->name;
+	argv = cm->argvec;
 
 	if (!ft_strncmp(s, "exit", 5))
 		ft_exit(sh->line);
