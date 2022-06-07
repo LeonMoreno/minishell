@@ -22,6 +22,26 @@ int check_builtins(char *s)
 
 void start_exec(t_sh *sh)
 {
+	t_cmd *cm;
+	t_tokens *t;
+	int pip;
+
+	pip = 0;
+	cm = sh->cmd_lst;
+	t = sh->token_lst;
+	while(cm)
+	{
+		printf("cmd = %s\n", cm->name);
+		cm = cm->next;
+	}
+	while (t)
+	{
+		if (t->type == PIPE)
+			pip++;
+		t = t->next;
+	}
+
+	printf("No PIPES = %d\n", sh->n_pipe);
 	if (check_builtins(sh->cmd_lst->name))
 		start_builtins(sh);
 }

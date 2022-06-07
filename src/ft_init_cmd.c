@@ -113,15 +113,18 @@ void	ft_init_cmd_lst(t_sh *sh)
 	t_tokens	*begin;
 	bool		is_cmd;
 
-
 	is_cmd = true;
+	sh->n_pipe = 0; //In each line pipe begin in cero #LEO
 	begin = sh->token_lst;
 	while (begin)
 	{
 		if (begin->type != PIPE && is_cmd)
 			ft_create_cmd(sh, &is_cmd, begin);
 		else if (begin->type == PIPE)
+		{
+			sh->n_pipe++; // add number pipes #LEO
 			is_cmd = true;
+		}
 		begin = begin->next;
 	}
 }

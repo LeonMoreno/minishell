@@ -11,7 +11,7 @@ void start_shell(t_sh *sh)
 {
 	while (1)
 	{
-		start_readline(sh);
+		start_readline(sh); // FT ReadLine
 		if (sh->line && sh->line[0] != '\0')
 		{
 			line_parser(sh);	
