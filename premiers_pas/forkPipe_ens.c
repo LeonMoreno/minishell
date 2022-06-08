@@ -19,8 +19,8 @@ typedef struct s_sh
 	int		n_pipe;
 	int		n_cmd;
 	pid_t	*pid;
-	//t_pipe	*pipe;
-	int		pipe[2];
+	t_pipe	*pipe;
+	//int		pipe[2];
 	struct	s_cmd	*cmd;
 }	t_sh;
 
@@ -29,9 +29,9 @@ void start_child(t_sh *sh, int i)
 	if (i == 0)
 	{
 		printf("Soy el hijo  PID = %d\n", getpid());
-		close (sh->pipe[0]);
-		dup2(sh->pipe[1], 1);
-		close(sh->pipe[1]);
+		close (sh->pipe->pipe[0]);
+		dup2(sh->pipe->pipe[1], 1);
+		close(sh->pipe->pipe[1]);
 		write(1, "Hola..", 6);
 	}
 	if (i == 1)
@@ -39,9 +39,9 @@ void start_child(t_sh *sh, int i)
 		char c;
 
 		printf("Soy el hijo  PID = %d\n", getpid());
-		close (sh->pipe[1]);
-		dup2(sh->pipe[0], 0);
-		close(sh->pipe[0]);
+		close (sh->pipe->pipe[1]);
+		dup2(sh->pipe->pipe[0], 0);
+		close(sh->pipe->pipe[0]);
 		read(0, &c, 1);
 		printf("%c\n", c);
 	}
@@ -53,11 +53,11 @@ void start_pipex(t_sh *sh)
 	int i;
 
 	i = 0;
-	//sh->pipe = malloc(sizeof(t_pipe) * sh->n_pipe);
+	sh->pipe = malloc(sizeof(t_pipe) * sh->n_pipe);
 	while (sh->n_pipe > i)
 	{
-		pipe(sh->pipe);
-		//pipe(sh->pipe[i].pipe);
+		//pipe(sh->pipe);
+		pipe(sh->pipe[i].pipe);
 		i++;
 	}
 }

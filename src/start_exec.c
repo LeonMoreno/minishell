@@ -31,7 +31,7 @@ int	init_fork(t_sh *sh)
 	i = 0;
 	while (cm)
 	{
-		if (sh->n_pipe > 0)
+		if (!check_cmd(sh->cmd_lst->name) || sh->n_pipe > 0)
 			i++;
 		cm = cm->next;
 	}
@@ -46,7 +46,7 @@ int	init_fork(t_sh *sh)
  */
 void	start_cmd(t_cmd *cm, t_sh *sh, int i)
 {
-	if (sh->n_pipe > 0)
+	if (!check_cmd(sh->cmd_lst->name) || sh->n_pipe > 0)
 	{
 		sh->id_f[i] = fork();
 		if (sh->id_f[i] == 0)
