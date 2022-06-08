@@ -12,8 +12,13 @@
 #include <sys/wait.h>
 
 #include <stdbool.h>
+
 // Variable global env
 extern char **environ;
+
+#define OUT 0 /*index pipe extrem READ */
+#define IN 1 /*Index pipe extrem WRITE */
+
 
 enum
 {
@@ -30,7 +35,7 @@ enum
 
 typedef struct s_pip
 {
-	int		pip[2];
+	int		p[2];
 }	t_pip;
 
 typedef struct s_tokens
@@ -56,7 +61,7 @@ typedef struct s_sh
 	char		*line;
 	t_cmd		*cmd_lst;
 	t_tokens	*token_lst;
-	t_pip		*pip;
+	t_pip		*pipe;
 	pid_t		*id_f;
 
 	int			n_cmd;
@@ -105,5 +110,7 @@ void	end_fork(t_sh *sh, int n_f);
 void	start_child_builtins(t_cmd *cm, t_sh *sh);
 void	start_child_cmdext(t_cmd *cm, t_sh *sh);
 
+//Functions childs fork
+void	s_parsing_cmd(t_cmd *cm, t_sh *sh);
 
 #endif

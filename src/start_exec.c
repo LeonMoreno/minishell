@@ -9,11 +9,11 @@ void	start_pipex(t_sh *sh)
 	int	i;
 
 	i = 0;
-	sh->pip = malloc(sizeof(t_pip) * sh->n_pipe);
+	sh->pipe = malloc(sizeof(t_pip) * sh->n_pipe);
 	while (sh->n_pipe > i)
 	{
 		ft_printf("Entre PIPE %d\n", i);
-		pipe(sh->pip[i++].pip);
+		pipe(sh->pipe[i++].p);
 	}
 }
 
