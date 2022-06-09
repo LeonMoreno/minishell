@@ -72,17 +72,21 @@ void    free_lst(t_sh *sh)
 void	end_fork(t_sh *sh)
 {
 	int	i;
+	int	j;
 	int	status;
 
 	i = 0;
+	j = 0;
 	while (i < sh->n_forks)
 	{
 		waitpid(sh->id_f[i], &status, 0);
-		if (sh->n_pipe && sh->pipe[i].p[IN])
+		//if (sh->n_pipe && sh->pipe[i].p[IN])
+		if (j < sh->n_pipe)
 		{
-			close(sh->pipe[i].p[OUT]);
-			close(sh->pipe[i].p[IN]);
-			printf("Cerrado *PIPE* %d\n", i);
+			close(sh->pipe[j].p[OUT]);
+			close(sh->pipe[j].p[IN]);
+			printf("Cerrado *PIPE* %d\n", j);
+			j++;
 		}
 		printf("Cerrado fork %d\n", i);
 		i++;
