@@ -66,6 +66,7 @@ typedef struct s_sh
 
 	int			n_cmd;
 	int			n_pipe;
+	int			m_pipe;
 	int			n_tokens;
 	int			start;
 }	t_sh;
@@ -108,9 +109,9 @@ void	end_fork(t_sh *sh, int n_f);
 
 //Functions childs fork
 void	start_child_builtins(t_cmd *cm, t_sh *sh);
-void	start_child_cmdext(t_cmd *cm, t_sh *sh);
+void	start_child_cmdext(t_cmd *cm, t_sh *sh, int x);
 
 //Functions childs fork
-void	s_parsing_cmd(t_cmd *cm, t_sh *sh);
+char	*cmd_path(t_cmd *cm);
 
 #endif

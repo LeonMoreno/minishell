@@ -7,9 +7,24 @@ void start_readline(t_sh *sh)
 			add_history(sh->line);
 }
 
+void	impri_argv(t_sh *sh)
+{
+	char **c;
+	int		i;
+
+	i = 0;
+	c = sh->cmd_lst->argvec;
+	while (c[i] != NULL)
+	{
+		printf("%s\n", c[i]);
+		i++;
+	}
+	printf("%s\n", c[i]);
+}
+
 void start_shell(t_sh *sh)
 {
-	ft_printf("\n\t\t ** PROC INI ID %d **\n", getpid());
+	ft_printf("\n\t\t ** PROC INI PID %d **\n", getpid());
 	while (1)
 	{
 		start_readline(sh); // FT ReadLine
@@ -19,6 +34,7 @@ void start_shell(t_sh *sh)
 			if(sh->token_lst) //If expansion NULL, Token lst is NULL
 			{	
 				ft_print_cmds(sh); // Print basic info of all cmds in cmd_lst
+				//impri_argv(sh);
 				start_exec(sh);
 				free_lst(sh);
 			}

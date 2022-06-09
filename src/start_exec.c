@@ -13,6 +13,7 @@ void	start_pipex(t_sh *sh)
 	while (sh->n_pipe > i)
 	{
 		ft_printf("Entre PIPE %d\n", i);
+		sh->m_pipe = i;
 		pipe(sh->pipe[i++].p);
 	}
 }
@@ -54,7 +55,7 @@ void	start_cmd(t_cmd *cm, t_sh *sh, int i)
 			if (check_cmd(cm->name))
 				start_child_builtins(cm, sh);
 			else
-				start_child_cmdext(cm, sh);
+				start_child_cmdext(cm, sh, i);
 		}
 	}
 	else

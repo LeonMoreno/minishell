@@ -78,6 +78,7 @@ void	end_fork(t_sh *sh, int n_f)
 	while (i < n_f)
 	{
 		waitpid(sh->id_f[i], &status, 0);
+		printf("Cerrado fork %d\n", i);
 		i++;
 	}
 }
