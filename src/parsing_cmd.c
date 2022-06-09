@@ -14,10 +14,10 @@ char	*cmd_path(t_cmd *cm)
 	{
 		path = ft_strjoin(path_split[i], cmd);
 		if (!access(path, X_OK))
-			break;
+			return (path);	
 		free(path);
 		i++;
 	}
 	free(path_split);
-	return (path);
+	return (NULL);
 }

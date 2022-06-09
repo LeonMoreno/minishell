@@ -48,7 +48,7 @@ void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i, int x)
 		printf("1ER IF Hijo PID %d CMD Ext %s \n", getpid(), cm->name);
 		dup_stdout(sh, x);
 	}
-	else 
+	else if (sh->n_pipe) 
 	{
 		if ((i + 1) == sh->n_forks)
 		{
@@ -67,9 +67,6 @@ void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i, int x)
 			dup_stdin(sh, x);
 			
 			dup_stdout_un(sh, x);
-			//close(sh->pipe[x + 1].p[OUT]);
-			//dup2(sh->pipe[x + 1].p[IN], STDOUT_FILENO);
-			//close(sh->pipe[x + 1].p[IN]);
 		}
 	}
 	execve(path, cm->argvec, NULL);
