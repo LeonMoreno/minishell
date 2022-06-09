@@ -34,7 +34,8 @@ int	init_fork(t_sh *sh)
 	i = 0;
 	while (cm)
 	{
-		if ((cmd_path(cm) && !check_cmd(sh->cmd_lst->name)) || sh->n_pipe > 0)
+		//if ((cmd_path(cm) && !check_cmd(sh->cmd_lst->name)) || sh->n_pipe > 0)
+		if (!check_cmd(sh->cmd_lst->name) || sh->n_pipe > 0)
 			i++;
 		cm = cm->next;
 	}

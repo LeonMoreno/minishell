@@ -36,10 +36,12 @@ $(OBJF)	:
 
 clean	:
 			$(RM) -r $(OBJ_DIR)
+			make -C $(LIBFT_DIR) clean
 			$(RM) $(OBJF)
 
 fclean	:	clean
 			$(RM) $(NAME)
+			make -C $(LIBFT_DIR) fclean
 
 re		: fclean all
 

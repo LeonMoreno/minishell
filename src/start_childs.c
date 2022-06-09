@@ -40,7 +40,11 @@ void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i, int x)
 {
 	char *path;
 
-	path = cmd_path(cm);
+	if(!(path = cmd_path(cm)))
+	{
+		ft_printf("miniShell: command not found: %s\n", cm->name);
+		exit(1);
+	}
 	printf("AFUERA hijo i = %d PID %d CMD %s n_pipe %d x = %d\n", i, getpid(), cm->name, sh->n_pipe, x);
 
 	if (!check_cmd(sh->cmd_lst->name) && sh->n_pipe > 0 && (i == 0))
