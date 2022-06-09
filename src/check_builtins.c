@@ -1,8 +1,10 @@
 #include "minishell.h"
 
 /**
- * check_cmd - check if is builtins cmd
- * Return : 1 if cmd is builtins
+ * @brief check if cmd is builtins cmd
+ *
+ * @param s
+ * @return 1 if cmd is builtins
  */
 int	check_cmd(char *s)
 {
@@ -23,6 +25,12 @@ int	check_cmd(char *s)
 	return (0);
 }
 
+/**
+ * @brief cherche and execute the builtins
+ * cherche with strncmp one space the plus in final
+ *
+ * @param cm struct info cmd
+ */
 void start_builtins(t_cmd *cm, t_sh *sh)
 {
 	char *s;

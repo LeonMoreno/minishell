@@ -1,7 +1,7 @@
 #include "minishell.h"
 
 /**
- * start_pipex - create des pipes
+ * @brief: create des pipes
  * @sh->pip : ptr struct s_pip
  */
 void	start_pipex(t_sh *sh)
@@ -14,14 +14,14 @@ void	start_pipex(t_sh *sh)
 		sh->pipe = malloc(sizeof(t_pip) * sh->n_pipe);
 		while (sh->n_pipe > i)
 		{
-			ft_printf("Entre PIPE %d\n", i);
+			//ft_printf("Entre PIPE %d\n", i);
 			pipe(sh->pipe[i++].p);
 		}
 	}
 }
 
 /**
- * init_fork - start and malloc var sh->id_f aka var_forks
+ * @brief: start and malloc var sh->id_f aka var_forks
  * @i : incrementa solo si hay pipex
  * Return : number forks malloces
  */
@@ -44,8 +44,8 @@ int	init_fork(t_sh *sh)
 }
 
 /**
- * start_cmd = begin start commands
- * if there pipe are forks builtins exec with in fork
+ * @brief: begin start commands extern & builtins
+ * if there pipe || are builtins exec builtins with in fork
  * if no pipe builtins exec without fork
  */
 void	start_cmd(t_cmd *cm, t_sh *sh, int i, int x)
@@ -64,15 +64,15 @@ void	start_cmd(t_cmd *cm, t_sh *sh, int i, int x)
 	else
 	{
 		start_builtins(cm, sh);
-		printf("EJECUTE cmd = %s PID %d\n", cm->name, getpid());
+		//printf("EJECUTE cmd = %s PID %d\n", cm->name, getpid());
 	}
 }
 
 /**
- * start_exec - start fork/pipes/commands/EndForks
+ * @brief: start fork/pipes/commands/EndForks
  * @i: use for index var sh->id_f: fork
  * @n_f: number of forks
- * @x : index number pipex, increment chaque 2 commands
+ * @x: index number pipex, increment chaque 2 commands
  */
 void	start_exec(t_sh *sh)
 {
@@ -93,6 +93,6 @@ void	start_exec(t_sh *sh)
 		cm = cm->next;
 		i++;
 	}
-	printf ("n_forks = %d FORKs\n", sh->n_forks);
+	//printf ("n_forks = %d FORKs\n", sh->n_forks);
 	end_fork(sh);
 }

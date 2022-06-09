@@ -5,7 +5,7 @@ void ft_getpwd(void)
 	char pwd[100];
 
 	getcwd(pwd, sizeof(pwd));
-	printf("%s\n", pwd);
+	ft_printf("%s\n", pwd);
 }
 
 void ft_exit(char *line)
@@ -32,7 +32,7 @@ void ft_echo(char **line_split)
 
 void ft_cd(char **line_split)
 {
-	if (!line_split[1]) 
+	if (!line_split[1])
 	{
 		if (chdir(getenv("HOME")) == -1)
 			perror("cd");
@@ -45,7 +45,13 @@ void ft_cd(char **line_split)
 	else if (chdir(line_split[1]) == -1)
 		perror("cd");
 }
-
+/**
+ * @brief with the extern char **environ accedemos a un puntero especial donde esta env
+ * todo programa recibe una copia de env en los argumentos del main
+ * con environ podemos cambiar las variables de env y los nuevos programas lo copian de alli.
+ *
+ * @param s
+ */
 void ft_export(char **s)
 {
 	int i;
@@ -56,6 +62,12 @@ void ft_export(char **s)
 
 	i = 0;
 	ctrl = 0;
+	if (!s[1])
+	{
+		ft_env();
+		return ;
+	}
+
 	key_s = ft_split(s[1], '=');
 	while (environ[i] != NULL)
 		i++;
@@ -66,7 +78,7 @@ void ft_export(char **s)
 		key_env = ft_split(environ[i], '=');
 		if(!ft_strncmp(key_s[0], key_env[0], ft_strlen(key_s[0]) + 1))
 		{
-			new_env[i] = malloc(sizeof(char) * ft_strlen(s[1])); 
+			new_env[i] = malloc(sizeof(char) * ft_strlen(s[1]));
 			new_env[i] = s[1];
 			ctrl = 1;
 		}
@@ -79,8 +91,8 @@ void ft_export(char **s)
 	}
 	if (!ctrl)
 	{
-		new_env[i] = malloc(sizeof(char) * ft_strlen(s[1])); 
-		new_env[i] = s[1];	
+		new_env[i] = malloc(sizeof(char) * ft_strlen(s[1]));
+		new_env[i] = s[1];
 		new_env[i + 1] = NULL;
 	}
 	environ = new_env;
@@ -116,7 +128,10 @@ void ft_unset(char **s)
 	environ = new_env;
 }
 
-
+/**
+ * @brief printf env
+ *
+ */
 void ft_env(void)
 {
 	int i;

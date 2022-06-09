@@ -1,65 +1,76 @@
 #include "minishell.h"
 
-void	dup_stdout(t_sh *sh, int x)
+/**
+ * @brief get variable PATH the env  -- split -- cherche than chaque line path+name_cmd
+ *
+ * @param cm struct with the info the cmd
+ * @return char* path if le cmd is trouve if not NULL
+ */
+
+char	*cmd_path(t_cmd *cm)
 {
-	close(sh->pipe[x].p[OUT]);
-	dup2(sh->pipe[x].p[IN], STDOUT_FILENO);
-	close(sh->pipe[x].p[IN]);
+	char **path_split;
+	char *path;
+	char *cmd;
+	int	i;
+
+	i = 0;
+	cmd = ft_strjoin("/", cm->name);
+	path_split = ft_split(getenv("PATH"), ':');
+	while (path_split[i] != NULL)
+	{
+		path = ft_strjoin(path_split[i], cmd);
+		if (!access(path, X_OK))
+			return (path);
+		free(path);
+		i++;
+	}
+	free(path_split);
+	return (NULL);
 }
 
-void	dup_stdout_un(t_sh *sh, int x)
-{
-	close(sh->pipe[x + 1].p[OUT]);
-	dup2(sh->pipe[x + 1].p[IN], STDOUT_FILENO);
-	close(sh->pipe[x + 1].p[IN]);
-}
-
-void	dup_stdin(t_sh *sh, int x)
-{
-	close(sh->pipe[x].p[IN]);
-	dup2(sh->pipe[x].p[OUT], STDIN_FILENO);
-	close(sh->pipe[x].p[OUT]);
-}
-
-void	dup_stdin_un(t_sh *sh, int x)
-{
-	close(sh->pipe[x + 1].p[IN]);
-	dup2(sh->pipe[x +1].p[OUT], STDIN_FILENO);
-	close(sh->pipe[x +1].p[OUT]);
-}
-
+/**
+ * @brief execution commands intern than fork
+ *
+ * @param cm struct info cmd
+ * @param x index pour le pipex
+ */
 void	start_child_builtins(t_cmd *cm, t_sh *sh, int x)
 {
-	printf("EXE CMD builtins %s PID %d\n", cm->name, getpid());
+	//printf("EXE CMD builtins %s PID %d\n", cm->name, getpid());
 	dup_stdout(sh, x);
 	start_builtins(cm, sh);
 	exit (0);
 }
 
+/**
+ * @brief: execution the commands extern than fork 1) check path if cmd exist. 2) execute selon ordre
+ *
+ * @param cm: struct with command and argus
+ * @param i: index of interactions the forks -- 1er_cmd i == 0, last_cmd i + 1 == n_forks(number of forks)
+ * @param x: index pour le pipex
+ */
 void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i, int x)
 {
-	char *path;
+	char	*path;
 
-	if(!(path = cmd_path(cm)))
-	{
-		ft_printf("miniShell: command not found: %s\n", cm->name);
-		exit(1);
-	}
+	path = cmd_path(cm);
+	if (!path)
+		msg_stderr("miniShell: command not found: ", cm);
 	printf("AFUERA hijo i = %d PID %d CMD %s n_pipe %d x = %d\n", i, getpid(), cm->name, sh->n_pipe, x);
-
 	if (!check_cmd(sh->cmd_lst->name) && sh->n_pipe > 0 && (i == 0))
 	{
-		printf("1ER IF Hijo PID %d CMD Ext %s \n", getpid(), cm->name);
+		//printf("1ER IF Hijo PID %d CMD Ext %s \n", getpid(), cm->name);
 		dup_stdout(sh, x);
 	}
-	else if (sh->n_pipe) 
+	else if (sh->n_pipe)
 	{
 		if ((i + 1) == sh->n_forks)
 		{
-			printf("2DO IF Hijo PID %d CMD Ext %s \n", getpid(), cm->name);
+			//printf("2DO IF Hijo PID %d CMD Ext %s \n", getpid(), cm->name);
 			if (sh->n_forks > 3 && (sh->n_forks % 2 == 0))
 			{
-				printf("HAY 4 COMMANDOS i = %d\n", i);
+				//printf("HAY 4 COMMANDOS i = %d\n", i);
 				dup_stdin_un(sh, x);
 			}
 			else
@@ -67,9 +78,9 @@ void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i, int x)
 		}
 		else
 		{
-			printf("HAY 3 COMMANDOS i = %d\n", i);
+			//printf("HAY 3 COMMANDOS i = %d\n", i);
 			dup_stdin(sh, x);
-			
+
 			dup_stdout_un(sh, x);
 		}
 	}

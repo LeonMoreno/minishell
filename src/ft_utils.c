@@ -64,31 +64,14 @@ void    free_lst(t_sh *sh)
 }
 
 /**
- * end_fork - if we are fork - wait childs exit
- * @status: save status child
- * @n_f: number of forks
+ * @brief MSG Err to STD ERR -- TEMPO
  *
+ * @cm->name name cmd
  */
-void	end_fork(t_sh *sh)
+void	msg_stderr(char *str, t_cmd *cm)
 {
-	int	i;
-	int	j;
-	int	status;
-
-	i = 0;
-	j = 0;
-	while (i < sh->n_forks)
-	{
-		waitpid(sh->id_f[i], &status, 0);
-		//if (sh->n_pipe && sh->pipe[i].p[IN])
-		if (j < sh->n_pipe)
-		{
-			close(sh->pipe[j].p[OUT]);
-			close(sh->pipe[j].p[IN]);
-			printf("Cerrado *PIPE* %d\n", j);
-			j++;
-		}
-		printf("Cerrado fork %d\n", i);
-		i++;
-	}
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd(cm->name, 2);
+	ft_putchar_fd('\n', 2);
+	exit(EXIT_FAILURE);
 }
