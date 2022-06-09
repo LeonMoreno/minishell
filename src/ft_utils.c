@@ -69,13 +69,13 @@ void    free_lst(t_sh *sh)
  * @n_f: number of forks
  *
  */
-void	end_fork(t_sh *sh, int n_f)
+void	end_fork(t_sh *sh)
 {
 	int	i;
 	int	status;
 
 	i = 0;
-	while (i < n_f)
+	while (i < sh->n_forks)
 	{
 		waitpid(sh->id_f[i], &status, 0);
 		printf("Cerrado fork %d\n", i);
