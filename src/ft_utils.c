@@ -78,6 +78,12 @@ void	end_fork(t_sh *sh)
 	while (i < sh->n_forks)
 	{
 		waitpid(sh->id_f[i], &status, 0);
+		if (sh->pipe[i].p[IN])
+		{
+			close(sh->pipe[i].p[OUT]);
+			close(sh->pipe[i].p[IN]);
+			printf("Cerrado *PIPE* %d\n", i);
+		}
 		printf("Cerrado fork %d\n", i);
 		i++;
 	}

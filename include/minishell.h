@@ -109,7 +109,7 @@ int		check_cmd(char *s); //int check_builtins(char *s);
 void	end_fork(t_sh *sh);
 
 //Functions childs fork
-void	start_child_builtins(t_cmd *cm, t_sh *sh);
+void	start_child_builtins(t_cmd *cm, t_sh *sh, int x);
 void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i, int x);
 
 //Functions childs fork

@@ -52,7 +52,7 @@ void	start_cmd(t_cmd *cm, t_sh *sh, int i, int x)
 		if (sh->id_f[i] == 0)
 		{
 			if (check_cmd(cm->name))
-				start_child_builtins(cm, sh);
+				start_child_builtins(cm, sh, x);
 			else
 				start_child_cmdext(cm, sh, i, x);
 		}
