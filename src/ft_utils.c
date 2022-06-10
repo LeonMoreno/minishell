@@ -46,6 +46,8 @@ void	free_cmd_lst(t_sh *sh)
 		//	free (begin->name);
 		//if (begin->argvec)
 		//	free(begin->argvec);
+		//if (begin->fds)
+		//	free(begin->fds); //AP Necesito liberar fds
 		free(temp);
 	}
 }

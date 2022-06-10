@@ -33,7 +33,7 @@ void start_shell(t_sh *sh)
 			if(sh->token_lst) //If expansion NULL, Token lst is NULL
 			{	
 				//ft_print_cmds(sh); // Print basic info of all cmds in cmd_lst
-				impri_argv(sh);
+				//impri_argv(sh);
 				//ft_print_cmds(sh);
 				start_exec(sh);
 				free_lst(sh);

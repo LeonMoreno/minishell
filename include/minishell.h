@@ -53,6 +53,7 @@ typedef struct s_cmd
 	char			**argvec;
 	char			*name;
 	int				n_redir;
+	int				*fds;
 	struct s_cmd	*next;
 }	t_cmd;
 
@@ -70,6 +71,7 @@ typedef struct s_sh
 	int			n_forks;
 	int			n_tokens;
 	int			start;
+	int			s_fd;
 }	t_sh;
 
 //Functions builtins
@@ -118,5 +120,9 @@ void	dup_stdout_un(t_sh *sh, int x);
 void	dup_stdout(t_sh *sh, int x);
 void	msg_stderr(char *str, t_cmd *cm);
 
+
+//Functions redir
+void	start_redir(t_cmd *cm);
+void	close_redir_buil(t_sh *sh, t_cmd *cm);
 
 #endif

@@ -6,28 +6,6 @@
  * @param cm struct with the info the cmd
  * @return char* path if le cmd is trouve if not NULL
  */
-
-int	ch_redir(t_sh *sh)
-{
-	t_tokens	**t;
-	int	i;
-
-	i = 0;
-	t = sh->cmd_lst->token_tab;
-	while (t[i])
-	{
-		if ( strncmp(t[i],  || t[i] == 62)
-			return (7);
-		i++;
-	}
-	return (0);
-}	
-
-void start_redir(t_sh *sh)
-{
-	printf("Redireccion = %d\n", ch_redir(sh));
-}
-
 char	*cmd_path(t_cmd *cm)
 {
 	char **path_split;
@@ -58,9 +36,8 @@ char	*cmd_path(t_cmd *cm)
  */
 void	start_child_builtins(t_cmd *cm, t_sh *sh, int x)
 {
-//	printf("EXE CMD builtins %s PID %d\n", cm->name, getpid());
-//	start_redir(sh);
-	
+	printf("FORK CMD builtins %s PID %d\n", cm->name, getpid());
+
 	dup_stdout(sh, x);
 	start_builtins(cm, sh);
 	exit (0);

@@ -16,8 +16,8 @@ void handle_signals(int sing)
 {
 	if (sing == SIGINT)
 	{
-		//printf("\n");
-		rl_on_new_line();
+		printf("\n");
+		//rl_on_new_line();
 	}
 		
 }		
