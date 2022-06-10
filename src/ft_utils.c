@@ -5,7 +5,7 @@
 void    ft_print_cmds(t_sh *sh)
 {
 	t_cmd	*begin;
-    int		i;
+	int		i;
     int		j;
 
 	i = 1;
@@ -15,6 +15,13 @@ void    ft_print_cmds(t_sh *sh)
 		j = 0;
 		while (begin->argvec[j])
 			j++;
+		j = 0;
+		while (begin->token_tab[j])
+		{
+			printf("Token this: %s\n", begin->token_tab[j]->str);
+			j++;
+		}
+
 		printf("CMD %d: [ %s ]  has %d args and %d redirections\n", i, begin->name, j - 1, begin->n_redir);
 		i++;
 		begin = begin->next;

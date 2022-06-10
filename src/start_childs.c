@@ -37,7 +37,7 @@ char	*cmd_path(t_cmd *cm)
  */
 void	start_child_builtins(t_cmd *cm, t_sh *sh, int x)
 {
-	//printf("EXE CMD builtins %s PID %d\n", cm->name, getpid());
+//	printf("EXE CMD builtins %s PID %d\n", cm->name, getpid());
 	dup_stdout(sh, x);
 	start_builtins(cm, sh);
 	exit (0);
@@ -57,17 +57,17 @@ void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i, int x)
 	path = cmd_path(cm);
 	if (!path)
 		msg_stderr("miniShell: command not found: ", cm);
-	printf("AFUERA hijo i = %d PID %d CMD %s n_pipe %d x = %d\n", i, getpid(), cm->name, sh->n_pipe, x);
+//	printf("AFUERA hijo i = %d PID %d CMD %s n_pipe %d x = %d\n", i, getpid(), cm->name, sh->n_pipe, x);
 	if (!check_cmd(sh->cmd_lst->name) && sh->n_pipe > 0 && (i == 0))
 	{
-		//printf("1ER IF Hijo PID %d CMD Ext %s \n", getpid(), cm->name);
+//		printf("1ER IF Hijo PID %d CMD Ext %s \n", getpid(), cm->name);
 		dup_stdout(sh, x);
 	}
 	else if (sh->n_pipe)
 	{
 		if ((i + 1) == sh->n_forks)
 		{
-			//printf("2DO IF Hijo PID %d CMD Ext %s \n", getpid(), cm->name);
+//			printf("2DO IF Hijo PID %d CMD Ext %s \n", getpid(), cm->name);
 			if (sh->n_forks > 3 && (sh->n_forks % 2 == 0))
 			{
 				//printf("HAY 4 COMMANDOS i = %d\n", i);
@@ -78,7 +78,7 @@ void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i, int x)
 		}
 		else
 		{
-			//printf("HAY 3 COMMANDOS i = %d\n", i);
+//			printf("HAY 3 COMMANDOS i = %d\n", i);
 			dup_stdin(sh, x);
 
 			dup_stdout_un(sh, x);

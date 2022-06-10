@@ -35,6 +35,7 @@ void start_shell(t_sh *sh)
 			{	
 				//ft_print_cmds(sh); // Print basic info of all cmds in cmd_lst
 				//impri_argv(sh);
+				ft_print_cmds(sh);
 				start_exec(sh);
 				free_lst(sh);
 			}
