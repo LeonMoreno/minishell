@@ -9,17 +9,16 @@ void start_readline(t_sh *sh)
 
 void	impri_argv(t_sh *sh)
 {
-	char **c;
+	t_tokens **c;
 	int		i;
 
 	i = 0;
-	c = sh->cmd_lst->argvec;
-	while (c[i] != NULL)
+	c = sh->cmd_lst->token_tab;
+	while (c[i])
 	{
-		printf("%s\n", c[i]);
+		printf("i = %d = %s\n", i, c[i]->str);
 		i++;
 	}
-	printf("%s\n", c[i]);
 }
 
 void start_shell(t_sh *sh)
@@ -34,8 +33,8 @@ void start_shell(t_sh *sh)
 			if(sh->token_lst) //If expansion NULL, Token lst is NULL
 			{	
 				//ft_print_cmds(sh); // Print basic info of all cmds in cmd_lst
-				//impri_argv(sh);
-				ft_print_cmds(sh);
+				impri_argv(sh);
+				//ft_print_cmds(sh);
 				start_exec(sh);
 				free_lst(sh);
 			}
