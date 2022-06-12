@@ -12,6 +12,17 @@ void start_readline(t_sh *sh)
 			add_history(sh->line);
 }
 
+void	handle_signals(int s)
+{
+	if (s == SIGINT)
+	{
+		ft_printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+}
+
 void	impri_argv(t_sh *sh)
 {
 	t_tokens **c;
@@ -53,6 +64,7 @@ int main()
 	t_sh *sh;
 // INITIALIZATION D'UN TEST TOKEN
 	sh = malloc(sizeof(t_sh));
+	signal(SIGINT, handle_signals);
 	start_shell(sh); //fonction shell
 	return (0);
 }
