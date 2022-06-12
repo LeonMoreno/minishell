@@ -2,7 +2,12 @@
 
 void start_readline(t_sh *sh)
 {
-		sh->line = readline("miniShell$ ");
+	char *promt;
+
+	promt = malloc(sizeof(char) * ft_strlen(getenv("USER")) + 12);
+	promt = ft_strjoin(getenv("USER"), "@miniShell$ ");
+
+		sh->line = readline(promt);
 		if (sh->line != 0)
 			add_history(sh->line);
 }
