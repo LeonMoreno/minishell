@@ -56,6 +56,5 @@ void	start_builtins(t_cmd *cm, t_sh *sh)
 	else if (argv[0] && !ft_strncmp(argv[0], "unset", 5))
 		ft_unset(argv);
 	if (cm->n_redir > 0 && sh->n_forks == 0)
-		//dup2(sh->s_fd, STDOUT_FILENO);
 		close_redir_buil(sh, cm);
 }

@@ -39,7 +39,7 @@ void	impri_argv(t_sh *sh)
 
 void start_shell(t_sh *sh)
 {
-	ft_printf("\n\t\t ** PROC INI PID %d **\n", getpid());
+	ft_printf("\n\t\t ** PROC INI PID %d **\n\n", getpid());
 	while (1)
 	{
 		start_readline(sh); // FT ReadLine

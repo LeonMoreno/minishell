@@ -1,5 +1,14 @@
 #include "minishell.h"
 
+/*void	start_redir_fork(t_cmd *cm, t_sh *sh)
+{
+	if (cm->n_redir > 0)
+	{
+		sh->s_fd = dup(STDOUT_FILENO);
+		start_redir(cm);
+	}
+}*/
+
 void	start_redir(t_cmd *cm)
 {
 	t_tokens	**t;
