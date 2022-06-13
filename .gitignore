@@ -27,7 +27,7 @@ node_modules
 
 # Libraries
 *.lib
-*.a
+#*.a
 
 # Object files
 *.o

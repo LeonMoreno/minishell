@@ -27,27 +27,30 @@ typedef struct s_sh
 
 void start_child(t_sh *sh, int i)
 {
+	char *argv[3] = {"ls", "-la", NULL};
+
 	if (i == 0)
 	{
+		int fd;
+		
 		printf("Soy el hijo  PID = %d\n", getpid());
+		fd = open("a", O_CREAT | O_RDWR, 0000644);
 		close (sh->pipe->pipe[0]);
+		dup2(fd, 1);
+		close(fd);
 		dup2(sh->pipe->pipe[1], 1);
 		close(sh->pipe->pipe[1]);
-		write(1, "Hola..", 6);
+		execve("/bin/ls", argv, NULL);
 	}
 	if (i == 1)
 	{
-		char c[3];
-		int fd;
+		char *argv[3] = {"cat", "-e", NULL};
 
 		printf("Soy el hijo  PID = %d\n", getpid());
-		fd = open("a", O_CREAT | O_RDWR, 0000644);
 		close (sh->pipe->pipe[1]);
 		dup2(sh->pipe->pipe[0], 0);
 		close(sh->pipe->pipe[0]);
-		read(0, &c, 4);
-		write(fd, &c, 4);
-		printf("%s\n", c);
+		execve("/bin/cat", argv, NULL);
 	}
 
 }	
@@ -79,7 +82,7 @@ void start_fork(t_sh *sh)
 		{
 			start_child(sh, i);
 			//start_child(&sh->cmd[i]);
-			exit(0);
+			//exit(0);
 		}
 		i++;
 	}
@@ -91,6 +94,8 @@ void wait_fork(t_sh *sh)
 	int	status;
 
 	i = 0;
+	close(sh->pipe->pipe[1]);
+	close(sh->pipe->pipe[0]);
 	while (i < sh->n_cmd)
 	{
 		waitpid(sh->pid[i], &status, 0);
