@@ -14,7 +14,7 @@ LIBFT		= $(addprefix $(LIBFT_DIR), $(LIBFT_A))
 #Sources Files
 SRC_FILES =	minishell ft_expansion ft_parsing_meta ft_reading\
 			ft_quoting start_builtins check_builtins start_exec\
-			ft_utils ft_init_cmd start_childs utils_childs
+			ft_utils ft_init_cmd start_childs utils_childs ft_sigaction
 
 #SRC
 SRC		=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))

@@ -5,6 +5,11 @@ void start_readline(t_sh *sh)
 		sh->line = readline("miniShell$ ");
 		if (sh->line != 0)
 			add_history(sh->line);
+		if (sh->line == NULL)
+		{
+			printf("%s\n", "\nexit");
+			ft_exit(NULL);
+		}
 }
 
 void	impri_argv(t_sh *sh)
@@ -47,8 +52,8 @@ void start_shell(t_sh *sh)
 int main()
 {
 	t_sh *sh;
-// INITIALIZATION D'UN TEST TOKEN
 	sh = malloc(sizeof(t_sh));
+	ft_sigaction();
 	start_shell(sh); //fonction shell
 	return (0);
 }

@@ -10,7 +10,8 @@ void ft_getpwd(void)
 
 void ft_exit(char *line)
 {
-	free(line);
+	if (line)
+		free(line);
 	exit (EXIT_SUCCESS);
 }
 
