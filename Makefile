@@ -11,10 +11,18 @@ LIBFT_A		= libft.a
 LIBFT_DIR	= libft/
 LIBFT		= $(addprefix $(LIBFT_DIR), $(LIBFT_A))
 
+#ReadLIne
+RD_A		= libreadline.a
+RDH_A		= libhistory.a
+RD_DIR		= lib/
+RD			= $(addprefix $(RD_DIR), $(RD_A))
+RDH			= $(addprefix $(RD_DIR), $(RDH_A))
+
 #Sources Files
 SRC_FILES =	minishell ft_expansion ft_parsing_meta ft_reading\
 			ft_quoting start_builtins check_builtins start_exec\
-			ft_utils ft_init_cmd start_childs utils_childs ft_sigaction
+			ft_utils ft_init_cmd start_childs utils_childs ft_sigaction \
+			start_redir
 
 #SRC
 SRC		=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
@@ -27,7 +35,7 @@ all	: $(NAME)
 
 $(NAME):	$(OBJ)
 			make -C $(LIBFT_DIR)
-			$(CC) $(OBJ) $(LIBFT) -lreadline -o $(NAME)
+			$(CC) $(OBJ) $(LIBFT) $(RD) $(RDH) -lcurses -lreadline -o $(NAME)
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c | $(OBJF)
 				$(CC) $(CFLAGS) -c $< -o $@

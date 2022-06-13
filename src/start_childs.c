@@ -6,7 +6,6 @@
  * @param cm struct with the info the cmd
  * @return char* path if le cmd is trouve if not NULL
  */
-
 char	*cmd_path(t_cmd *cm)
 {
 	char **path_split;
@@ -37,7 +36,8 @@ char	*cmd_path(t_cmd *cm)
  */
 void	start_child_builtins(t_cmd *cm, t_sh *sh, int x)
 {
-//	printf("EXE CMD builtins %s PID %d\n", cm->name, getpid());
+	printf("FORK CMD builtins %s PID %d\n", cm->name, getpid());
+
 	dup_stdout(sh, x);
 	start_builtins(cm, sh);
 	exit (0);
@@ -57,6 +57,7 @@ void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i, int x)
 	path = cmd_path(cm);
 	if (!path)
 		msg_stderr("miniShell: command not found: ", cm);
+	//start_redir_fork(cm, sh);
 //	printf("AFUERA hijo i = %d PID %d CMD %s n_pipe %d x = %d\n", i, getpid(), cm->name, sh->n_pipe, x);
 	if (!check_cmd(sh->cmd_lst->name) && sh->n_pipe > 0 && (i == 0))
 	{

@@ -31,17 +31,17 @@ int	check_cmd(char *s)
  *
  * @param cm struct info cmd
  */
-void start_builtins(t_cmd *cm, t_sh *sh)
+void	start_builtins(t_cmd *cm, t_sh *sh)
 {
-	char *s;
-	char **argv;
+	char	**argv;
 
-	//s = sh->token_lst->str;
-	//argv = sh->cmd_lst->argvec;
-	s = cm->name;
 	argv = cm->argvec;
-
-	if (!ft_strncmp(s, "exit", 5))
+	if (cm->n_redir > 0)
+	{
+		sh->s_fd = dup(STDOUT_FILENO);
+		start_redir(cm);
+	}
+	if (!ft_strncmp(cm->name, "exit", 5))
 		ft_exit(sh->line);
 	else if (argv[0] && !ft_strncmp(argv[0], "pwd", 4))
 		ft_getpwd();
@@ -55,4 +55,6 @@ void start_builtins(t_cmd *cm, t_sh *sh)
 		ft_env();
 	else if (argv[0] && !ft_strncmp(argv[0], "unset", 5))
 		ft_unset(argv);
+	if (cm->n_redir > 0 && sh->n_forks == 0)
+		close_redir_buil(sh, cm);
 }

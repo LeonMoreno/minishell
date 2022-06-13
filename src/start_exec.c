@@ -64,7 +64,7 @@ void	start_cmd(t_cmd *cm, t_sh *sh, int i, int x)
 	else
 	{
 		start_builtins(cm, sh);
-//		printf("EJECUTE cmd = %s PID %d\n", cm->name, getpid());
+		printf("EJECUTE cmd = %s PID %d\n", cm->name, getpid());
 	}
 }
 

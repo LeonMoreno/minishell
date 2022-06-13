@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <signal.h>
+#include <sys/ioctl.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 
@@ -14,12 +15,11 @@ typedef struct s_sh
 
 void handle_signals(int sing)
 {
-	if (sing == SIGINT)
-	{
-		//printf("\n");
-		rl_on_new_line();
-	}
-		
+	//printf("\n"); // Move to a new line
+    ioctl(STDIN_FILENO, TIOCSTI, "\n");
+    rl_on_new_line(); // Regenerate the prompt on a newline
+	//rl_replace_line("", 0); // Clear the previous text
+    //rl_redisplay();	
 }		
 
 void ft_readline(t_sh *sh)
@@ -62,10 +62,10 @@ int main(void)
 			getcwd(getpwd, sizeof(getpwd));
 			printf("%s\n", getpwd);
 		}
-		if (!sh->line || !strncmp(sh->line, "exit", 4))
+		if (!sh->line || !strncmp(sh->line, "exit", 4) || (sh->line[0] == 4))
 		{
 			free(sh->line);
-			break;
+			exit(0);
 		}
 	free(sh->line);
 	}
