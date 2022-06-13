@@ -15,11 +15,11 @@ typedef struct s_sh
 
 void handle_signals(int sing)
 {
-	//printf("\n"); // Move to a new line
-    ioctl(STDIN_FILENO, TIOCSTI, "\n");
+	printf("\n"); // Move to a new line
+    //ioctl(STDIN_FILENO, TIOCSTI, "\n");
     rl_on_new_line(); // Regenerate the prompt on a newline
-	//rl_replace_line("", 0); // Clear the previous text
-    //rl_redisplay();	
+	rl_replace_line("", 0); // Clear the previous text
+    rl_redisplay();	
 }		
 
 void ft_readline(t_sh *sh)
