@@ -14,6 +14,7 @@
 #include <stdbool.h>
 //Include pour sigaction
 #include <signal.h>
+#include <termios.h>
 
 // Variable global env
 extern char **environ;

@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-
 //Prints info on all commands
 void    ft_print_cmds(t_sh *sh)
 {
@@ -63,10 +62,6 @@ void    free_lst(t_sh *sh)
 	{
 		temp = begin;
 		begin = begin->next;
-	//	if (begin->argve)
-	//		free(begin->argve);
-	//	if (begin->str)
-	//		free(begin->str);
 		free (temp);
     }
 	free_cmd_lst(sh);

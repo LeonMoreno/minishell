@@ -69,7 +69,7 @@ char	*ft_prep_string(t_sh *sh, char *temp, int *i)
 
 //FT_PARSING :- Increments string temp and creates new token with it.
 // - Checks for quoting rules. " = 34 '= 39
-//Cases for next_token: 1. End of word 2. Presence of operator.
+//Cases for next_token: 1. End of word 2. Presence of an operator.
 // 3. end of line. 
 
 void	ft_parsing(t_sh *sh, int *i)

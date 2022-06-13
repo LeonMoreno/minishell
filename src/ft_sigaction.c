@@ -3,32 +3,43 @@
 
 void	ft_handler(int sig)
 {
+	//struct termios term;
+//	char	*prompt;
+//	int		len;
+
 	if (sig == SIGINT) 	
 	{
-	write(1, "\nminiShell'$' ", 10);
-	rl_redisplay();
-	rl_on_new_line();
-	}	
-	else
-		(void) sig;
+		ft_printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+	if (sig == SIGQUIT)
+	{
+		//prompt = ft_strjoin(getenv("USER"), "@miniShell$ ");
+		//len = ft_strlen(prompt);
+
+		//tcgetattr(0, &term);
+		//tcsetattr(0, TCSANOW, &term);
+		//write(1, "agrenon@miniShell$ ", 21);
 	
-	//(void) sig;
+	}
 	return ;
 }
 
 void	ft_sigaction(void)
 {
-
+	//struct termios term;
 	struct sigaction	action;
-	sigset_t			s;
+	//sigset_t			s;
 
+	signal(SIGQUIT, SIG_IGN);
+	//tcgetattr(0, &term);
 	sigemptyset(&action.sa_mask);
+	sigaddset(&action.sa_mask, SIGINT);
+	//sigaddset(&action.sa_mask, SIGQUIT);
 	action.sa_handler = ft_handler;
 	action.sa_flags = SA_RESTART;
-	sigaddset(&s, SIGINT);
 	sigaction(SIGINT, &action, NULL);
-	sigaction(SIGQUIT, &action, NULL);
-	sigemptyset(&s);
-	sigaddset(&s, SIGQUIT);
-	sigprocmask(SIG_BLOCK, &s, NULL);
+	//sigaction(SIGQUIT, &action, NULL);
 }

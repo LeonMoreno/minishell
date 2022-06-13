@@ -12,20 +12,9 @@ void start_readline(t_sh *sh)
 			add_history(sh->line);
 		if (sh->line == NULL)
 		{
-			printf("%s\n", "\nexit");
+			printf("%s\n", "exit");
 			ft_exit(NULL);
 		}
-}
-
-void	handle_signals(int s)
-{
-	if (s == SIGINT)
-	{
-		ft_printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
 }
 
 void	impri_argv(t_sh *sh)
@@ -69,7 +58,6 @@ int main()
 	t_sh *sh;
 	sh = malloc(sizeof(t_sh));
 	ft_sigaction();
-	signal(SIGINT, handle_signals);
 	start_shell(sh); //fonction shell
 	return (0);
 }
