@@ -13,10 +13,7 @@ void	start_pipex(t_sh *sh)
 	{
 		sh->pipe = malloc(sizeof(t_pip) * sh->n_pipe);
 		while (sh->n_pipe > i)
-		{
-			//ft_printf("Entre PIPE %d\n", i);
 			pipe(sh->pipe[i++].p);
-		}
 	}
 }
 
@@ -34,7 +31,6 @@ int	init_fork(t_sh *sh)
 	i = 0;
 	while (cm)
 	{
-		//if ((cmd_path(cm) && !check_cmd(sh->cmd_lst->name)) || sh->n_pipe > 0)
 		if (!check_cmd(sh->cmd_lst->name) || sh->n_pipe > 0)
 			i++;
 		cm = cm->next;
@@ -62,9 +58,7 @@ void	start_cmd(t_cmd *cm, t_sh *sh, int i, int x)
 		}
 	}
 	else
-	{
 		start_builtins(cm, sh);
-//		printf("EJECUTE cmd = %s PID %d\n", cm->name, getpid());
 	}
 }
 
@@ -93,6 +87,5 @@ void	start_exec(t_sh *sh)
 		cm = cm->next;
 		i++;
 	}
-	//printf ("n_forks = %d FORKs\n", sh->n_forks);
 	end_fork(sh);
 }

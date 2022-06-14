@@ -2,7 +2,7 @@
 NAME	= minishell
 SRC_DIR	= src/
 OBJ_DIR	= obj/
-CFLAGS	= -Werror -Wall -Wextra -I include/
+CFLAGS	=  -g -Werror -Wall -Wextra -I include/
 CC		= gcc
 RM		= rm -f
 
@@ -22,7 +22,7 @@ RDH			= $(addprefix $(RD_DIR), $(RDH_A))
 SRC_FILES =	minishell ft_expansion ft_parsing_meta ft_reading\
 			ft_quoting start_builtins check_builtins start_exec\
 			ft_utils ft_init_cmd start_childs utils_childs ft_sigaction \
-			start_redir
+			start_redir next_builtins
 
 #SRC
 SRC		=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))

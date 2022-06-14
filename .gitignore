@@ -28,6 +28,8 @@ node_modules
 # Libraries
 *.lib
 #*.a
+libft/libft.a
 
 # Object files
 *.o
+minishell

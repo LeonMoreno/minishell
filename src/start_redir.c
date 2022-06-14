@@ -1,13 +1,13 @@
 #include "minishell.h"
 
-/*void	start_redir_fork(t_cmd *cm, t_sh *sh)
+void	start_redir_fork(t_cmd *cm)
 {
 	if (cm->n_redir > 0)
 	{
-		sh->s_fd = dup(STDOUT_FILENO);
 		start_redir(cm);
+		//close_redir_fork(sh, cm);
 	}
-}*/
+}
 
 void	start_redir(t_cmd *cm)
 {
@@ -26,7 +26,6 @@ void	start_redir(t_cmd *cm)
 		if (!ft_strncmp(t[i]->str, ">", 2) || !ft_strncmp(t[i]->str, "<", 2))
 		{
 			cm->fds[j] = open(t[i + 1]->str, O_CREAT | O_RDWR, 0000644);
-			printf("fds = %d, i = %d,  j = %d, %s\n", cm->fds[j], i, j, t[i + 1]->str);
 			j++;
 		}
 		i++;

@@ -75,6 +75,7 @@ typedef struct s_sh
 	int			n_tokens;
 	int			start;
 	int			s_fd;
+	char		*promt;
 }	t_sh;
 
 //Functions builtins
@@ -129,5 +130,6 @@ void	msg_stderr(char *str, t_cmd *cm);
 //Functions redir
 void	start_redir(t_cmd *cm);
 void	close_redir_buil(t_sh *sh, t_cmd *cm);
+void	start_redir_fork(t_cmd *cm);
 
 #endif
