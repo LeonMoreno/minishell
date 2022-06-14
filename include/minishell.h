@@ -46,7 +46,6 @@ typedef struct s_tokens
 	int				type;
 	char			*str;
 	char			**argve;
-	char			*path;
 	struct s_tokens	*next;
 }	t_tokens;
 

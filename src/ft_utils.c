@@ -38,8 +38,8 @@ void	free_cmd_lst(t_sh *sh)
 	while (begin)
 	{
 		temp = begin;
-		//if (begin->token_tab)
-		//	free(begin->token_tab);
+		if (begin->token_tab)
+			free(begin->token_tab);
 		//if (begin->name)
 		//	free (begin->name);
 		if (begin->argvec)
@@ -62,6 +62,8 @@ void    free_lst(t_sh *sh)
 	while(begin)
 	{
 		temp = begin;
+		if (begin->str)
+			free(begin->str);
 		begin = begin->next;
 		free (temp);
     }

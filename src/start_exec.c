@@ -58,8 +58,7 @@ void	start_cmd(t_cmd *cm, t_sh *sh, int i, int x)
 		}
 	}
 	else
-		start_builtins(cm, sh);
-	}
+		start_builtins(cm, sh);	
 }
 
 /**
