@@ -13,7 +13,9 @@ void	ft_open_file(t_cmd *cmd, int files, char *name, char *content)
 		unlink(path);
 		free(path);
 		free(cmd->fdin_str);
-	}		
+	}
+	if (cmd->fd_in)	
+		close(cmd->fd_in);
 	if (name)
 		fd = open(name, O_RDONLY, 777);
 	else
