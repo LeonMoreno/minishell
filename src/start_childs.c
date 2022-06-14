@@ -54,8 +54,6 @@ void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i, int x)
 {
 	char	*path;
 
-	if (cm->n_redir > 0)
-		start_redir_fork(cm, sh);
 	path = cmd_path(cm);
 	if (!path)
 		msg_stderr("miniShell: command not found: ", cm);
@@ -86,5 +84,7 @@ void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i, int x)
 			dup_stdout_un(sh, x);
 		}
 	}
+	if (cm->n_redir > 0)
+		start_redir_fork(cm, sh);
 	execve(path, cm->argvec, NULL);
 }
