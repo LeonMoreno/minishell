@@ -83,6 +83,8 @@ void	start_exec(t_sh *sh)
 		if (i != 0 && i % 2 == 0)
 			x++;
 		start_cmd(cm, sh, i, x);
+//		if (cm->n_redir > 0 && cm->n_forks > 0) 
+//			start_redir_pipes(cm, sh);
 		cm = cm->next;
 		i++;
 	}
