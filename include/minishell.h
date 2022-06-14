@@ -19,10 +19,6 @@
 // Variable global env
 extern char **environ;
 
-#define OUT 0 /*index pipe extrem READ */
-#define IN 1 /*Index pipe extrem WRITE */
-
-
 enum
 {
 	CMD,
@@ -30,10 +26,8 @@ enum
 	OPER,
 	OPERD,
 	PIPE,
-	EXIT = 0,
-	ENV,
-	CD,
-	EXPRT,
+	OUT = 0,
+	IN
 };
 
 typedef struct s_pip
@@ -55,6 +49,8 @@ typedef struct s_cmd
 	char			**argvec;
 	char			*name;
 	int				n_redir;
+	int				fd_in;
+	char			*fdin_str;
 	int				*fds;
 	struct s_cmd	*next;
 }	t_cmd;
@@ -102,6 +98,9 @@ int		ft_double_meta(t_sh *sh, int i);
 void	ft_argvec_init(t_tokens *index, t_cmd *this_cmd);
 void	ft_init_cmd_lst(t_sh *sh);
 
+//Functions Heredoc
+void	ft_check_redir_input(t_sh *sh);
+
 //Functions Sigaction
 void	ft_sigaction(void);
 
@@ -124,7 +123,6 @@ void	dup_stdin(t_sh *sh, int x);
 void	dup_stdout_un(t_sh *sh, int x);
 void	dup_stdout(t_sh *sh, int x);
 void	msg_stderr(char *str, t_cmd *cm);
-
 
 //Functions redir
 void	start_redir(t_cmd *cm);

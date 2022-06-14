@@ -60,6 +60,8 @@ void	ft_init_cmd(t_cmd *cmd, t_tokens *index)
 
 	begin = index;
 	i = 0;
+	cmd->fd_in = 0;
+	cmd->fdin_str = NULL;
 	len_arg = ft_size(index);
 	cmd->token_tab = malloc(sizeof(t_tokens *) * len_arg + 1);
 	cmd->token_tab[len_arg] = NULL;
@@ -67,18 +69,10 @@ void	ft_init_cmd(t_cmd *cmd, t_tokens *index)
 	while (i < len_arg)
 	{
 		cmd->token_tab[i] = begin;
-		//printf("      -TOKEN tab[ %d ]: %s   : Type %d\n",i, begin->str, begin-type);
 		begin = begin->next;
 		i++;
 	}
-	ft_argvec_init(index, cmd);
-	i = 0;
-	while (cmd->argvec[i])
-	{
-		//printf("   -Argvec[ %d ]: %s\n", i, cmd->argvec[i]);
-		i++;
-	}
-	
+	ft_argvec_init(index, cmd);	
 }
 
 void	ft_create_cmd(t_sh *sh, bool *is_cmd, t_tokens *index)
@@ -127,5 +121,6 @@ void	ft_init_cmd_lst(t_sh *sh)
 		}
 		begin = begin->next;
 	}
+	ft_check_redir_input(sh);
 }
 

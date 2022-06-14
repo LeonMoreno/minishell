@@ -6,7 +6,7 @@
 /*   By: lmoreno <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 16:26:54 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/13 18:06:40 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/14 13:24:15 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	ft_export_last(int ctrl, int i, char **s, char **new_env)
 		new_env[i] = s[1];
 	}
 	new_env[i + 1] = NULL;
-	free(s);
+	//free(s);
 	free(environ);
 	environ = new_env;
 }

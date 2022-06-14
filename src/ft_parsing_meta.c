@@ -38,4 +38,3 @@ int		ft_parsing_meta(t_sh *sh,int i)
 		return (38);
 	return (0);
 }
-

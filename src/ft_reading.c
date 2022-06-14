@@ -63,7 +63,8 @@ char	*ft_prep_string(t_sh *sh, char *temp, int *i)
 		new_temp = ft_strdup(this_char);
 	else
 		new_temp = ft_strjoin(temp, this_char);
-	free(temp);
+	if (temp)
+		free(temp);
 	return (new_temp);
 }
 
@@ -82,8 +83,8 @@ void	ft_parsing(t_sh *sh, int *i)
 		temp = ft_single_quoting(sh, i, temp);
 	else if (sh->line[*i] == 34 && ft_quote_real(sh, *i, 1))
 		temp = ft_double_quoting(sh, i, temp);
-	else if (sh->line[*i] == '$')
-		temp = ft_expansion(sh, i, temp);	
+//	else if (sh->line[*i] == '$')
+//		temp = ft_expansion(sh, i, temp);	
 	else if (sh->line[*i] > 32 && sh->line[*i] < 127)
 		temp = ft_prep_string(sh, temp, i);
 	if ( (sh->start >= 0 && ft_parsing_meta(sh, (*i) + 1)) || ft_parsing_meta(sh, *i))
