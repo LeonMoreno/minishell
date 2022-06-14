@@ -75,6 +75,7 @@ typedef struct s_sh
 	int			n_tokens;
 	int			start;
 	int			s_fd;
+	char		*promt;
 }	t_sh;
 
 //Functions builtins

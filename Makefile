@@ -2,7 +2,7 @@
 NAME	= minishell
 SRC_DIR	= src/
 OBJ_DIR	= obj/
-CFLAGS	= -Werror -Wall -Wextra -I include/
+CFLAGS	=  -g -Werror -Wall -Wextra -I include/
 CC		= gcc
 RM		= rm -f
 

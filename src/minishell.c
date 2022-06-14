@@ -2,12 +2,10 @@
 
 void start_readline(t_sh *sh)
 {
-	char *promt;
+	sh->promt = malloc(sizeof(char) * ft_strlen(getenv("USER")) + 12);
+	sh->promt = ft_strjoin(getenv("USER"), "@miniShell$ ");
 
-	promt = malloc(sizeof(char) * ft_strlen(getenv("USER")) + 12);
-	promt = ft_strjoin(getenv("USER"), "@miniShell$ ");
-
-		sh->line = readline(promt);
+		sh->line = readline(sh->promt);
 		if (sh->line != 0)
 			add_history(sh->line);
 		if (sh->line == NULL)
@@ -15,20 +13,6 @@ void start_readline(t_sh *sh)
 			printf("%s\n", "exit");
 			ft_exit(NULL);
 		}
-}
-
-void	impri_argv(t_sh *sh)
-{
-	t_tokens **c;
-	int		i;
-
-	i = 0;
-	c = sh->cmd_lst->token_tab;
-	while (c[i])
-	{
-		printf("i = %d = %s\n", i, c[i]->str);
-		i++;
-	}
 }
 
 void start_shell(t_sh *sh)
@@ -43,8 +27,6 @@ void start_shell(t_sh *sh)
 			if(sh->token_lst) //If expansion NULL, Token lst is NULL
 			{	
 				//ft_print_cmds(sh); // Print basic info of all cmds in cmd_lst
-				//impri_argv(sh);
-				//ft_print_cmds(sh);
 				start_exec(sh);
 				free_lst(sh);
 			}

@@ -57,6 +57,7 @@ void    free_lst(t_sh *sh)
 	t_tokens *temp;
 
 	free(sh->line);
+	free(sh->promt);
 	begin = sh->token_lst;
 	while(begin)
 	{

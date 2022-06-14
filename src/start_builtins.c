@@ -17,7 +17,10 @@ void	ft_getpwd(void)
 void	ft_exit(char *line)
 {
 	if (line)
+	{
+		rl_clear_history();
 		free(line);
+	}
 	exit (EXIT_SUCCESS);
 }
 
