@@ -50,10 +50,10 @@ void	end_fork(t_sh *sh)
 		{
 			close(sh->pipe[j].p[OUT]);
 			close(sh->pipe[j].p[IN]);
-			printf("Cerrado *PIPE* %d\n", j);
+//			printf("Cerrado *PIPE* %d\n", j);
 			j++;
 		}
-		printf("Cerrado fork %d\n", i);
+//		printf("Cerrado fork %d\n", i);
 		i++;
 	}
 }

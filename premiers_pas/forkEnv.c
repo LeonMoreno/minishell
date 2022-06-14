@@ -31,13 +31,9 @@ void start_child(t_sh *sh, int i)
 
 	if (i == 0)
 	{
-		int fd;
 		
 		printf("Soy el hijo  PID = %d\n", getpid());
-		fd = open("a", O_CREAT | O_RDWR, 0000644);
 		close (sh->pipe->pipe[0]);
-		dup2(fd, 1);
-		close(fd);
 		dup2(sh->pipe->pipe[1], 1);
 		close(sh->pipe->pipe[1]);
 		execve("/bin/ls", argv, NULL);
@@ -45,12 +41,16 @@ void start_child(t_sh *sh, int i)
 	if (i == 1)
 	{
 		char *argv[3] = {"cat", "-e", NULL};
+		int fd;
+		close (sh->pipe->pipe[1]);
+		fd = open("a", O_CREAT | O_RDWR, 0000644);
+		dup2(sh->pipe->pipe[0], fd);
 
 		printf("Soy el hijo  PID = %d\n", getpid());
-		close (sh->pipe->pipe[1]);
-		dup2(sh->pipe->pipe[0], 0);
+		//dup2(sh->pipe->pipe[0], 0);
 		close(sh->pipe->pipe[0]);
-		execve("/bin/cat", argv, NULL);
+		close(fd);
+		//execve("/bin/cat", argv, NULL);
 	}
 
 }	

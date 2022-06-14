@@ -36,7 +36,7 @@ char	*cmd_path(t_cmd *cm)
  */
 void	start_child_builtins(t_cmd *cm, t_sh *sh, int x)
 {
-	printf("FORK CMD builtins %s PID %d\n", cm->name, getpid());
+//	printf("FORK CMD builtins %s PID %d\n", cm->name, getpid());
 
 	dup_stdout(sh, x);
 	start_builtins(cm, sh);
