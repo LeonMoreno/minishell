@@ -129,5 +129,6 @@ void	msg_stderr(char *str, t_cmd *cm);
 //Functions redir
 void	start_redir(t_cmd *cm);
 void	close_redir_buil(t_sh *sh, t_cmd *cm);
+void	start_redir_fork(t_cmd *cm, t_sh *sh);
 
 #endif

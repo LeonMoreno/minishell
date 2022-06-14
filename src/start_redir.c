@@ -1,13 +1,15 @@
 #include "minishell.h"
 
-/*void	start_redir_fork(t_cmd *cm, t_sh *sh)
+void	start_redir_fork(t_cmd *cm, t_sh *sh)
 {
-	if (cm->n_redir > 0)
+	if (cm->n_redir > 0 && sh->n_forks == 1)
 	{
+		printf("No CMD = %d\n", sh->n_forks);
 		sh->s_fd = dup(STDOUT_FILENO);
 		start_redir(cm);
+		//close_redir_buil(sh, cm);
 	}
-}*/
+}
 
 void	start_redir(t_cmd *cm)
 {
