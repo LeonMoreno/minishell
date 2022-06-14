@@ -30,6 +30,8 @@ void	start_shell(t_sh *sh)
 				free_lst(sh);
 			}
 		}
+		else if (sh->line && sh->line[0] == '\0')
+			free(sh->line);
 		sh->token_lst = NULL;
 	}
 }

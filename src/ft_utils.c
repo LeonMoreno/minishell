@@ -41,11 +41,13 @@ void	free_cmd_lst(t_sh *sh)
 		if (begin->token_tab)
 			free(begin->token_tab);
 		//if (begin->name)
-		//	free (begin->name);
+	//		free (begin->name);
 		if (begin->argvec)
 			free(begin->argvec);
-		//if (begin->fds)
-		//	free(begin->fds); //AP Necesito liberar fds
+		if (begin->fdin_str)
+			free(begin->fdin_str);
+	//	if (begin->fds)
+	//		free(begin->fds); //AP Necesito liberar fds
 		begin = begin->next;
 		free(temp);
 	}
@@ -55,7 +57,9 @@ void    free_lst(t_sh *sh)
 {
 	t_tokens *begin;
 	t_tokens *temp;
+	int		i;
 
+	i = 0;
 	free(sh->line);
 	free(sh->promt);
 	begin = sh->token_lst;
@@ -64,6 +68,12 @@ void    free_lst(t_sh *sh)
 		temp = begin;
 		if (begin->str)
 			free(begin->str);
+/*		if (begin->argve)
+		{
+			while (begin->argve[i])
+				free(begin->argve[i++]);
+			free(begin->argve);
+		}*/
 		begin = begin->next;
 		free (temp);
     }

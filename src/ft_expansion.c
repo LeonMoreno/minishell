@@ -34,8 +34,6 @@ char	*ft_expansion(t_sh *sh, int *i, char *temp)
 	char	*new_temp;
 	char	*found;
 	
-	
-
 	end = ft_end_expansion(sh, *i);
 	//printf("END: %d CHAR: %c\n", end, sh->line[end]);
 	found = ft_compare_env(sh, *i, end);
