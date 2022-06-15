@@ -60,10 +60,11 @@ void	start_cmd(t_cmd *cm, t_sh *sh, int i, int x)
 			}
 			if (cm->fd_in)
 				dup2(cm->fd_in, 0);
-			if (check_cmd(cm->name))
+			if (check_cmd(cm->name) && cm->fd_in != -1)
 				start_child_builtins(cm, sh, x);
-			else
+			else if (cm->fd_in != -1)
 				start_child_cmdext(cm, sh, i, x);
+			exit(0);
 		}
 	}
 	else
