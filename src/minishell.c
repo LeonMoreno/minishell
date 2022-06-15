@@ -25,7 +25,7 @@ void	start_shell(t_sh *sh)
 			line_parser(sh);
 			if (sh->token_lst)
 			{	
-				//ft_print_cmds(sh); // Print basic info of all cmds in cmd_lst
+//				ft_print_cmds(sh); // Print basic info of all cmds in cmd_lst
 				start_exec(sh);
 				free_lst(sh);
 			}
