@@ -8,23 +8,24 @@ void	ft_open_file(t_cmd *cmd, int files, char *name, char *content)
 
 	if (cmd->fdin_str)
 	{
-		path = ft_strjoin(getcwd(NULL, 0), cmd->fdin_str);
-		printf("Path to unlink: %s\n", path);
-		unlink(path);
-		free(path);
+		printf("Path to unlink: %s\n", cmd->fdin_str);
+		unlink(cmd->fdin_str);
 		free(cmd->fdin_str);
+		cmd->fdin_str = NULL;
 	}
-	if (cmd->fd_in)	
+	if (cmd->fd_in)
 		close(cmd->fd_in);
 	if (name)
 		fd = open(name, O_RDONLY, 777);
 	else
 	{
 		filename = ft_strjoin(".heredoc", ft_itoa(files));
-		fd = open(filename, O_WRONLY | O_CREAT, 0744);
+		fd = open(filename, O_RDWR | O_CREAT, 777);
 		write(fd, content, ft_strlen(content)); 
-		cmd->fdin_str = ft_strjoin("/", filename);
+		path = ft_strjoin("/", filename);
+		cmd->fdin_str = ft_strjoin(getcwd(NULL, 0), path);
 		free(filename);
+		free(path);
 		printf("make new FIle: %s\n", cmd->fdin_str);
 	}
 	cmd->fd_in = fd;
@@ -35,23 +36,25 @@ char	*ft_heredoc(char *operand)
 {
 	char	*new_str;
 	char	*temp;
+	char	*end;
 
-	temp = NULL;
 	rl_on_new_line();
+	temp = malloc(sizeof(char));
+	temp[0] = '\0';
+	end = temp;
 	while (1)
 	{
 		new_str = readline("heredoc>");
 		if (!ft_strncmp(new_str, operand, ft_strlen(operand) + 1))
 			break ;
-		if (temp)
-			temp = ft_strjoin(temp, new_str);
-		else
-			temp = ft_strdup(new_str);
+		end = ft_strjoin(temp, new_str);
+		free(temp);
 		free(new_str);
+		temp = end;	
 	}
-	
-	printf("HEREDOC string: %s\n", temp);
-	return (temp);
+	free(new_str);
+	printf("HEREDOC string: %s\n", end);
+	return (end);
 }
 
 void	ft_check_redir_input(t_sh *sh)

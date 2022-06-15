@@ -40,13 +40,18 @@ void	free_cmd_lst(t_sh *sh)
 		temp = begin;
 		if (begin->token_tab)
 			free(begin->token_tab);
-		//if (begin->name)
+	//	if (begin->name)
 	//		free (begin->name);
+		if (begin->fd_in)
+			close(begin->fd_in);
 		if (begin->argvec)
 			free(begin->argvec);
 		if (begin->fdin_str)
+			unlink(begin->fdin_str);	
+		if (begin->fdin_str)
 			free(begin->fdin_str);
-	//	if (begin->fds)
+	
+		//	if (begin->fds)
 	//		free(begin->fds); //AP Necesito liberar fds
 		begin = begin->next;
 		free(temp);
