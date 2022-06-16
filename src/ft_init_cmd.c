@@ -1,22 +1,5 @@
 #include "minishell.h"
 
-int	ft_size(t_tokens *lsist)
-{
-	t_tokens *begin;
-	int i;
-
-	i = 0;
-	begin = lsist;
-	while (begin)
-	{
-		if (begin->type == PIPE)
-			break;
-		i++;
-		begin = begin->next;
-	}
-	return (i);
-}
-
 void	ft_argvec_init(t_tokens *index, t_cmd *this_cmd)
 {
 	t_tokens	*begin;
@@ -27,14 +10,14 @@ void	ft_argvec_init(t_tokens *index, t_cmd *this_cmd)
 	is_cmd = false;
 	begin = index;
 	i = 0;
-	temp = malloc(sizeof(char *) * ft_size(index) + 1);
-	temp[ft_size(index)] = NULL;
+	temp = malloc(sizeof(char *) * ft_size(index, 0) + 1);
+	temp[ft_size(index, 0)] = NULL;
 	while (begin)
 	{
 		if (begin->type == PIPE)
 			break ;
-		else if (begin->next && begin->next->type != PIPE && begin->type == OPER)
-			begin->next->type = OPERD;
+		//else if (begin->next && begin->next->type != PIPE && begin->type == OPER)
+		//	begin->next->type = OPERD;
 		else if (begin->type == ARG && !is_cmd)
 		{
 			is_cmd = true;
@@ -62,7 +45,7 @@ void	ft_init_cmd(t_cmd *cmd, t_tokens *index)
 	i = 0;
 	cmd->fd_in = 0;
 	cmd->fdin_str = NULL;
-	len_arg = ft_size(index);
+	len_arg = ft_size(index, 1);
 	cmd->token_tab = malloc(sizeof(t_tokens *) * len_arg + 1);
 	cmd->token_tab[len_arg] = NULL;
 	cmd->argvec = NULL;

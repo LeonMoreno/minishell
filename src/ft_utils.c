@@ -42,7 +42,7 @@ void	free_cmd_lst(t_sh *sh)
 			free(begin->token_tab);
 	//	if (begin->name)
 	//		free (begin->name);
-		if (begin->fd_in)
+		if (begin->fd_in > 2)
 			close(begin->fd_in);
 		if (begin->argvec)
 			free(begin->argvec);

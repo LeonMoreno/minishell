@@ -26,7 +26,7 @@ int	init_fork(t_sh *sh)
 {
 	int		i;
 	t_cmd	*cm;
-
+			
 	cm = sh->cmd_lst;
 	i = 0;
 	while (cm)
@@ -47,19 +47,22 @@ int	init_fork(t_sh *sh)
  */
 void	start_cmd(t_cmd *cm, t_sh *sh, int i, int x)
 {
+	
 	if (!check_cmd(sh->cmd_lst->name) || sh->n_pipe > 0)
 	{
 		sh->id_f[i] = fork();
 
 		if (sh->id_f[i] == 0)
 		{
+			//printf("Child before dup cm->fd_in : %d\n", cm->fd_in);
 			if (cm->fdin_str)
 			{
 				close(cm->fd_in);
 				cm->fd_in = open(cm->fdin_str, O_RDONLY, 777);
 			}
-			if (cm->fd_in)
+			if (cm->fd_in > 2)
 				dup2(cm->fd_in, 0);
+			
 			if (check_cmd(cm->name) && cm->fd_in != -1)
 				start_child_builtins(cm, sh, x);
 			else if (cm->fd_in != -1)

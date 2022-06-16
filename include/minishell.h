@@ -95,6 +95,7 @@ int		ft_parsing_meta(t_sh *sh, int i);
 int		ft_double_meta(t_sh *sh, int i);
 
 //Functions Commands
+int		ft_size(t_tokens *lsist, int mode);
 void	ft_argvec_init(t_tokens *index, t_cmd *this_cmd);
 void	ft_init_cmd_lst(t_sh *sh);
 

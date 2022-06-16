@@ -27,6 +27,7 @@ void	start_shell(t_sh *sh)
 			{	
 //				ft_print_cmds(sh); // Print basic info of all cmds in cmd_lst
 				start_exec(sh);
+				//printf("APRES EXEC\n");
 				free_lst(sh);
 			}
 		}
