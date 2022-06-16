@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   next_builtins.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: lmoreno <marvin@42quebec.com>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/13 16:26:54 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/13 18:06:40 by lmoreno          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 void	ft_unset_next(char **s, char **new_env)
@@ -32,7 +20,7 @@ void	ft_unset_next(char **s, char **new_env)
 		i++;
 	}
 	new_env[j] = NULL;
-	free(environ);
+	//free(environ);
 	environ = new_env;
 }
 
@@ -66,45 +54,67 @@ void	ft_unset(char **s)
  * @**key_env variable de environ donde comparo si existe la variable (leo)
  */
 
+int	sch(char *s, char c)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == c)
+			return (i);
+		i++;
+	}
+	return (i);
+}
+
+
 void	ft_export_last(int ctrl, int i, char **s, char **new_env)
 {
+	static	int x = 1;
+
+	printf("TERCER FC i = %d\n", i);
 	if (!ctrl)
-	{
-		new_env[i] = malloc(sizeof(char) * ft_strlen(s[1]));
-		new_env[i] = s[1];
-	}
+		new_env[i] = ft_strdup(s[1]);
 	new_env[i + 1] = NULL;
-	free(s);
-	free(environ);
+	if (x > 1)
+	{
+		printf("x = %d\n", x);
+		free_doble_ptr(environ);
+	}
+	x++;
+	//free(environ);
 	environ = new_env;
+	printf("Awui LLEGO\n");
 }
 
 void	ft_export_next(char **new_env, char **key_s, char **s)
 {
 	int		i;
 	int		ctrl;
-	char	**key_env;
 
 	i = 0;
 	ctrl = 0;
 	while (environ[i] != NULL)
 	{
-		key_env = ft_split(environ[i], '=');
-		if (!ft_strncmp(key_s[0], key_env[0], ft_strlen(key_s[0]) + 1))
+		if (!ft_strncmp(environ[i], key_s[0], sch(environ[i], '=')))
 		{
-			new_env[i] = malloc(sizeof(char) * ft_strlen(s[1]));
-			new_env[i] = s[1];
+			printf("ENtre %s env = %s\n", s[1], environ[i]);
+			new_env[i] = ft_strdup(s[1]);
+			printf("NEW_ENV = %s\n", new_env[i]);
 			ctrl = 1;
 		}
 		else
 		{
 			new_env[i] = malloc(sizeof(char) * ft_strlen(environ[i]));
-			new_env[i] = environ[i];
+			new_env[i] = ft_memcpy(new_env[i], environ[i], ft_strlen(environ[i]));
+			//new_env[i] = ft_strdup(environ[i]);
 		}
-		//free(key_env);
 		i++;
 	}
-	ft_export_last(ctrl, i, s, new_env);
+//	printf("SEGUNDO WHILL\n");
+	//free_doble_ptr(key_s);
+		ft_export_last(ctrl, i, s, new_env);
 }
 
 void	ft_export(char **s)
@@ -127,11 +137,13 @@ void	ft_export(char **s)
 	}
 	while (environ[i] != NULL)
 		i++;
-	new_env = malloc(sizeof(char *) * i + 2);
+	printf("i = %d y ENV = %s\n", i, environ[i]);
+	new_env = malloc(sizeof(char *) * i + 1);
 	if (!new_env)
 	{
 		printf("error malloc\n");
 		return ;
 	}
+
 	ft_export_next(new_env, key_s, s);
 }

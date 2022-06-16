@@ -49,6 +49,7 @@ void	free_cmd_lst(t_sh *sh)
 		begin = begin->next;
 		free(temp);
 	}
+	printf("LLEGUE A FREE\n");
 }
 
 void    free_lst(t_sh *sh)
@@ -57,17 +58,30 @@ void    free_lst(t_sh *sh)
 	t_tokens *temp;
 
 	free(sh->line);
-	free(sh->promt);
+	//free(sh->promt);
 	begin = sh->token_lst;
 	while(begin)
 	{
 		temp = begin;
-		if (begin->str)
-			free(begin->str);
 		begin = begin->next;
+		//if (begin->str)
+		//	free(begin->str);
 		free (temp);
     }
 	free_cmd_lst(sh);
+}
+
+void	free_doble_ptr(char **s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		free(s[i]);
+		i++;
+	}
+	free(s);
 }
 
 /**

@@ -19,6 +19,8 @@ void	ft_exit(char *line)
 	if (line)
 	{
 		rl_clear_history();
+		//free_doble_ptr(environ);
+		//free(sh->promt);
 		free(line);
 	}
 	exit (EXIT_SUCCESS);
