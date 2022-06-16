@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_expansion.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/16 18:29:45 by agrenon           #+#    #+#             */
+/*   Updated: 2022/06/16 18:29:46 by agrenon          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int		ft_end_expansion(t_sh *sh, int i)
+int	ft_end_expansion(t_sh *sh, int i)
 {
 	while (sh->line[i])
 	{
-		if (sh->line[i] == 39 || sh->line[i] == 34 || sh->line[i] < 33 )  
+		if (sh->line[i] == 39 || sh->line[i] == 34 || sh->line[i] < 33)
 			break ;
 		if (sh->line[i + 1] == '$')
 		{
@@ -20,7 +32,7 @@ char	*ft_compare_env(t_sh *sh, int start, int end)
 {
 	char	*expan;
 	char	*found;
-	
+
 	expan = ft_substr(sh->line, start + 1, end - start - 1);
 	found = getenv(expan);
 	if (found)
@@ -33,9 +45,8 @@ char	*ft_expansion(t_sh *sh, int *i, char *temp)
 	int		end;
 	char	*new_temp;
 	char	*found;
-	
+
 	end = ft_end_expansion(sh, *i);
-	//printf("END: %d CHAR: %c\n", end, sh->line[end]);
 	found = ft_compare_env(sh, *i, end);
 	*i = end - 1;
 	if (temp && found)

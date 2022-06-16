@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_quoting.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/16 18:54:11 by agrenon           #+#    #+#             */
+/*   Updated: 2022/06/16 18:54:12 by agrenon          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 //Increments token string according to the double quoting Rule
 char	*ft_double_quoting(t_sh *sh, int *i, char *temp)
 {
-    int		clone;
+	int		clone;
 	char	*new_temp;
-	
-	*i = *i + 1;	
-	clone =  ft_quote_real(sh, *i, 1);
+
+	*i = *i + 1;
+	clone = ft_quote_real(sh, *i, 1);
 	new_temp = temp;
 	if (sh->line[*i] == 34)
 		return (temp);
@@ -29,7 +41,7 @@ char	*ft_single_quoting(t_sh *sh, int *i, char *temp)
 	char	*new_temp;
 
 	*i = *i + 1;
-	clone =  ft_quote_real(sh, *i, 0);
+	clone = ft_quote_real(sh, *i, 0);
 	new_temp = temp;
 	if (sh->line[*i] == 39)
 		return (temp);
@@ -43,7 +55,7 @@ char	*ft_single_quoting(t_sh *sh, int *i, char *temp)
 }
 
 //Search for next " or ' index. Returns 0 if none.  
-int		ft_quote_real(t_sh *sh, int i, int a)
+int	ft_quote_real(t_sh *sh, int i, int a)
 {
 	i = i + 1;
 	while (sh->line[i])

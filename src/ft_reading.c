@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_reading.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/16 19:02:24 by agrenon           #+#    #+#             */
+/*   Updated: 2022/06/16 19:02:26 by agrenon          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 //Create a token and puts it at the end of the list
 t_tokens	*ft_create_token(t_sh *sh)
 {
-	t_tokens *token;
-	t_tokens *begin;
-	
-	token =	malloc(sizeof(t_tokens));
+	t_tokens	*token;
+	t_tokens	*begin;
+
+	token = malloc(sizeof(t_tokens));
 	token->next = NULL;
 	token->argve = NULL;
 	if (!sh->token_lst)
@@ -28,7 +40,7 @@ t_tokens	*ft_create_token(t_sh *sh)
 }
 
 //Initiate a token. Newly created token receives :
-//1. Its String : token->str  2.Its Type  a:arg (also for cmds until ft_init_cmd)  b:oper c.pipe 
+//1. Its String : token->str  2.Its Type  a:arg b:oper c.pipe 
 void	ft_next_token(t_sh *sh, int i, char **temp)
 {
 	t_tokens	*token;
@@ -36,7 +48,7 @@ void	ft_next_token(t_sh *sh, int i, char **temp)
 	if (!*temp)
 	{
 		sh->start = -1;
-		return ;	
+		return ;
 	}
 	token = ft_create_token(sh);
 	token->str = *temp;
@@ -45,9 +57,8 @@ void	ft_next_token(t_sh *sh, int i, char **temp)
 	if (ft_parsing_meta(sh, i))
 		token->type = OPER;
 	if (ft_parsing_meta(sh, i) == 124 && !ft_double_meta(sh, i))
-		token->type = PIPE;	
+		token->type = PIPE;
 	sh->start = -1;
-	//printf("TOKEN Type: %d String: [ %s ]\n", token->type, token->str);
 	*temp = NULL;
 }
 
@@ -75,19 +86,20 @@ char	*ft_prep_string(t_sh *sh, char *temp, int *i)
 
 void	ft_parsing(t_sh *sh, int *i)
 {
-	static char *temp = NULL;
+	static char	*temp = NULL;
 
-	if (sh->line[*i] < 33 && sh->start >= 0 )
+	if (sh->line[*i] < 33 && sh->start >= 0)
 		ft_next_token(sh, *i, &temp);
-	else if (sh->line[*i] == 39 && ft_quote_real(sh, *i, 0)) 
+	else if (sh->line[*i] == 39 && ft_quote_real(sh, *i, 0))
 		temp = ft_single_quoting(sh, i, temp);
 	else if (sh->line[*i] == 34 && ft_quote_real(sh, *i, 1))
 		temp = ft_double_quoting(sh, i, temp);
-//	else if (sh->line[*i] == '$')
-//		temp = ft_expansion(sh, i, temp);	
+	else if (sh->line[*i] == '$')
+		temp = ft_expansion(sh, i, temp);
 	else if (sh->line[*i] > 32 && sh->line[*i] < 127)
 		temp = ft_prep_string(sh, temp, i);
-	if ( (sh->start >= 0 && ft_parsing_meta(sh, (*i) + 1)) || ft_parsing_meta(sh, *i))
+	if ((sh->start >= 0 && ft_parsing_meta(sh, (*i) + 1))
+		|| ft_parsing_meta(sh, *i))
 	{
 		if (ft_double_meta(sh, *i))
 		{
@@ -96,9 +108,9 @@ void	ft_parsing(t_sh *sh, int *i)
 		}
 		ft_next_token(sh, *i, &temp);
 	}
-	else if (sh->line[*i + 1] == '\0' && sh->line[*i] > 32 &&
-	   	sh->line[*i] < 127)
-	ft_next_token(sh, *i + 1, &temp);
+	else if (sh->line[*i + 1] == '\0' && sh->line[*i] > 32
+		&& sh->line[*i] < 127)
+		ft_next_token(sh, *i + 1, &temp);
 }
 
 //Loops and parse the line received and stored in sh->line.
@@ -106,7 +118,7 @@ void	ft_parsing(t_sh *sh, int *i)
 void	line_parser(t_sh *sh)
 {
 	int		i;
-	
+
 	i = 0;
 	sh->n_tokens = 0;
 	sh->start = -1;
@@ -120,5 +132,5 @@ void	line_parser(t_sh *sh)
 	sh->cmd_lst = NULL;
 	if (sh->token_lst)
 		ft_init_cmd_lst(sh);
-	return ; 
+	return ;
 }

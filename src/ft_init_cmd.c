@@ -1,4 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_init_cmd.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/16 18:49:40 by agrenon           #+#    #+#             */
+/*   Updated: 2022/06/16 18:50:30 by agrenon          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
+
+void	ft_attribute_argvec(t_tokens *begin, bool *is_cmd, t_cmd *this_cmd)
+{
+	if (begin->type == ARG && *is_cmd == false)
+	{
+		*is_cmd = true;
+		this_cmd->name = begin->str;
+		begin->type = CMD;
+	}
+}
 
 void	ft_argvec_init(t_tokens *index, t_cmd *this_cmd)
 {
@@ -13,29 +35,20 @@ void	ft_argvec_init(t_tokens *index, t_cmd *this_cmd)
 	temp = malloc(sizeof(char *) * ft_size(index, 0) + 1);
 	temp[ft_size(index, 0)] = NULL;
 	while (begin)
-	{
+	{	
 		if (begin->type == PIPE)
 			break ;
-		//else if (begin->next && begin->next->type != PIPE && begin->type == OPER)
-		//	begin->next->type = OPERD;
-		else if (begin->type == ARG && !is_cmd)
-		{
-			is_cmd = true;
-			this_cmd->name = begin->str;
-			begin->type = CMD;
-		}
-		if (begin->type == ARG	|| begin->type == CMD)
+		ft_attribute_argvec(begin, &is_cmd, this_cmd);
+		if (begin->type == ARG || begin->type == CMD)
 			temp[i++] = begin->str;
 		if (begin->type == OPER)
 			this_cmd->n_redir++;
-		
 		begin = begin->next;
 	}
-	this_cmd->argvec = temp;	
+	this_cmd->argvec = temp;
 }
 
-
-void	ft_init_cmd(t_cmd *cmd, t_tokens *index) 
+void	ft_init_cmd(t_cmd *cmd, t_tokens *index)
 {
 	int			len_arg;
 	int			i;
@@ -55,7 +68,7 @@ void	ft_init_cmd(t_cmd *cmd, t_tokens *index)
 		begin = begin->next;
 		i++;
 	}
-	ft_argvec_init(index, cmd);	
+	ft_argvec_init(index, cmd);
 }
 
 void	ft_create_cmd(t_sh *sh, bool *is_cmd, t_tokens *index)
@@ -74,8 +87,8 @@ void	ft_create_cmd(t_sh *sh, bool *is_cmd, t_tokens *index)
 		return ;
 	}
 	begin = sh->cmd_lst;
-    while (begin)
-    {
+	while (begin)
+	{
 		if (!begin->next)
 			break ;
 		begin = begin->next;
@@ -84,14 +97,13 @@ void	ft_create_cmd(t_sh *sh, bool *is_cmd, t_tokens *index)
 	ft_init_cmd(cmd, index);
 }
 
-
 void	ft_init_cmd_lst(t_sh *sh)
 {
 	t_tokens	*begin;
 	bool		is_cmd;
 
 	is_cmd = true;
-	sh->n_pipe = 0; //In each line pipe begin in cero #LEO
+	sh->n_pipe = 0;
 	begin = sh->token_lst;
 	while (begin)
 	{
@@ -99,11 +111,10 @@ void	ft_init_cmd_lst(t_sh *sh)
 			ft_create_cmd(sh, &is_cmd, begin);
 		else if (begin->type == PIPE)
 		{
-			sh->n_pipe++; // add number pipes #LEO
+			sh->n_pipe++;
 			is_cmd = true;
 		}
 		begin = begin->next;
 	}
 	ft_check_redir_input(sh);
 }
-
