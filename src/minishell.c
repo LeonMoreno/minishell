@@ -2,7 +2,6 @@
 
 void	start_readline(t_sh *sh)
 {
-	sh->promt = malloc(sizeof(char) * ft_strlen(getenv("USER")) + 12);
 	sh->promt = ft_strjoin(getenv("USER"), "@miniShell$ ");
 	sh->line = readline(sh->promt);
 	if (sh->line != 0)
@@ -10,7 +9,7 @@ void	start_readline(t_sh *sh)
 	if (sh->line == NULL)
 	{
 		printf("%s\n", "exit");
-		ft_exit(NULL);
+		ft_exit(sh);
 	}
 }
 

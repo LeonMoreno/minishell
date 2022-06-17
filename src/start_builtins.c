@@ -14,12 +14,13 @@ void	ft_getpwd(void)
 	}
 }
 
-void	ft_exit(char *line)
+void	ft_exit(t_sh *sh)
 {
-	if (line)
+	if (sh->line)
 	{
 		rl_clear_history();
-		free(line);
+		free(sh->promt);
+		free(sh->line);
 	}
 	exit (EXIT_SUCCESS);
 }

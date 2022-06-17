@@ -74,7 +74,7 @@ typedef struct s_sh
 }	t_sh;
 
 //Functions builtins
-void	ft_exit(char *line);
+void	ft_exit(t_sh *sh);
 void	ft_getpwd(void);
 void	ft_echo(char **line_split);
 void	ft_cd(char **line_split);
