@@ -7,6 +7,8 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+extern	char **environ;
+
 typedef struct s_sh
 {
 	char	*line;
@@ -50,7 +52,9 @@ int main(void)
 
 	sh = malloc(sizeof(t_sh));
 	char getpwd[100];
-
+	int	i;
+	
+	i = 0;
 	signal(SIGINT, handle_signals);
 	init_shell();
 
@@ -65,8 +69,18 @@ int main(void)
 		if (!sh->line || !strncmp(sh->line, "exit", 4) || (sh->line[0] == 4))
 		{
 			free(sh->line);
+			free(sh);
 			exit(0);
 		}
+		if (!strncmp(sh->line, "env", 3))
+		{
+			while (environ[i] != NULL)
+			{
+				printf("%s\n", environ[i]);
+				i++;
+			}
+		}
+
 	free(sh->line);
 	}
 	return (0);

@@ -50,7 +50,7 @@ void	start_builtins(t_cmd *cm, t_sh *sh)
 	else if (argv[0] && !ft_strncmp(argv[0], "cd", 3))
 		ft_cd(argv);
 	else if (argv[0] && !ft_strncmp(argv[0], "export", 7))
-		ft_export(argv);
+		ft_export(sh);
 	else if (argv[0] && !ft_strncmp(argv[0], "env", 4))
 		ft_env();
 	else if (argv[0] && !ft_strncmp(argv[0], "unset", 5))

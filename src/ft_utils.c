@@ -97,7 +97,7 @@ void	free_doble_arr(char **s)
 	int	i;
 
 	i = 0;
-	while (s[i] != NULL)
+	while (s[i] && s)
 	{
 //		printf("s_i = %s\n", s[i]);
 		free(s[i]);

@@ -61,6 +61,7 @@ void	ft_init_cmd(t_cmd *cmd, t_tokens *index)
 	len_arg = ft_size(index, 1);
 	cmd->token_tab = malloc(sizeof(t_tokens *) * len_arg + 1);
 	cmd->token_tab[len_arg] = NULL;
+	cmd->token_tab[len_arg] = NULL;
 	cmd->argvec = NULL;
 	while (i < len_arg)
 	{

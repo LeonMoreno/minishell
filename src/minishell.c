@@ -42,6 +42,7 @@ int	main(void)
 
 	sh = malloc(sizeof(t_sh));
 	ft_sigaction();
+	start_env(sh);
 	start_shell(sh);
 	return (0);
 }

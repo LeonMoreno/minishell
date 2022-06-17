@@ -21,6 +21,7 @@ void	ft_exit(t_sh *sh)
 		rl_clear_history();
 		free(sh->promt);
 		free(sh->line);
+		free_doble_arr(sh->env);
 	}
 	exit (EXIT_SUCCESS);
 }
