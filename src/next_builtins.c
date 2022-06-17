@@ -71,10 +71,9 @@ void	ft_export_last(int ctrl, int i, char **s, char **new_env)
 	if (!ctrl)
 	{
 		new_env[i] = malloc(sizeof(char) * ft_strlen(s[1]));
-		new_env[i] = s[1];
+		new_env[i] = ft_memcpy(new_env[i], s[1], ft_strlen(s[1])); 
 	}
 	new_env[i + 1] = NULL;
-	//free(s);
 	free(environ);
 	environ = new_env;
 }
@@ -93,17 +92,18 @@ void	ft_export_next(char **new_env, char **key_s, char **s)
 		if (!ft_strncmp(key_s[0], key_env[0], ft_strlen(key_s[0]) + 1))
 		{
 			new_env[i] = malloc(sizeof(char) * ft_strlen(s[1]));
-			new_env[i] = s[1];
+			new_env[i] = ft_memcpy(new_env[i], s[1], ft_strlen(s[1])); 
 			ctrl = 1;
 		}
 		else
 		{
 			new_env[i] = malloc(sizeof(char) * ft_strlen(environ[i]));
-			new_env[i] = environ[i];
+			new_env[i] = ft_memcpy(new_env[i], environ[i], ft_strlen(environ[i])); 
 		}
-		//free(key_env);
+		free_doble_arr(key_env);
 		i++;
 	}
+	free_doble_arr(key_s);
 	ft_export_last(ctrl, i, s, new_env);
 }
 
@@ -127,7 +127,7 @@ void	ft_export(char **s)
 	}
 	while (environ[i] != NULL)
 		i++;
-	new_env = malloc(sizeof(char *) * i + 2);
+	new_env = malloc(sizeof(char *) * i + 1);
 	if (!new_env)
 	{
 		printf("error malloc\n");

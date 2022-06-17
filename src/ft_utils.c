@@ -92,6 +92,21 @@ void	free_lst(t_sh *sh)
 	free_cmd_lst(sh);
 }
 
+void	free_doble_arr(char **s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != NULL)
+	{
+//		printf("s_i = %s\n", s[i]);
+		free(s[i]);
+		i++;
+	}
+	free(s);
+}
+
+
 /**
  * @brief MSG Err to STD ERR -- TEMPO
  *

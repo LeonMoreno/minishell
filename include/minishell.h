@@ -108,6 +108,7 @@ void	ft_sigaction(void);
 //Functions utils
 void	free_lst(t_sh *sh);
 void	ft_print_cmds(t_sh *sh);
+void	free_doble_arr(char **s);
 
 //Functions excec_cmd
 void	start_exec(t_sh *sh);
