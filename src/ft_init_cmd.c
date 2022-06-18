@@ -32,7 +32,7 @@ void	ft_argvec_init(t_tokens *index, t_cmd *this_cmd)
 	is_cmd = false;
 	begin = index;
 	i = 0;
-	temp = malloc(sizeof(char *) * ft_size(index, 0) + 1);
+	temp = malloc(sizeof(char *) * (ft_size(index, 0) + 1));
 	temp[ft_size(index, 0)] = NULL;
 	while (begin)
 	{	
@@ -59,7 +59,7 @@ void	ft_init_cmd(t_cmd *cmd, t_tokens *index)
 	cmd->fd_in = 0;
 	cmd->fdin_str = NULL;
 	len_arg = ft_size(index, 1);
-	cmd->token_tab = malloc(sizeof(t_tokens *) * len_arg + 1);
+	cmd->token_tab = malloc(sizeof(t_tokens *) * (len_arg + 1));
 	cmd->token_tab[len_arg] = NULL;
 	cmd->token_tab[len_arg] = NULL;
 	cmd->argvec = NULL;

@@ -80,6 +80,8 @@ int main(void)
 				i++;
 			}
 		}
+		if (!strncmp(sh->line, "getenv", 6))
+			printf("%s\n", getenv("USER"));
 
 	free(sh->line);
 	}

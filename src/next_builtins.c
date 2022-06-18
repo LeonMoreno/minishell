@@ -89,7 +89,7 @@ void	ft_export_next(char **new_env, char **key_s, char **s, t_sh *sh)
 
 	i = 0;
 	ctrl = 0;
-	while (sh->env[i] != NULL)
+	while (environ[i] != NULL)
 	{
 		key_env = ft_split(environ[i], '=');
 		if (!ft_strncmp(key_s[0], key_env[0], ft_strlen(key_s[0]) + 1))
@@ -131,7 +131,7 @@ void	ft_export(t_sh *sh)
 		printf("AQUI key_s = %s\n", key_s[1]);
 		return ;
 	}
-	while (sh->env[i] != NULL)
+	while (environ[i] != NULL)
 		i++;
 	new_env = malloc(sizeof(char *) * i + 1);
 	if (!new_env)
