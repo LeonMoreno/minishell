@@ -37,8 +37,6 @@ int	init_fork(t_sh *sh)
 	}
 	if (i > 0)
 		sh->id_f = malloc(sizeof(pid_t) * i);
-	//if (!sh->id_f)
-	//	exit(1);	
 	return (i);
 }
 

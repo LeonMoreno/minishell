@@ -53,4 +53,5 @@ void	end_fork(t_sh *sh)
 		}
 		i++;
 	}
+	free(sh->id_f);
 }
