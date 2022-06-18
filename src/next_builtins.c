@@ -1,18 +1,36 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   next_builtins.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: lmoreno <marvin@42quebec.com>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/13 16:26:54 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/14 13:24:15 by agrenon          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
-void	ft_unset_next(char **s, char **new_env)
+int	ft_len_env(char *key_s, t_sh *sh)
+{
+	int		i;
+	int		len;
+	int		ctrl;
+	char		**key_env;
+
+	i = 0;
+	ctrl = 0;
+	len = 0;
+	while (sh->env[len] != NULL)
+		len++;
+	while (sh->env[i] != NULL)
+	{
+		key_env = ft_split(sh->env[i], '=');
+		if (!ft_strncmp(key_s, key_env[0], ft_strlen(key_s) + 1))
+		{
+			ctrl = 0;
+			free_doble_arr(key_env);
+			break;
+		}
+		else
+			ctrl = 1;
+		free_doble_arr(key_env);
+		i++;
+	}
+	len = ctrl + len;
+	return (len);
+}
+
+void	ft_unset_next(char **s, char **new_env, t_sh *sh)
 {
 	int		i;
 	int		j;
@@ -25,18 +43,19 @@ void	ft_unset_next(char **s, char **new_env)
 		key_env = ft_split(environ[i], '=');
 		if (ft_strncmp(s[1], key_env[0], ft_strlen(s[1] + 1)))
 		{
-			new_env[j] = malloc(sizeof(char) * ft_strlen(environ[i]));
-			new_env[j] = environ[i];
+			new_env[j] = ft_strdup(environ[i]); 
 			j++;
 		}
+		free_doble_arr(key_env);
 		i++;
 	}
 	new_env[j] = NULL;
-	free(environ);
+	free_doble_arr(sh->env);
+	sh->env = new_env;
 	environ = new_env;
 }
 
-void	ft_unset(char **s)
+void	ft_unset(char **s, t_sh *sh)
 {
 	int		i;
 	char	**new_env;
@@ -49,8 +68,8 @@ void	ft_unset(char **s)
 	}
 	while (environ[i] != NULL)
 		i++;
-	new_env = malloc(sizeof(char *) * i + 1);
-	ft_unset_next(s, new_env);
+	new_env = malloc(sizeof(char *) * (i + 1));
+	ft_unset_next(s, new_env, sh);
 }
 
 /**
@@ -68,8 +87,12 @@ void	ft_unset(char **s)
 void	ft_export_last(int ctrl, int i, char **s, char **new_env, t_sh *sh)
 {
 	if (!ctrl)
+	{
 		new_env[i] = ft_strdup(s[1]); 
-	new_env[i + 1] = NULL;
+		new_env[i + 1] = NULL;
+	}
+	else
+		new_env[i] = NULL;
 	free_doble_arr(sh->env);
 	sh->env = new_env;
 	environ = sh->env;
@@ -89,16 +112,16 @@ void	ft_export_next(char **new_env, char **key_s, char **s, t_sh *sh)
 
 	i = 0;
 	ctrl = 0;
-	while (environ[i] != NULL)
+	while (sh->env[i] != NULL)
 	{
-		key_env = ft_split(environ[i], '=');
+		key_env = ft_split(sh->env[i], '=');
 		if (!ft_strncmp(key_s[0], key_env[0], ft_strlen(key_s[0]) + 1))
 		{
 			new_env[i] = ft_strdup(s[1]); 
 			ctrl = 1;
 		}
 		else
-			new_env[i] = ft_strdup(environ[i]); 
+			new_env[i] = ft_strdup(sh->env[i]); 
 		free_doble_arr(key_env);
 		i++;
 	}
@@ -113,13 +136,12 @@ void	ft_export_next(char **new_env, char **key_s, char **s, t_sh *sh)
  */
 void	ft_export(t_sh *sh)
 {
-	int		i;
+	int		len;
 	char	**new_env;
 	char	**key_s;
 	char	**s;
 
 	s = sh->cmd_lst->argvec;
-	i = 0;
 	if (!s[1])
 	{
 		ft_env();
@@ -127,13 +149,9 @@ void	ft_export(t_sh *sh)
 	}
 	key_s = ft_split(s[1], '=');
 	if (!key_s[1])
-	{
-		printf("AQUI key_s = %s\n", key_s[1]);
 		return ;
-	}
-	while (environ[i] != NULL)
-		i++;
-	new_env = malloc(sizeof(char *) * (i + 2));
+	len = ft_len_env(key_s[0], sh);
+	new_env = malloc(sizeof(char *) * (len + 1));
 	if (!new_env)
 	{
 		printf("error malloc\n");

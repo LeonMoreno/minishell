@@ -81,7 +81,7 @@ void	ft_echo(char **line_split);
 void	ft_cd(char **line_split);
 void	ft_export(t_sh *sh);
 void	ft_env(void);
-void	ft_unset(char **s);
+void	ft_unset(char **s, t_sh *sh);
 void	start_env(t_sh *sh);
 
 //Functions parser

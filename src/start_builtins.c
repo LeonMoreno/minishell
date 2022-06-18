@@ -19,9 +19,9 @@ void	ft_exit(t_sh *sh)
 	if (sh->line)
 	{
 		rl_clear_history();
-		//free(sh->promt);
-		//free(sh->line);
-		//free_doble_arr(sh->env);
+		free(sh->promt);
+		free(sh->line);
+		free_doble_arr(sh->env);
 	}
 	exit (EXIT_SUCCESS);
 }

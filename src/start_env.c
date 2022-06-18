@@ -2,8 +2,6 @@
 
 static	void	init_void_env(t_sh *sh, int x)
 {
-
-	printf("x = %d\n", x);
 	sh->env = malloc(sizeof(char *) * x + 3);
 	sh->env[x] = ft_strdup("HOME=/home");
 	sh->env[x + 1] = ft_strdup("USER=user");

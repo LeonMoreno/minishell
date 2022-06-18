@@ -35,7 +35,6 @@ int	init_fork(t_sh *sh)
 			i++;
 		cm = cm->next;
 	}
-	printf(" i = %d\n", i);
 	if (i > 0)
 		sh->id_f = malloc(sizeof(pid_t) * i);
 	//if (!sh->id_f)
