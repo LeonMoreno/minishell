@@ -38,12 +38,12 @@ void	ft_unset_next(char **s, char **new_env, t_sh *sh)
 
 	i = 0;
 	j = 0;
-	while (environ[i] != NULL)
+	while (sh->env[i] != NULL)
 	{
-		key_env = ft_split(environ[i], '=');
+		key_env = ft_split(sh->env[i], '=');
 		if (ft_strncmp(s[1], key_env[0], ft_strlen(s[1] + 1)))
 		{
-			new_env[j] = ft_strdup(environ[i]); 
+			new_env[j] = ft_strdup(sh->env[i]); 
 			j++;
 		}
 		free_doble_arr(key_env);
@@ -52,7 +52,7 @@ void	ft_unset_next(char **s, char **new_env, t_sh *sh)
 	new_env[j] = NULL;
 	free_doble_arr(sh->env);
 	sh->env = new_env;
-	environ = new_env;
+	environ = sh->env;
 }
 
 void	ft_unset(char **s, t_sh *sh)
@@ -66,9 +66,9 @@ void	ft_unset(char **s, t_sh *sh)
 		ft_printf("unset: not enough arguments\n");
 		return ;
 	}
-	while (environ[i] != NULL)
+	while (sh->env[i] != NULL)
 		i++;
-	new_env = malloc(sizeof(char *) * (i + 1));
+	new_env = malloc(sizeof(char *) * (i));
 	ft_unset_next(s, new_env, sh);
 }
 
