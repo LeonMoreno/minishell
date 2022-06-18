@@ -133,7 +133,7 @@ void	ft_export(t_sh *sh)
 	}
 	while (environ[i] != NULL)
 		i++;
-	new_env = malloc(sizeof(char *) * i + 1);
+	new_env = malloc(sizeof(char *) * (i + 2));
 	if (!new_env)
 	{
 		printf("error malloc\n");
