@@ -18,6 +18,7 @@ void	start_shell(t_sh *sh)
 	ft_printf("\n\t\t ** PROC INI PID %d **\n\n", getpid());
 	while (1)
 	{
+		init_var(sh);
 		start_readline(sh);
 		if (sh->line && sh->line[0] != '\0')
 		{

@@ -1,5 +1,15 @@
 #include "minishell.h"
 
+void	init_var(t_sh *sh)
+{
+	sh->id_f = 0;
+	sh->n_cmd = 0;
+	sh->n_pipe = 0;
+	sh->n_forks = 0;
+	sh->n_tokens = 0;
+	sh->start = 0;
+}
+
 static	void	init_void_env(t_sh *sh, int x)
 {
 	sh->env = malloc(sizeof(char *) * x + 3);

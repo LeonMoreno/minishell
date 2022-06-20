@@ -25,7 +25,8 @@ char	*cmd_path(t_cmd *cm)
 		free(path);
 		i++;
 	}
-	free(path_split);
+	free_doble_arr(path_split);
+	free(cmd);
 	return (NULL);
 }
 
@@ -67,10 +68,14 @@ void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i, int x)
 			if (sh->n_forks > 3 && (sh->n_forks % 2 == 0))
 				dup_stdin_un(sh, x);
 			else
+			{
+				printf("if_else AQUI i = %d\n", i);
 				dup_stdin(sh, x);
+			}
 		}
 		else
 		{
+			printf("else AQUI i = %d\n", i);
 			dup_stdin(sh, x);
 			dup_stdout_un(sh, x);
 		}
