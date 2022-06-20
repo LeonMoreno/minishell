@@ -95,6 +95,7 @@ char	*ft_single_quoting(t_sh *sh, int *i, char *temp);
 char	*ft_prep_string(t_sh *sh, char *temp, int *i);
 int		ft_parsing_meta(t_sh *sh, int i);
 int		ft_double_meta(t_sh *sh, int i);
+int		ft_parse_err(t_tokens *list);
 
 //Functions Commands
 int		ft_size(t_tokens *lsist, int mode);

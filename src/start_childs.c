@@ -69,13 +69,13 @@ void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i, int x)
 				dup_stdin_un(sh, x);
 			else
 			{
-				printf("if_else AQUI i = %d\n", i);
+//				printf("if_else AQUI i = %d\n", i);
 				dup_stdin(sh, x);
 			}
 		}
 		else
 		{
-			printf("else AQUI i = %d\n", i);
+//			printf("else AQUI i = %d\n", i);
 			dup_stdin(sh, x);
 			dup_stdout_un(sh, x);
 		}

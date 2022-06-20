@@ -2,7 +2,8 @@
 
 void	start_redir_fork(t_cmd *cm, t_sh *sh)
 {
-	printf("i = %d \n", sh->n_forks);
+	(void) sh;
+//	printf("i = %d \n", sh->n_forks);
 	//if (sh->n_forks == 1)
 		start_redir(cm);
 }

@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 19:02:24 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/16 19:02:26 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/20 15:05:54 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_tokens	*ft_create_token(t_sh *sh)
 	token = malloc(sizeof(t_tokens));
 	token->next = NULL;
 	token->argve = NULL;
+	token->str = NULL;
 	if (!sh->token_lst)
 		sh->token_lst = token;
 	else
@@ -54,10 +55,11 @@ void	ft_next_token(t_sh *sh, int i, char **temp)
 	token->str = *temp;
 	sh->n_tokens++;
 	token->type = ARG;
-	if (ft_parsing_meta(sh, i))
+	if (ft_parsing_meta(sh, i) || ft_parsing_meta(sh, i - 1))
 		token->type = OPER;
-	if (ft_parsing_meta(sh, i) == 124 && !ft_double_meta(sh, i))
+	if (ft_parsing_meta(sh, i) == 124 && !ft_double_meta(sh, i - 1))
 		token->type = PIPE;
+	//printf("token->str =  [%s] TYPE =  [%d]\n", token->str, token->type);
 	sh->start = -1;
 	*temp = NULL;
 }
@@ -130,7 +132,7 @@ void	line_parser(t_sh *sh)
 		i++;
 	}
 	sh->cmd_lst = NULL;
-	if (sh->token_lst)
+	if (sh->token_lst && ft_parse_err(sh->token_lst))
 		ft_init_cmd_lst(sh);
 	return ;
 }
