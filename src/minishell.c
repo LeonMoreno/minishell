@@ -2,7 +2,17 @@
 
 void	start_readline(t_sh *sh)
 {
-	sh->promt = ft_strjoin(getenv("USER"), "@miniShell$ ");
+	char	*str;
+	char	*temp;
+	char	*final;
+
+	str = ft_strjoin(BHGRN, getenv("USER"));
+	temp = ft_strjoin(HRED, "@minishell$ ");	
+	final = ft_strjoin(temp, RESET);
+	free(temp);
+	sh->promt = ft_strjoin(str, final);
+	free(str);
+	free(final);
 	sh->line = readline(sh->promt);
 	if (sh->line != 0)
 		add_history(sh->line);
@@ -15,7 +25,7 @@ void	start_readline(t_sh *sh)
 
 void	start_shell(t_sh *sh)
 {
-	ft_printf("\n\t\t ** PROC INI PID %d **\n\n", getpid());
+	ft_printf("\n\t\t %s ** PROC INI PID %d ** %s\n\n", UBLU, getpid(), RESET);
 	while (1)
 	{
 		init_var(sh);

@@ -54,7 +54,8 @@ void	end_fork(t_sh *sh)
 			j++;
 		}
 		waitpid(sh->id_f[i], &status, 0);
-//		printf("Close CHILD-%d\n", i);
+		//printf("Return value status-%d\n", status);
+
 		i++;
 	}
 	if (sh->id_f)
