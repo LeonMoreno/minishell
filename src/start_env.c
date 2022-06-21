@@ -45,7 +45,6 @@ static	char	*init_shlvl(char *shlvl)
 		lvl++;
 	}
 	free(tab);
-	printf("SHLVL: %s\n", temp);
 	return (temp);
 }
 

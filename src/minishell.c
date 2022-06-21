@@ -6,8 +6,11 @@ void	start_readline(t_sh *sh)
 	char	*temp;
 	char	*final;
 
+	str = NULL;
 	str = ft_strjoin(BHGRN, getenv("USER"));
-	temp = ft_strjoin(HRED, "@minishell$ ");	
+	if (!str)
+		str = ft_strjoin(BHGRN, "user");
+	temp = ft_strjoin(HRED, "@minishell$ ");
 	final = ft_strjoin(temp, RESET);
 	free(temp);
 	sh->promt = ft_strjoin(str, final);
@@ -35,7 +38,7 @@ void	start_shell(t_sh *sh)
 			line_parser(sh);
 			if (sh->token_lst) //&& ft_parse_err(sh->token_lst))
 			{	
-//				ft_print_cmds(sh); // Print basic info of all cmds in cmd_lst
+		//		ft_print_cmds(sh); // Print basic info of all cmds in cmd_lst
 				start_exec(sh);
 				//printf("APRES EXEC\n");
 			}
