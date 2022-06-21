@@ -65,7 +65,8 @@ void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i, int x)
 	{
 		if ((i + 1) == sh->n_forks)
 		{
-			if (sh->n_forks > 3 && (i % 2 == 0))
+			//if (sh->n_forks > 3 && (i % 2 == 0))
+			if (sh->n_forks > 3)
 			{
 				printf("if_else AQUI i = %d\n", i);
 				dup_stdin_un(sh, x);
