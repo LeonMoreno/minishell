@@ -25,23 +25,23 @@ void	ft_exit(t_sh *sh)
 	exit (EXIT_SUCCESS);
 }
 
-void	ft_echo(t_sh *sh, char **line_split)
+void	ft_echo(char **s)
 {
 	int	i;
 
 	i = 1;
-	while (line_split[i] != NULL)
+	while (s[i] != NULL)
 	{
-		ft_printf("%s", line_split[i]);
-		if (line_split[i + 1] != NULL)
+		//if (!sh->n_pipe)
+		//	write(1, "\e[0;30m\e[47m%\e[0m", 17);
+		if (ft_strncmp(s[i], "-n", 3))
+			ft_printf("%s", s[i]);
+		if (ft_strncmp(s[i], "-n", 3) && s[i + 1] != NULL)
 			ft_printf(" ");
 		i++;
 	}
-	if (!sh->n_pipe)
-	{
-		write(1, "\e[0;30m\e[47m%\e[0m", 17);
+	if (ft_strncmp(s[1], "-n", 3))
 		write(1, "\n", 1);
-	}	
 }
 
 void	ft_cd(char **line_split)

@@ -46,7 +46,7 @@ void	start_builtins(t_cmd *cm, t_sh *sh)
 	else if (argv[0] && !ft_strncmp(argv[0], "pwd", 4))
 		ft_getpwd();
 	else if (argv[0] && !ft_strncmp(argv[0], "echo", 5))
-		ft_echo(sh, argv);
+		ft_echo(argv);
 	else if (argv[0] && !ft_strncmp(argv[0], "cd", 3))
 		ft_cd(argv);
 	else if (argv[0] && !ft_strncmp(argv[0], "export", 7))
