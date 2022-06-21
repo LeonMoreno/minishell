@@ -59,7 +59,7 @@ void	end_fork(t_sh *sh)
 		{
 			close(sh->pipe[j].p[OUT]);
 			close(sh->pipe[j].p[IN]);
-			printf("PRIMER IF Close pipe %d\n", j);
+//			printf("PRIMER IF Close pipe %d\n", j);
 			j++;
 		}
 		i++;

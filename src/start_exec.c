@@ -95,17 +95,17 @@ void	start_exec(t_sh *sh)
 	start_pipex(sh);
 	sh->n_forks = init_fork(sh);
 	
-	printf("NoPIPES = %d FORK = %d\n", sh->n_pipe, sh->n_forks);
+//	printf("NoPIPES = %d FORK = %d\n", sh->n_pipe, sh->n_forks);
 	while (cm)
 	{
 		if (i < sh->n_pipe)
 		{
 			pipe(sh->pipe[i].p);
-			printf("Abri PIPE %d\n", i);
+//			printf("Abri PIPE %d\n", i);
 		}
 		if (i != 0 && i % 2 == 0)
 		{
-			printf(" i = %d __ x = %d pi = %d\n", i, x, pi);
+//			printf(" i = %d __ x = %d pi = %d\n", i, x, pi);
 			close(sh->pipe[pi].p[OUT]);
 			close(sh->pipe[pi].p[IN]);
 			x++;
@@ -113,7 +113,7 @@ void	start_exec(t_sh *sh)
 		}
 		if (i != 1 && i % 2 == 1)
 		{
-			printf(" i = %d __ x = %d pi = %d\n", i, x, pi);
+//			printf(" i = %d __ x = %d pi = %d\n", i, x, pi);
 			close(sh->pipe[pi].p[OUT]);
 			close(sh->pipe[pi].p[IN]);
 			pi++;
