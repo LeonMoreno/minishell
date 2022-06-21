@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 19:02:24 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/20 15:05:54 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/20 16:19:45 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ char	*ft_prep_string(t_sh *sh, char *temp, int *i)
 void	ft_parsing(t_sh *sh, int *i)
 {
 	static char	*temp = NULL;
+
 
 	if (sh->line[*i] < 33 && sh->start >= 0)
 		ft_next_token(sh, *i, &temp);

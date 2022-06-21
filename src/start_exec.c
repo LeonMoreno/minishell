@@ -6,14 +6,14 @@
  */
 void	start_pipex(t_sh *sh)
 {
-	int	i;
+	//int	i;
 
-	i = 0;
+	//i = 0;
 	if (sh->n_pipe)
 	{
 		sh->pipe = malloc(sizeof(t_pip) * sh->n_pipe);
-		while (sh->n_pipe > i)
-			pipe(sh->pipe[i++].p);
+		//while (sh->n_pipe > i)
+		//	pipe(sh->pipe[i++].p);
 	}
 }
 
@@ -86,16 +86,38 @@ void	start_exec(t_sh *sh)
 	t_cmd	*cm;
 	int		i;
 	int		x;
+	int		pi;
 
 	i = 0;
 	x = 0;
+	pi = 0;
 	cm = sh->cmd_lst;
 	start_pipex(sh);
 	sh->n_forks = init_fork(sh);
+	
+	printf("NoPIPES = %d FORK = %d\n", sh->n_pipe, sh->n_forks);
 	while (cm)
 	{
+		if (i < sh->n_pipe)
+		{
+			pipe(sh->pipe[i].p);
+			printf("Abri PIPE %d\n", i);
+		}
 		if (i != 0 && i % 2 == 0)
+		{
+			printf(" i = %d __ x = %d pi = %d\n", i, x, pi);
+			close(sh->pipe[pi].p[OUT]);
+			close(sh->pipe[pi].p[IN]);
 			x++;
+			pi++;
+		}
+		if (i != 1 && i % 2 == 1)
+		{
+			printf(" i = %d __ x = %d pi = %d\n", i, x, pi);
+			close(sh->pipe[pi].p[OUT]);
+			close(sh->pipe[pi].p[IN]);
+			pi++;
+		}
 		start_cmd(cm, sh, i, x);
 		cm = cm->next;
 		i++;

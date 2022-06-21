@@ -12,10 +12,11 @@ void	init_var(t_sh *sh)
 
 static	void	init_void_env(t_sh *sh, int x)
 {
-	sh->env = malloc(sizeof(char *) * x + 3);
+	sh->env = malloc(sizeof(char *) * (x + 4));
 	sh->env[x] = ft_strdup("HOME=/home");
 	sh->env[x + 1] = ft_strdup("USER=user");
-	sh->env[x + 2] = NULL;
+	sh->env[x + 2] = ft_strdup("PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin");
+	sh->env[x + 3] = NULL;
 	environ = sh->env;
 }
 

@@ -26,8 +26,8 @@ void	dup_stdin(t_sh *sh, int x)
 void	dup_stdin_un(t_sh *sh, int x)
 {
 	close(sh->pipe[x + 1].p[IN]);
-	dup2(sh->pipe[x +1].p[OUT], STDIN_FILENO);
-	close(sh->pipe[x +1].p[OUT]);
+	dup2(sh->pipe[x + 1].p[OUT], STDIN_FILENO);
+	close(sh->pipe[x + 1].p[OUT]);
 }
 
 /**
@@ -46,14 +46,14 @@ void	end_fork(t_sh *sh)
 	j = 0;
 	while (i < sh->n_forks)
 	{
-		if (j < sh->n_pipe)
+		waitpid(sh->id_f[i], &status, 0);
+		if (sh->pipe && (j < sh->n_pipe))
 		{
 			close(sh->pipe[j].p[OUT]);
 			close(sh->pipe[j].p[IN]);
-//			printf("Close pipe %d\n", j);
+			printf("Close pipe %d\n", j);
 			j++;
 		}
-		waitpid(sh->id_f[i], &status, 0);
 //		printf("Close CHILD-%d\n", i);
 		i++;
 	}
