@@ -36,9 +36,9 @@ char	*cmd_path(t_cmd *cm)
  * @param cm struct info cmd
  * @param x index pour le pipex
  */
-void	start_child_builtins(t_cmd *cm, t_sh *sh, int x)
+void	start_child_builtins(t_cmd *cm, t_sh *sh, int i)
 {
-	dup_stdout(sh, x);
+	dup_stdout(sh, i);
 	start_builtins(cm, sh);
 	exit (0);
 }
@@ -52,7 +52,7 @@ void	start_child_builtins(t_cmd *cm, t_sh *sh, int x)
  * 1er_cmd i == 0, last_cmd i + 1 == n_forks(number of forks)
  * @param x: index pour le pipex
  */
-void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i, int x)
+void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i)
 {
 	char	*path;
 
@@ -60,38 +60,14 @@ void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i, int x)
 	if (!path)
 		msg_stderr("miniShell: command not found: ", cm);
 	if (!check_cmd(sh->cmd_lst->name) && sh->n_pipe > 0 && (i == 0))
-		dup_stdout(sh, x);
-	else if (sh->n_pipe)
+		dup_stdout(sh, i);
+	else if (sh->n_pipe && sh->n_forks != (i + 1))
 	{
-		if ((i + 1) == sh->n_forks)
-		{
-			//if (sh->n_forks > 3 && (i % 2 == 0))
-			if (sh->n_forks > 3)
-			{
-				//printf("if_else AQUI i = %d\n", i);
-				dup_stdin_un(sh, x);
-			}
-			else
-			{
-				dup_stdin(sh, x);
-			}
-		}
-		else
-		{
-			if (sh->n_forks > 3 && (i % 2 == 1) && i != 1)
-			{
-				printf("else AQUI i = %d\n", i);
-				dup_stdin_un(sh, x);
-				dup_stdout_dos(sh, x);
-			}
-			else
-			{
-//				printf("else AQUI i = %d\n", i);
-				dup_stdin(sh, x);
-				dup_stdout_un(sh, x);
-			}
-		}
-	}	
+		dup_stdin(sh, i);
+		dup_stdout(sh, i);
+	}
+	else if (sh->n_pipe && sh->n_forks == (i + 1))
+		dup_stdin(sh, i);
 	//if (cm->n_redir > 0 && (sh->n_forks == 1 || ((i + 1) == sh->n_forks)))
 //	if (cm->n_redir > 0)
 //		start_redir_fork(cm, sh);

@@ -46,7 +46,7 @@ int	init_fork(t_sh *sh)
  * if no pipe builtins exec without fork
  * if cmd has a fd_in , Dup2 stdin 
  */
-void	start_cmd(t_cmd *cm, t_sh *sh, int i, int x)
+void	start_cmd(t_cmd *cm, t_sh *sh, int i)
 {
 	
 	if (!check_cmd(sh->cmd_lst->name) || sh->n_pipe > 0)
@@ -65,9 +65,9 @@ void	start_cmd(t_cmd *cm, t_sh *sh, int i, int x)
 				dup2(cm->fd_in, 0);
 			
 			if (check_cmd(cm->name) && cm->fd_in != -1)
-				start_child_builtins(cm, sh, x);
+				start_child_builtins(cm, sh, i);
 			else if (cm->fd_in != -1)
-				start_child_cmdext(cm, sh, i, x);
+				start_child_cmdext(cm, sh, i);
 			exit(0);
 		}
 	}
@@ -85,11 +85,9 @@ void	start_exec(t_sh *sh)
 {
 	t_cmd	*cm;
 	int		i;
-	int		x;
 	int		pi;
 
 	i = 0;
-	x = 0;
 	pi = 0;
 	cm = sh->cmd_lst;
 	start_pipex(sh);
@@ -108,7 +106,6 @@ void	start_exec(t_sh *sh)
 //			printf(" i = %d __ x = %d pi = %d\n", i, x, pi);
 			close(sh->pipe[pi].p[OUT]);
 			close(sh->pipe[pi].p[IN]);
-			x++;
 			pi++;
 		}
 		if (i != 1 && i % 2 == 1)
@@ -118,7 +115,7 @@ void	start_exec(t_sh *sh)
 			close(sh->pipe[pi].p[IN]);
 			pi++;
 		}
-		start_cmd(cm, sh, i, x);
+		start_cmd(cm, sh, i);
 		cm = cm->next;
 		i++;
 	}

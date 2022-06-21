@@ -1,19 +1,20 @@
 #include "minishell.h"
 
-void	dup_stdout(t_sh *sh, int x)
+void	dup_stdout(t_sh *sh, int i)
 {
-	close(sh->pipe[x].p[OUT]);
-	dup2(sh->pipe[x].p[IN], STDOUT_FILENO);
-	close(sh->pipe[x].p[IN]);
+	close(sh->pipe[i].p[OUT]);
+	dup2(sh->pipe[i].p[IN], STDOUT_FILENO);
+	close(sh->pipe[i].p[IN]);
 }
 
+/*
 void	dup_stdout_un(t_sh *sh, int x)
 {
 //	printf("STD_OUT_UN X = %d\n", x);
 	close(sh->pipe[x + 1].p[OUT]);
 	dup2(sh->pipe[x + 1].p[IN], STDOUT_FILENO);
 	close(sh->pipe[x + 1].p[IN]);
-}
+} 
 
 void	dup_stdout_dos(t_sh *sh, int x)
 {
@@ -21,22 +22,22 @@ void	dup_stdout_dos(t_sh *sh, int x)
 	close(sh->pipe[x + 2].p[OUT]);
 	dup2(sh->pipe[x + 2].p[IN], STDOUT_FILENO);
 	close(sh->pipe[x + 2].p[IN]);
-}
+} */
 
-void	dup_stdin(t_sh *sh, int x)
+void	dup_stdin(t_sh *sh, int i)
 {
-	close(sh->pipe[x].p[IN]);
-	dup2(sh->pipe[x].p[OUT], STDIN_FILENO);
-	close(sh->pipe[x].p[OUT]);
-//	printf("SEG_CMD LEi STDIN Voy POR AQUI X = %d\n", x);
+	close(sh->pipe[i - 1].p[IN]);
+	dup2(sh->pipe[i - 1].p[OUT], STDIN_FILENO);
+	close(sh->pipe[i - 1].p[OUT]);
 }
 
+/*
 void	dup_stdin_un(t_sh *sh, int x)
 {
 	close(sh->pipe[x + 1].p[IN]);
 	dup2(sh->pipe[x + 1].p[OUT], STDIN_FILENO);
 	close(sh->pipe[x + 1].p[OUT]);
-}
+} */
 
 /**
  * end_fork - if we are fork - wait childs exit

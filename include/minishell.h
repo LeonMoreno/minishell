@@ -121,8 +121,8 @@ int		check_cmd(char *s); //int check_builtins(char *s);
 void	end_fork(t_sh *sh);
 
 //Functions childs fork and pipes
-void	start_child_builtins(t_cmd *cm, t_sh *sh, int x);
-void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i, int x);
+void	start_child_builtins(t_cmd *cm, t_sh *sh, int i);
+void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i);
 char	*cmd_path(t_cmd *cm);
 void	dup_stdin_un(t_sh *sh, int x);
 void	dup_stdin(t_sh *sh, int x);
