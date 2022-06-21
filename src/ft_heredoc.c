@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:18:57 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/21 12:28:51 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/21 15:37:16 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,12 @@ char	*ft_heredoc(char *operand)
 	rl_on_new_line();
 	temp = malloc(sizeof(char));
 	temp[0] = '\0';
+	ft_sig_cancel();
 	while (1)
 	{
 		new_str = readline("heredoc>");
+		if (new_str == NULL)
+			ft_exit_here(temp);
 		if (!ft_strncmp(new_str, operand, ft_strlen(operand) + 1))
 			break ;
 		end = ft_strjoin(temp, new_str);
@@ -77,6 +80,36 @@ char	*ft_heredoc(char *operand)
 		free(end);
 	}
 	free(new_str);
+	return (temp);
+}
+
+char	*ft_fork_here(char *operand)
+{
+	int		i_pipe[2];
+	int		me;
+	char	*temp;
+	char	buf[10240];
+
+	me  = 0;
+	while (me < 10240)
+		buf[me++] = '\0';
+	pipe(i_pipe);
+	me = fork();
+	if (me == 0)
+	{
+		close (i_pipe[0]);
+		temp = ft_heredoc(operand);
+		write(i_pipe[1], temp, ft_strlen(temp));
+		free(temp);
+		close(i_pipe[1]);
+		exit(0);
+	}
+	close(i_pipe[1]);
+	ft_silence();
+	read(i_pipe[0], buf, 10240);
+	close(i_pipe[0]);
+	temp = ft_strdup(buf);
+	ft_sigaction();
 	return (temp);
 }
 
@@ -99,7 +132,7 @@ void	ft_check_redir_input(t_sh *sh)
 			tab = begin->token_tab;
 			if (tab[i]->type == OPER && tab[i]->str[0] == '<'
 				&& tab[i]->str[1] == '<')
-				ft_open_heredoc(begin, files++, ft_heredoc(tab[i + 1]->str));
+				ft_open_heredoc(begin, files++, ft_fork_here(tab[i + 1]->str));
 			else if (tab[i]->type == OPER && tab[i]->str[0] == '<')
 				ft_open_file(begin, tab[i + 1]->str);
 			i++;

@@ -104,9 +104,12 @@ void	ft_init_cmd_lst(t_sh *sh);
 
 //Functions Heredoc
 void	ft_check_redir_input(t_sh *sh);
+void	ft_exit_here(char *temp);
 
 //Functions Sigaction
 void	ft_sigaction(void);
+void	ft_sig_cancel(void);
+void	ft_silence(void);
 
 //Functions utils
 void	free_lst(t_sh *sh);

@@ -67,7 +67,7 @@ void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i, int x)
 		{
 			if (sh->n_forks > 3 && (i % 2 == 0))
 			{
-				printf("if_else AQUI i = %d\n", i);
+			//	printf("if_else AQUI i = %d\n", i);
 				dup_stdin_un(sh, x);
 			}
 			else
@@ -79,7 +79,7 @@ void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i, int x)
 		{
 			if (sh->n_forks > 3 && (i % 2 == 1) && i != 1)
 			{
-				printf("else AQUI i = %d\n", i);
+				//printf("else AQUI i = %d\n", i);
 				dup_stdin_un(sh, x);
 				dup_stdout_dos(sh, x);
 			}
@@ -91,9 +91,8 @@ void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i, int x)
 			}
 		}
 	}	
-	//if (cm->n_redir > 0 && (sh->n_forks == 1 || ((i + 1) == sh->n_forks)))
-//	if (cm->n_redir > 0)
-//		start_redir_fork(cm, sh);
+	if (cm->n_redir > 0 && (sh->n_forks == 1 || ((i + 1) == sh->n_forks)))
+		start_redir_fork(cm, sh);
 	execve(path, cm->argvec, NULL);
 	perror("execve");
 	exit(EXIT_FAILURE);
