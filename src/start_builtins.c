@@ -40,7 +40,7 @@ void	ft_echo(t_sh *sh, char **line_split)
 	if (!sh->n_pipe)
 	{
 		write(1, "\e[0;30m\e[47m%\e[0m", 17);
-		write(1, "\n", 4);
+		write(1, "\n", 1);
 	}	
 }
 
