@@ -1,20 +1,13 @@
 #include "minishell.h"
 
 /**
- * @brief: create des pipes
+ * @brief: malloc pour les pipes 
  * @sh->pip : ptr struct s_pip
  */
 void	start_pipex(t_sh *sh)
 {
-	//int	i;
-
-	//i = 0;
 	if (sh->n_pipe)
-	{
 		sh->pipe = malloc(sizeof(t_pip) * sh->n_pipe);
-		//while (sh->n_pipe > i)
-		//	pipe(sh->pipe[i++].p);
-	}
 }
 
 /**
@@ -26,7 +19,7 @@ int	init_fork(t_sh *sh)
 {
 	int		i;
 	t_cmd	*cm;
-			
+
 	cm = sh->cmd_lst;
 	i = 0;
 	while (cm)
@@ -48,14 +41,11 @@ int	init_fork(t_sh *sh)
  */
 void	start_cmd(t_cmd *cm, t_sh *sh, int i)
 {
-	
 	if (!check_cmd(sh->cmd_lst->name) || sh->n_pipe > 0)
 	{
 		sh->id_f[i] = fork();
-
 		if (sh->id_f[i] == 0)
 		{
-			//printf("Child before dup cm->fd_in : %d\n", cm->fd_in);
 			if (cm->fdin_str)
 			{
 				close(cm->fd_in);
@@ -63,7 +53,6 @@ void	start_cmd(t_cmd *cm, t_sh *sh, int i)
 			}
 			if (cm->fd_in > 2)
 				dup2(cm->fd_in, 0);
-			
 			if (check_cmd(cm->name) && cm->fd_in != -1)
 				start_child_builtins(cm, sh, i);
 			else if (cm->fd_in != -1)
@@ -72,7 +61,23 @@ void	start_cmd(t_cmd *cm, t_sh *sh, int i)
 		}
 	}
 	else
-		start_builtins(cm, sh);	
+		start_builtins(cm, sh);
+}
+
+void	close_pipes(t_sh *sh, int i, int *pi)
+{
+	if (i != 0 && i % 2 == 0)
+	{
+		close(sh->pipe[*pi].p[OUT]);
+		close(sh->pipe[*pi].p[IN]);
+		*pi = *pi + 1;
+	}
+	if (i != 1 && i % 2 == 1)
+	{
+		close(sh->pipe[*pi].p[OUT]);
+		close(sh->pipe[*pi].p[IN]);
+		*pi = *pi + 1;
+	}
 }
 
 /**
@@ -92,29 +97,11 @@ void	start_exec(t_sh *sh)
 	cm = sh->cmd_lst;
 	start_pipex(sh);
 	sh->n_forks = init_fork(sh);
-	
-//	printf("NoPIPES = %d FORK = %d\n", sh->n_pipe, sh->n_forks);
 	while (cm)
 	{
 		if (i < sh->n_pipe)
-		{
 			pipe(sh->pipe[i].p);
-//			printf("Abri PIPE %d\n", i);
-		}
-		if (i != 0 && i % 2 == 0)
-		{
-//			printf(" i = %d __ x = %d pi = %d\n", i, x, pi);
-			close(sh->pipe[pi].p[OUT]);
-			close(sh->pipe[pi].p[IN]);
-			pi++;
-		}
-		if (i != 1 && i % 2 == 1)
-		{
-//			printf(" i = %d __ x = %d pi = %d\n", i, x, pi);
-			close(sh->pipe[pi].p[OUT]);
-			close(sh->pipe[pi].p[IN]);
-			pi++;
-		}
+		close_pipes(sh, i, &pi);
 		start_cmd(cm, sh, i);
 		cm = cm->next;
 		i++;
