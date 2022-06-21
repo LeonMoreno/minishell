@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 19:17:31 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/20 17:35:35 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/21 16:24:24 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ void	free_doble_arr(char **s)
 	}
 	free(s);
 }
-
 
 /**
  * @brief MSG Err to STD ERR -- TEMPO

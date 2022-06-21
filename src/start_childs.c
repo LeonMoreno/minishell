@@ -68,9 +68,9 @@ void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i)
 	}
 	else if (sh->n_pipe && sh->n_forks == (i + 1))
 		dup_stdin(sh, i);
-	//if (cm->n_redir > 0 && (sh->n_forks == 1 || ((i + 1) == sh->n_forks)))
-//		start_redir_fork(cm, sh);
-	execve(path, cm->argvec, NULL);
+	if (cm->n_redir > 0 && (sh->n_forks == 1 || ((i + 1) == sh->n_forks)))
+		start_redir_fork(cm, sh);
+	execve(path, cm->argvec, environ);
 	perror("execve");
 	exit(EXIT_FAILURE);
 }

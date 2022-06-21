@@ -13,12 +13,40 @@ void	init_var(t_sh *sh)
 
 static	void	init_void_env(t_sh *sh, int x)
 {
+	char	*s;
+
+	s = ft_strdup("PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin");
 	sh->env = malloc(sizeof(char *) * (x + 4));
 	sh->env[x] = ft_strdup("HOME=/home");
 	sh->env[x + 1] = ft_strdup("USER=user");
-	sh->env[x + 2] = ft_strdup("PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin");
+	sh->env[x + 2] = s;
 	sh->env[x + 3] = NULL;
 	environ = sh->env;
+}
+
+// Incrémente le niveau du shell
+static	char	*init_shlvl(char *shlvl)
+{
+	char	**tab;
+	int		lvl;
+	char	*temp;
+	char	*chiffre;
+
+	tab = ft_split(shlvl, '=');
+	lvl = ft_atoi(tab[1]);
+	lvl++;
+	chiffre = ft_itoa(lvl);
+	temp = ft_strjoin("SHLVL=", chiffre);
+	free(chiffre);
+	lvl = 0;
+	while (tab[lvl])
+	{
+		free(tab[lvl]);
+		lvl++;
+	}
+	free(tab);
+	printf("SHLVL: %s\n", temp);
+	return (temp);
 }
 
 static	void	init_env(t_sh *sh, int x)
@@ -29,7 +57,10 @@ static	void	init_env(t_sh *sh, int x)
 	sh->env = malloc(sizeof(char *) * (x + 1));
 	while (environ[i] != NULL)
 	{
-		sh->env[i] = ft_strdup(environ[i]);
+		if (!ft_strncmp(environ[i], "SHLVL", 5))
+			sh->env[i] = init_shlvl(environ[i]);
+		else
+			sh->env[i] = ft_strdup(environ[i]);
 		i++;
 	}
 	sh->env[i] = NULL;
@@ -43,7 +74,7 @@ void	start_env(t_sh *sh)
 	i = 0;
 	while (environ[i] != NULL)
 		i++;
-	if (i > 5)
+	if (i > 2)
 		init_env(sh, i);
 	else
 		init_void_env(sh, i);
