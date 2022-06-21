@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 19:02:24 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/20 16:19:45 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/21 12:28:25 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,19 +65,22 @@ void	ft_next_token(t_sh *sh, int i, char **temp)
 }
 
 //Joins a new character to the string that will become the token
-char	*ft_prep_string(t_sh *sh, char *temp, int *i)
+char	*ft_prep_string(t_sh *sh, char **temp, int *i)
 {
 	char	this_char[2];
 	char	*new_temp;
 
 	this_char[0] = sh->line[*i];
 	this_char[1] = '\0';
-	if (!temp)
+	if (!*temp)
 		new_temp = ft_strdup(this_char);
 	else
-		new_temp = ft_strjoin(temp, this_char);
-	if (temp)
-		free(temp);
+		new_temp = ft_strjoin(*temp, this_char);
+	if (*temp)
+	{
+		free(*temp);
+		*temp = NULL;
+	}
 	return (new_temp);
 }
 
@@ -100,14 +103,14 @@ void	ft_parsing(t_sh *sh, int *i)
 	else if (sh->line[*i] == '$')
 		temp = ft_expansion(sh, i, temp);
 	else if (sh->line[*i] > 32 && sh->line[*i] < 127)
-		temp = ft_prep_string(sh, temp, i);
+		temp = ft_prep_string(sh, &temp, i);
 	if ((sh->start >= 0 && ft_parsing_meta(sh, (*i) + 1))
 		|| ft_parsing_meta(sh, *i))
 	{
 		if (ft_double_meta(sh, *i))
 		{
 			*i = *i + 1;
-			temp = ft_prep_string(sh, temp, i);
+			temp = ft_prep_string(sh, &temp, i);
 		}
 		ft_next_token(sh, *i, &temp);
 	}

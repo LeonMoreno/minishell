@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:54:11 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/16 18:54:12 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/20 16:36:23 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*ft_double_quoting(t_sh *sh, int *i, char *temp)
 		if (sh->line[*i] == '$')
 			new_temp = ft_expansion(sh, i, new_temp);
 		else if (sh->line[*i] != 34)
-			new_temp = ft_prep_string(sh, new_temp, i);
+			new_temp = ft_prep_string(sh, &new_temp, i);
 		*i = *i + 1;
 	}	
 	return (new_temp);
@@ -48,7 +48,7 @@ char	*ft_single_quoting(t_sh *sh, int *i, char *temp)
 	while (*i < clone)
 	{
 		if (sh->line[*i] != 39)
-			new_temp = ft_prep_string(sh, new_temp, i);
+			new_temp = ft_prep_string(sh, &new_temp, i);
 		*i = *i + 1;
 	}
 	return (new_temp);

@@ -19,14 +19,13 @@ void	ft_exit(t_sh *sh)
 	if (sh->line)
 	{
 		rl_clear_history();
-		free(sh->promt);
-		free(sh->line);
+		free_lst(sh);
 		free_doble_arr(sh->env);
 	}
 	exit (EXIT_SUCCESS);
 }
 
-void	ft_echo(char **line_split)
+void	ft_echo(t_sh *sh, char **line_split)
 {
 	int	i;
 
@@ -38,8 +37,11 @@ void	ft_echo(char **line_split)
 			ft_printf(" ");
 		i++;
 	}
-	write(1, "%", 1);
-	write(1, "\n", 1);
+	if (!sh->n_pipe)
+	{
+		write(1, "\e[0;30m\e[47m%\e[0m", 17);
+		write(1, "\n", 4);
+	}	
 }
 
 void	ft_cd(char **line_split)

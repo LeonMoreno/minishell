@@ -7,7 +7,7 @@
 // Include readline
 #include <readline/readline.h>
 #include <readline/history.h>
-
+#include "colours.h"
 //Include pout wait
 #include <sys/wait.h>
 
@@ -63,9 +63,9 @@ typedef struct s_sh
 	t_pip		*pipe;
 	pid_t		*id_f;
 
+	int		last_re;
 	int		n_cmd;
 	int		n_pipe;
-	//int		m_pipe;
 	int		n_forks;
 	int		n_tokens;
 	int		start;
@@ -77,7 +77,7 @@ typedef struct s_sh
 //Functions builtins
 void	ft_exit(t_sh *sh);
 void	ft_getpwd(void);
-void	ft_echo(char **line_split);
+void	ft_echo(t_sh *sh, char **line_split);
 void	ft_cd(char **line_split);
 void	ft_export(t_sh *sh);
 void	ft_env(void);
@@ -92,7 +92,7 @@ int		ft_quote_real(t_sh *sh, int i, int a);
 char	*ft_expansion(t_sh *sh, int *i, char *temp);
 char	*ft_double_quoting(t_sh *sh, int *i, char *temp);
 char	*ft_single_quoting(t_sh *sh, int *i, char *temp);
-char	*ft_prep_string(t_sh *sh, char *temp, int *i);
+char	*ft_prep_string(t_sh *sh, char **temp, int *i);
 int		ft_parsing_meta(t_sh *sh, int i);
 int		ft_double_meta(t_sh *sh, int i);
 int		ft_parse_err(t_tokens *list);

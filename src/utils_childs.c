@@ -62,7 +62,6 @@ void	end_fork(t_sh *sh)
 			printf("PRIMER IF Close pipe %d\n", j);
 			j++;
 		}
-		//printf("Close CHILD-%d\n", i);
 		i++;
 	}
 	if (sh->id_f)
