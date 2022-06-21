@@ -1,5 +1,9 @@
 #include "minishell.h"
 
+/**
+ * @brief: cambio stdOUT CMD envio info al IN DEL PIPE_i
+ * @i: numero del PIPE, q es el mismo No del fork
+ **/
 void	dup_stdout(t_sh *sh, int i)
 {
 	close(sh->pipe[i].p[OUT]);
@@ -7,37 +11,16 @@ void	dup_stdout(t_sh *sh, int i)
 	close(sh->pipe[i].p[IN]);
 }
 
-/*
-void	dup_stdout_un(t_sh *sh, int x)
-{
-//	printf("STD_OUT_UN X = %d\n", x);
-	close(sh->pipe[x + 1].p[OUT]);
-	dup2(sh->pipe[x + 1].p[IN], STDOUT_FILENO);
-	close(sh->pipe[x + 1].p[IN]);
-} 
-
-void	dup_stdout_dos(t_sh *sh, int x)
-{
-//	printf("STD_OUT_UN X = %d\n", x);
-	close(sh->pipe[x + 2].p[OUT]);
-	dup2(sh->pipe[x + 2].p[IN], STDOUT_FILENO);
-	close(sh->pipe[x + 2].p[IN]);
-} */
-
+/**
+ * @brief: cambio stdIN CMD tomo info DEL OUT PIPE_i
+ * @i: numero del PIPE, q es el mismo No del fork
+ **/
 void	dup_stdin(t_sh *sh, int i)
 {
 	close(sh->pipe[i - 1].p[IN]);
 	dup2(sh->pipe[i - 1].p[OUT], STDIN_FILENO);
 	close(sh->pipe[i - 1].p[OUT]);
 }
-
-/*
-void	dup_stdin_un(t_sh *sh, int x)
-{
-	close(sh->pipe[x + 1].p[IN]);
-	dup2(sh->pipe[x + 1].p[OUT], STDIN_FILENO);
-	close(sh->pipe[x + 1].p[OUT]);
-} */
 
 /**
  * end_fork - if we are fork - wait childs exit
@@ -60,7 +43,6 @@ void	end_fork(t_sh *sh)
 		{
 			close(sh->pipe[j].p[OUT]);
 			close(sh->pipe[j].p[IN]);
-//			printf("PRIMER IF Close pipe %d\n", j);
 			j++;
 		}
 		i++;
