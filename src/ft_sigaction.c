@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:55:38 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/20 17:46:58 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/21 15:24:14 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,30 @@ void	ft_handler(int sig)
 		rl_redisplay();
 	}
 	return ;
+}
+
+void	ft_handler_here(int sig)
+{
+	if (sig == SIGINT)
+	{
+		write(4,  "\0", 1); 
+		close(4);
+		exit(0);
+	}
+
+}
+
+void	ft_silence(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	ft_sig_cancel(void)
+{
+	signal(SIGQUIT, SIG_DFL);	
+	signal(SIGINT, SIG_DFL);
+	signal(SIGINT, ft_handler_here);
 }
 
 void	ft_sigaction(void)
