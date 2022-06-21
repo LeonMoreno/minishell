@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:18:57 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/21 15:43:36 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/21 16:15:03 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_open_file(t_cmd *cmd, char *name)
 		perror(name);
 }
 
-char	*ft_heredoc(char *operand)
+char	*ft_heredoc(char *operand, t_sh *sh)
 {
 	char	*new_str;
 	char	*temp;
@@ -70,7 +70,7 @@ char	*ft_heredoc(char *operand)
 	{
 		new_str = readline("heredoc>");
 		if (new_str == NULL)
-			ft_exit_here(temp);
+			ft_exit_here(temp, sh);
 		if (!ft_strncmp(new_str, operand, ft_strlen(operand) + 1))
 			break ;
 		end = ft_strjoin(temp, new_str);
@@ -83,7 +83,7 @@ char	*ft_heredoc(char *operand)
 	return (temp);
 }
 
-char	*ft_fork_here(char *operand)
+char	*ft_fork_here(char *operand, t_sh *sh)
 {
 	int		i_pipe[2];
 	int		me;
@@ -98,7 +98,7 @@ char	*ft_fork_here(char *operand)
 	if (me == 0)
 	{
 		close (i_pipe[0]);
-		temp = ft_heredoc(operand);
+		temp = ft_heredoc(operand, sh);
 		write(i_pipe[1], temp, ft_strlen(temp));
 		free(temp);
 		close(i_pipe[1]);
@@ -132,7 +132,7 @@ void	ft_check_redir_input(t_sh *sh)
 			tab = begin->token_tab;
 			if (tab[i]->type == OPER && tab[i]->str[0] == '<'
 				&& tab[i]->str[1] == '<')
-				ft_open_heredoc(begin, files++, ft_fork_here(tab[i + 1]->str));
+				ft_open_heredoc(begin, files++, ft_fork_here(tab[i + 1]->str, sh));
 			else if (tab[i]->type == OPER && tab[i]->str[0] == '<')
 				ft_open_file(begin, tab[i + 1]->str);
 			i++;
