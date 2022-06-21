@@ -65,19 +65,30 @@ void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i, int x)
 	{
 		if ((i + 1) == sh->n_forks)
 		{
-			if (sh->n_forks > 3 && (sh->n_forks % 2 == 0))
+			if (sh->n_forks > 3 && (i % 2 == 0))
+			{
+				printf("if_else AQUI i = %d\n", i);
 				dup_stdin_un(sh, x);
+			}
 			else
 			{
-//				printf("if_else AQUI i = %d\n", i);
 				dup_stdin(sh, x);
 			}
 		}
 		else
 		{
-//			printf("else AQUI i = %d\n", i);
-			dup_stdin(sh, x);
-			dup_stdout_un(sh, x);
+			if (sh->n_forks > 3 && (i % 2 == 1) && i != 1)
+			{
+				printf("else AQUI i = %d\n", i);
+				dup_stdin_un(sh, x);
+				dup_stdout_dos(sh, x);
+			}
+			else
+			{
+//				printf("else AQUI i = %d\n", i);
+				dup_stdin(sh, x);
+				dup_stdout_un(sh, x);
+			}
 		}
 	}	
 	//if (cm->n_redir > 0 && (sh->n_forks == 1 || ((i + 1) == sh->n_forks)))

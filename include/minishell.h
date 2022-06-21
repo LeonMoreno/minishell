@@ -127,6 +127,7 @@ char	*cmd_path(t_cmd *cm);
 void	dup_stdin_un(t_sh *sh, int x);
 void	dup_stdin(t_sh *sh, int x);
 void	dup_stdout_un(t_sh *sh, int x);
+void	dup_stdout_dos(t_sh *sh, int x);
 void	dup_stdout(t_sh *sh, int x);
 void	msg_stderr(char *str, t_cmd *cm);
 

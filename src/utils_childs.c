@@ -15,6 +15,14 @@ void	dup_stdout_un(t_sh *sh, int x)
 	close(sh->pipe[x + 1].p[IN]);
 }
 
+void	dup_stdout_dos(t_sh *sh, int x)
+{
+//	printf("STD_OUT_UN X = %d\n", x);
+	close(sh->pipe[x + 2].p[OUT]);
+	dup2(sh->pipe[x + 2].p[IN], STDOUT_FILENO);
+	close(sh->pipe[x + 2].p[IN]);
+}
+
 void	dup_stdin(t_sh *sh, int x)
 {
 	close(sh->pipe[x].p[IN]);
@@ -51,10 +59,10 @@ void	end_fork(t_sh *sh)
 		{
 			close(sh->pipe[j].p[OUT]);
 			close(sh->pipe[j].p[IN]);
-			printf("Close pipe %d\n", j);
+			printf("PRIMER IF Close pipe %d\n", j);
 			j++;
 		}
-//		printf("Close CHILD-%d\n", i);
+		//printf("Close CHILD-%d\n", i);
 		i++;
 	}
 	if (sh->id_f)
