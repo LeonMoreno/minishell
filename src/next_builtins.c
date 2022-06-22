@@ -84,11 +84,11 @@ void	ft_unset(char **s, t_sh *sh)
  * @**key_s argu de export
  * @**key_env variable de environ donde comparo si existe la variable (leo)
  */
-void	ft_export_last(int ctrl, int i, char **s, char **new_env, t_sh *sh)
+void	ft_export_last(int ctrl, int i, char *s, char **new_env, t_sh *sh)
 {
 	if (!ctrl)
 	{
-		new_env[i] = ft_strdup(s[1]); 
+		new_env[i] = ft_strdup(s); 
 		new_env[i + 1] = NULL;
 	}
 	else
@@ -104,7 +104,7 @@ void	ft_export_last(int ctrl, int i, char **s, char **new_env, t_sh *sh)
  * @key_s: split de s
  * @key_env: var de env -- var=argu -- comparo var 
  */
-void	ft_export_next(char **new_env, char **key_s, char **s, t_sh *sh)
+void	ft_export_next(char **new_env, char **key_s, char *s, t_sh *sh)
 {
 	int		i;
 	int		ctrl;
@@ -117,7 +117,7 @@ void	ft_export_next(char **new_env, char **key_s, char **s, t_sh *sh)
 		key_env = ft_split(sh->env[i], '=');
 		if (!ft_strncmp(key_s[0], key_env[0], ft_strlen(key_s[0]) + 1))
 		{
-			new_env[i] = ft_strdup(s[1]); 
+			new_env[i] = ft_strdup(s); 
 			ctrl = 1;
 		}
 		else
@@ -134,22 +134,20 @@ void	ft_export_next(char **new_env, char **key_s, char **s, t_sh *sh)
  *@s: cmd export + argu
  * si no hay argu exec ft_env
  */
-void	ft_export(t_sh *sh)
+void	ft_export(char *s, t_sh *sh)
 {
 	int		len;
 	char	**new_env;
 	char	**key_s;
-	char	**s;
 
-	s = sh->cmd_lst->argvec;
 	if (!s[1])
 	{
 		ft_env();
 		return ;
 	}
-	key_s = ft_split(s[1], '=');
-	if (!key_s[1])
-		return ;
+	key_s = ft_split(s, '=');
+	//if (!key_s[1])
+	//	return ;
 	len = ft_len_env(key_s[0], sh);
 	new_env = malloc(sizeof(char *) * (len + 1));
 	if (!new_env)

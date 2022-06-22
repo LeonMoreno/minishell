@@ -78,8 +78,8 @@ typedef struct s_sh
 void	ft_exit(t_sh *sh);
 void	ft_getpwd(void);
 void	ft_echo(char **s);
-void	ft_cd(char **line_split);
-void	ft_export(t_sh *sh);
+void	ft_cd(char **s, t_sh *sh);
+void	ft_export(char *s, t_sh *sh);
 void	ft_env(void);
 void	ft_unset(char **s, t_sh *sh);
 void	start_env(t_sh *sh);

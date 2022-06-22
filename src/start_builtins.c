@@ -37,8 +37,6 @@ void	ft_echo(char **s)
 	}
 	while (s[i] != NULL)
 	{
-		//if (!sh->n_pipe)
-		//	write(1, "\e[0;30m\e[47m%\e[0m", 17);
 		if (ft_strncmp(s[i], "-n", 3))
 			ft_printf("%s", s[i]);
 		if (ft_strncmp(s[i], "-n", 3) && s[i + 1] != NULL)
@@ -49,20 +47,43 @@ void	ft_echo(char **s)
 		write(1, "\n", 1);
 }
 
-void	ft_cd(char **line_split)
+void	ft_cd(char **s, t_sh *sh)
 {
-	if (!line_split[1])
+	char *buf;
+	char *oldpwd;
+
+	buf = getcwd(NULL, 0);
+	oldpwd = ft_strjoin("OLDPWD=", buf);
+	if (!s[1])
 	{
-		if (chdir(getenv("HOME")) == -1)
+		if (chdir(getenv("HOME")) == 0)
+			ft_export(oldpwd, sh);
+		else
 			perror("cd");
 	}
-	else if (line_split[1][0] == '~')
+	else if (s[1][0] == '~')
 	{
-		if (chdir(getenv("HOME")) == -1)
+		if (chdir(getenv("HOME")) == 0)
+			ft_export(oldpwd, sh);
+		else
 			perror("cd");
 	}
-	else if (chdir(line_split[1]) == -1)
-		perror("cd");
+	else if (s[1][0] == '-')
+	{
+		if (chdir(getenv("OLDPWD")) == 0)
+			ft_export(oldpwd, sh);
+		else
+			perror("cd");
+	}
+	else 
+	{
+		if (chdir(s[1]) == 0)
+			ft_export(oldpwd, sh);
+		else
+			perror("cd");
+	}
+	free(buf);
+	free(oldpwd);
 }
 
 /**
