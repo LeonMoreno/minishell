@@ -42,8 +42,8 @@ void	ft_argvec_init(t_tokens *index, t_cmd *this_cmd)
 		ft_attribute_argvec(begin, &is_cmd, this_cmd);
 		if (begin->type == ARG || begin->type == CMD)
 			temp[i++] = begin->str;
-		if (begin->type == OPER)
-			this_cmd->n_redir++;
+//		if (begin->type == OPER)
+//			this_cmd->n_redir++;
 		begin = begin->next;
 	}
 	this_cmd->argvec = temp;
@@ -80,7 +80,7 @@ void	ft_create_cmd(t_sh *sh, bool *is_cmd, t_tokens *index)
 
 	cmd = malloc(sizeof(t_cmd));
 	cmd->next = NULL;
-	cmd->n_redir = 0;
+//	cmd->n_redir = 0;
 	*is_cmd = false;
 	if (!sh->cmd_lst)
 	{

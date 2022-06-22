@@ -36,9 +36,9 @@ void	start_builtins(t_cmd *cm, t_sh *sh)
 	char	**argv;
 
 	argv = cm->argvec;
-	if (cm->n_redir > 0)
+	if (cm->n_r_out > 0)
 	{
-		sh->s_fd = dup(STDOUT_FILENO);
+		sh->true_fd_out = dup(STDOUT_FILENO);
 		start_redir(cm);
 	}
 	if (!ft_strncmp(cm->name, "exit", 5))
@@ -55,6 +55,6 @@ void	start_builtins(t_cmd *cm, t_sh *sh)
 		ft_env();
 	else if (argv[0] && !ft_strncmp(argv[0], "unset", 5))
 		ft_unset(argv, sh);
-	if (cm->n_redir > 0 && sh->n_forks == 0)
+	if (cm->n_r_out > 0 && sh->n_forks == 0)
 		close_redir_buil(sh, cm);
 }

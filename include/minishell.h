@@ -48,7 +48,8 @@ typedef struct s_cmd
 	t_tokens		**token_tab;
 	char			**argvec;
 	char			*name;
-	int				n_redir;
+	//int				n_redir;
+	int				n_r_out;
 	int				fd_in;
 	char			*fdin_str;
 	int				*fds;
@@ -69,7 +70,7 @@ typedef struct s_sh
 	int		n_forks;
 	int		n_tokens;
 	int		start;
-	int		s_fd;
+	int		true_fd_out;
 	char		*promt;
 	char		**env;
 }	t_sh;
@@ -139,5 +140,6 @@ void	start_redir(t_cmd *cm);
 void	close_redir_buil(t_sh *sh, t_cmd *cm);
 void	start_redir_fork(t_cmd *cm, t_sh *sh);
 void	start_redir_pipes(t_cmd *cm, t_sh *sh, int x);
+void	chr_redir_out(t_cmd *cm, char c);
 
 #endif

@@ -8,7 +8,7 @@ void	start_redir_fork(t_cmd *cm, t_sh *sh)
 		start_redir(cm);
 }
 
-static	int	chr_symbol(t_cmd *cm, char c)
+void	chr_redir_out(t_cmd *cm, char c)
 {
 	t_tokens	**t;
 	int			n;
@@ -23,7 +23,7 @@ static	int	chr_symbol(t_cmd *cm, char c)
 				n++;
 		i++;
 	}
-	return (n);
+	cm->n_r_out = n;
 }
 
 void	start_redir(t_cmd *cm)
@@ -35,8 +35,7 @@ void	start_redir(t_cmd *cm)
 	t = cm->token_tab;
 	i = 0;
 	j = 0;
-	chr_symbol(cm, '>');
-	cm->fds = malloc(sizeof(int) * chr_symbol(cm, '>'));
+	cm->fds = malloc(sizeof(int) * cm->n_r_out);
 	if (!cm->fds)
 		exit (1);
 	while (t[i])
@@ -56,12 +55,12 @@ void	close_redir_buil(t_sh *sh, t_cmd *cm)
 	int	j;
 
 	j = 0;
-	dup2(sh->s_fd, STDOUT_FILENO);
+	dup2(sh->true_fd_out, STDOUT_FILENO);
 	while (cm->fds[j])
 	{
 		close(cm->fds[j]);
 		j++;
 	}
-	close(sh->s_fd);
+	close(sh->true_fd_out);
 	free(cm->fds);
 }
