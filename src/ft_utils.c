@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: agrenon <agrenon@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/16 19:17:31 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/22 11:19:30 by lmoreno          ###   ########.fr       */
+/*   Created: 2022/06/22 13:15:28 by agrenon           #+#    #+#             */
+/*   Updated: 2022/06/22 13:15:45 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ void	free_doble_arr(char **s)
 	i = 0;
 	while (s[i] && s)
 	{
-//		printf("s_i = %s\n", s[i]);
 		free(s[i]);
 		i++;
 	}

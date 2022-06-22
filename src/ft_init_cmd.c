@@ -1,5 +1,4 @@
 /* ************************************************************************** */
-	//		free(begin->fds);
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_init_cmd.c                                      :+:      :+:    :+:   */
@@ -7,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:49:40 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/16 18:50:30 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/22 13:16:37 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +79,7 @@ void	ft_create_cmd(t_sh *sh, bool *is_cmd, t_tokens *index)
 
 	cmd = malloc(sizeof(t_cmd));
 	cmd->next = NULL;
-//	cmd->n_redir = 0;
+	cmd->name = NULL;
 	*is_cmd = false;
 	if (!sh->cmd_lst)
 	{

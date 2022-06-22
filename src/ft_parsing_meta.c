@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parsing_meta.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: agrenon <agrenon@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/16 19:05:39 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/20 16:33:34 by agrenon          ###   ########.fr       */
+/*   Created: 2022/06/22 10:28:36 by agrenon           #+#    #+#             */
+/*   Updated: 2022/06/22 10:29:13 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ int	ft_parsing_meta(t_sh *sh, int i)
 		return (124);
 	if (sh->line[i] == 124)
 		return (124);
-//	if (sh->line[i] == 42)
-//		return (42);
 	if (sh->line[i] == 38 && sh->line[i + 1] == 38)
 		return (38);
 	return (0);
