@@ -20,7 +20,7 @@ void handle_signals(int sing)
 	printf("\n"); // Move to a new line
     //ioctl(STDIN_FILENO, TIOCSTI, "\n");
     rl_on_new_line(); // Regenerate the prompt on a newline
-	rl_replace_line("", 0); // Clear the previous text
+//	rl_replace_line("", 0); // Clear the previous text
     rl_redisplay();	
 }		
 

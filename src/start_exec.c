@@ -99,6 +99,7 @@ void	start_exec(t_sh *sh)
 	sh->n_forks = init_fork(sh);
 	while (cm)
 	{
+		chr_redir_out(cm, '>');
 		if (i < sh->n_pipe)
 			pipe(sh->pipe[i].p);
 		close_pipes(sh, i, &pi);
