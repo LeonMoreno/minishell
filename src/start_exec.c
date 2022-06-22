@@ -96,10 +96,10 @@ void	start_exec(t_sh *sh)
 	pi = 0;
 	cm = sh->cmd_lst;
 	start_pipex(sh);
-	chr_redir_out(sh->cmd_lst, '>');
 	sh->n_forks = init_fork(sh);
 	while (cm)
 	{
+		chr_redir_out(cm, '>');
 		if (i < sh->n_pipe)
 			pipe(sh->pipe[i].p);
 		close_pipes(sh, i, &pi);

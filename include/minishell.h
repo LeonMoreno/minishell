@@ -48,11 +48,10 @@ typedef struct s_cmd
 	t_tokens		**token_tab;
 	char			**argvec;
 	char			*name;
-	//int				n_redir;
 	int				n_r_out;
 	int				fd_in;
 	char			*fdin_str;
-	int				*fds;
+	int				*fd_out;
 	struct s_cmd	*next;
 }	t_cmd;
 

@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 19:17:31 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/22 10:26:32 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/22 11:19:30 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_print_cmds(t_sh *sh)
 			printf("Token this: %s\n", begin->token_tab[j]->str);
 			j++;
 		}
-		printf("CMD %d: [ %s ]  has %d args and \n",
+		printf("CMD %d: [ %s ]  has %d args\n",
 			i, begin->name, j - 1);
 		i++;
 		begin = begin->next;
