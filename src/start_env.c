@@ -9,9 +9,9 @@ void	init_var(t_sh *sh)
 	sh->n_tokens = 0;
 	sh->start = 0;
 	sh->tmp = NULL;
-	//sh->token_lst = NULL;
-	//sh->cmd_lst = NULL;
-	//sh->line = NULL;
+	sh->token_lst = NULL;
+	sh->cmd_lst = NULL;
+	sh->line = NULL;
 }
 
 static	void	init_void_env(t_sh *sh, int x)

@@ -19,6 +19,8 @@ char	*cmd_path(t_cmd *cm)
 			return (cm->name);
 	cmd = ft_strjoin("/", cm->name);
 	path_split = ft_split(getenv("PATH"), ':');
+	if (!path_split)
+		return (NULL);
 	while (path_split[i] != NULL)
 	{
 		path = ft_strjoin(path_split[i], cmd);
