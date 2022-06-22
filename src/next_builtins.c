@@ -5,7 +5,7 @@ int	ft_len_env(char *key_s, t_sh *sh)
 	int		i;
 	int		len;
 	int		ctrl;
-	char		**key_env;
+	char	**key_env;
 
 	i = 0;
 	ctrl = 0;
@@ -19,15 +19,14 @@ int	ft_len_env(char *key_s, t_sh *sh)
 		{
 			ctrl = 0;
 			free_doble_arr(key_env);
-			break;
+			break ;
 		}
 		else
 			ctrl = 1;
 		free_doble_arr(key_env);
 		i++;
 	}
-	len = ctrl + len;
-	return (len);
+	return (len = ctrl + len);
 }
 
 void	ft_unset_next(char **s, char **new_env, t_sh *sh)
@@ -43,7 +42,7 @@ void	ft_unset_next(char **s, char **new_env, t_sh *sh)
 		key_env = ft_split(sh->env[i], '=');
 		if (ft_strncmp(s[1], key_env[0], ft_strlen(s[1] + 1)))
 		{
-			new_env[j] = ft_strdup(sh->env[i]); 
+			new_env[j] = ft_strdup(sh->env[i]);
 			j++;
 		}
 		free_doble_arr(key_env);
@@ -84,11 +83,11 @@ void	ft_unset(char **s, t_sh *sh)
  * @**key_s argu de export
  * @**key_env variable de environ donde comparo si existe la variable (leo)
  */
-void	ft_export_last(int ctrl, int i, char *s, char **new_env, t_sh *sh)
+void	ft_export_last(int ctrl, int i, char **new_env, t_sh *sh)
 {
 	if (!ctrl)
 	{
-		new_env[i] = ft_strdup(s); 
+		new_env[i] = ft_strdup(sh->tmp);
 		new_env[i + 1] = NULL;
 	}
 	else
@@ -96,7 +95,9 @@ void	ft_export_last(int ctrl, int i, char *s, char **new_env, t_sh *sh)
 	free_doble_arr(sh->env);
 	sh->env = new_env;
 	environ = sh->env;
+	sh->tmp = NULL;
 }
+
 /**
  * @brief:
  * @new_env - malloc temp
@@ -104,7 +105,7 @@ void	ft_export_last(int ctrl, int i, char *s, char **new_env, t_sh *sh)
  * @key_s: split de s
  * @key_env: var de env -- var=argu -- comparo var 
  */
-void	ft_export_next(char **new_env, char **key_s, char *s, t_sh *sh)
+void	ft_export_next(char **new_env, char **key_s, t_sh *sh)
 {
 	int		i;
 	int		ctrl;
@@ -117,16 +118,16 @@ void	ft_export_next(char **new_env, char **key_s, char *s, t_sh *sh)
 		key_env = ft_split(sh->env[i], '=');
 		if (!ft_strncmp(key_s[0], key_env[0], ft_strlen(key_s[0]) + 1))
 		{
-			new_env[i] = ft_strdup(s); 
+			new_env[i] = ft_strdup(sh->tmp);
 			ctrl = 1;
 		}
 		else
-			new_env[i] = ft_strdup(sh->env[i]); 
+			new_env[i] = ft_strdup(sh->env[i]);
 		free_doble_arr(key_env);
 		i++;
 	}
 	free_doble_arr(key_s);
-	ft_export_last(ctrl, i, s, new_env, sh);
+	ft_export_last(ctrl, i, new_env, sh);
 }
 
 /**
@@ -145,9 +146,8 @@ void	ft_export(char *s, t_sh *sh)
 		ft_env();
 		return ;
 	}
+	sh->tmp = s;
 	key_s = ft_split(s, '=');
-	//if (!key_s[1])
-	//	return ;
 	len = ft_len_env(key_s[0], sh);
 	new_env = malloc(sizeof(char *) * (len + 1));
 	if (!new_env)
@@ -155,5 +155,5 @@ void	ft_export(char *s, t_sh *sh)
 		printf("error malloc\n");
 		return ;
 	}
-	ft_export_next(new_env, key_s, s, sh);
+	ft_export_next(new_env, key_s, sh);
 }

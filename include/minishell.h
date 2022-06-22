@@ -70,8 +70,9 @@ typedef struct s_sh
 	int		n_tokens;
 	int		start;
 	int		true_fd_out;
-	char		*promt;
-	char		**env;
+	char	*promt;
+	char	**env;
+	char	*tmp;
 }	t_sh;
 
 //Functions builtins

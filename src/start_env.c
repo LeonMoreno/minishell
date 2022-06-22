@@ -8,6 +8,7 @@ void	init_var(t_sh *sh)
 	sh->n_forks = 0;
 	sh->n_tokens = 0;
 	sh->start = 0;
+	sh->tmp = NULL;
 }
 
 static	void	init_void_env(t_sh *sh, int x)

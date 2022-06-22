@@ -65,10 +65,11 @@ void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i)
 		dup_stdout(sh, i);
 	else if (sh->n_pipe && sh->n_forks != (i + 1))
 	{
-		dup_stdin(sh, i);
+		if (!cm->fd_in)
+			dup_stdin(sh, i);
 		dup_stdout(sh, i);
 	}
-	else if (sh->n_pipe && sh->n_forks == (i + 1))
+	else if (!cm->fd_in && sh->n_pipe && sh->n_forks == (i + 1))
 		dup_stdin(sh, i);
 	if (cm->n_r_out > 0)
 		start_redir_fork(cm, sh);
