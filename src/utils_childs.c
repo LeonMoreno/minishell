@@ -47,6 +47,7 @@ void	end_fork(t_sh *sh)
 		}
 		i++;
 	}
+	sh->last_re = WEXITSTATUS(status);
 	if (sh->id_f)
 		free(sh->id_f);
 	if (sh->n_pipe)

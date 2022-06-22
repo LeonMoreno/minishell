@@ -12,5 +12,5 @@ int main(int argc, char **argv)
 		printf("argu %d, %s\n", i, argv[i]);
 		i++;
 	}
-	return (0);
+	return (7);
 }
