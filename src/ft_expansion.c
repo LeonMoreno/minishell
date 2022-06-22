@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:29:45 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/20 15:51:53 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/22 09:32:37 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_end_expansion(t_sh *sh, int i)
 	{
 		if (sh->line[i] == 39 || sh->line[i] == 34 || sh->line[i] < 33)
 			break ;
-		if (sh->line[i + 1] == '$')
+		if (sh->line[i + 1] == '$' || sh->line[i] == '?')
 		{
 			i++;
 			break ;
@@ -34,9 +34,15 @@ char	*ft_compare_env(t_sh *sh, int start, int end)
 	char	*found;
 
 	expan = ft_substr(sh->line, start + 1, end - start - 1);
-	found = getenv(expan);
-	if (found)
-		found = ft_strdup(found);
+	if (expan[0] == '?')
+		found = ft_strdup(ft_itoa(sh->last_re));
+	else
+	{
+		found = getenv(expan);
+		if (found)
+			found = ft_strdup(found);
+		free(expan);
+	}
 	return (found);
 }
 

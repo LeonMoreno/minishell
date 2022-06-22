@@ -8,7 +8,6 @@ void	init_var(t_sh *sh)
 	sh->n_forks = 0;
 	sh->n_tokens = 0;
 	sh->start = 0;
-	sh->last_re = 0;
 }
 
 static	void	init_void_env(t_sh *sh, int x)
@@ -39,14 +38,7 @@ static	char	*init_shlvl(char *shlvl)
 	chiffre = ft_itoa(lvl);
 	temp = ft_strjoin("SHLVL=", chiffre);
 	free(chiffre);
-	free_doble_arr(tab); // Tu peux utiliser pour arr
-	/*lvl = 0;
-	while (tab[lvl])
-	{
-		free(tab[lvl]);
-		lvl++;
-	}
-	free(tab);*/
+	free_doble_arr(tab);
 	return (temp);
 }
 
@@ -66,6 +58,7 @@ static	void	init_env(t_sh *sh, int x)
 	}
 	sh->env[i] = NULL;
 	environ = sh->env;
+	sh->last_re = 0;
 }
 
 void	start_env(t_sh *sh)

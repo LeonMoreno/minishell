@@ -103,8 +103,10 @@ void	ft_argvec_init(t_tokens *index, t_cmd *this_cmd);
 void	ft_init_cmd_lst(t_sh *sh);
 
 //Functions Heredoc
+char	*ft_heredoc(char *operand, t_sh *sh);
 void	ft_check_redir_input(t_sh *sh);
 void	ft_exit_here(char *temp, t_sh *sh);
+void	child_here(int *i_pipe, t_sh *sh, char *operand);
 
 //Functions Sigaction
 void	ft_sigaction(void);

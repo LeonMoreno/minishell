@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:18:57 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/21 16:15:03 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/22 10:15:15 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,7 @@ char	*ft_fork_here(char *operand, t_sh *sh)
 	pipe(i_pipe);
 	me = fork();
 	if (me == 0)
-	{
-		close (i_pipe[0]);
-		temp = ft_heredoc(operand, sh);
-		write(i_pipe[1], temp, ft_strlen(temp));
-		free(temp);
-		close(i_pipe[1]);
-		exit(0);
-	}
+		child_here(i_pipe, sh, operand);
 	close(i_pipe[1]);
 	ft_silence();
 	read(i_pipe[0], buf, 10240);
