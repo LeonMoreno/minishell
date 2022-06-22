@@ -6,13 +6,13 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:18:57 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/21 16:15:03 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/22 10:24:16 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_open_heredoc(t_cmd *cmd, int files, char *content)
+void	ft_open_h(t_cmd *cmd, int files, char *content)
 {
 	char	*filename;
 	char	*path;
@@ -90,20 +90,13 @@ char	*ft_fork_here(char *operand, t_sh *sh)
 	char	*temp;
 	char	buf[10240];
 
-	me  = 0;
+	me = 0;
 	while (me < 10240)
 		buf[me++] = '\0';
 	pipe(i_pipe);
 	me = fork();
 	if (me == 0)
-	{
-		close (i_pipe[0]);
-		temp = ft_heredoc(operand, sh);
-		write(i_pipe[1], temp, ft_strlen(temp));
-		free(temp);
-		close(i_pipe[1]);
-		exit(0);
-	}
+		child_here(i_pipe, sh, operand);
 	close(i_pipe[1]);
 	ft_silence();
 	read(i_pipe[0], buf, 10240);
@@ -132,7 +125,7 @@ void	ft_check_redir_input(t_sh *sh)
 			tab = begin->token_tab;
 			if (tab[i]->type == OPER && tab[i]->str[0] == '<'
 				&& tab[i]->str[1] == '<')
-				ft_open_heredoc(begin, files++, ft_fork_here(tab[i + 1]->str, sh));
+				ft_open_h(begin, files++, ft_fork_here(tab[i + 1]->str, sh));
 			else if (tab[i]->type == OPER && tab[i]->str[0] == '<')
 				ft_open_file(begin, tab[i + 1]->str);
 			i++;

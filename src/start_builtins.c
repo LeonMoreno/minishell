@@ -30,6 +30,11 @@ void	ft_echo(char **s)
 	int	i;
 
 	i = 1;
+	if (!s[i])
+	{
+		write(1, "\n", 1);
+		return ;
+	}
 	while (s[i] != NULL)
 	{
 		//if (!sh->n_pipe)

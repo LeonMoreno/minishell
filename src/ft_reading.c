@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 19:02:24 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/21 12:28:25 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/22 09:23:28 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	ft_parsing(t_sh *sh, int *i)
 		temp = ft_single_quoting(sh, i, temp);
 	else if (sh->line[*i] == 34 && ft_quote_real(sh, *i, 1))
 		temp = ft_double_quoting(sh, i, temp);
-	else if (sh->line[*i] == '$')
+	else if (sh->line[*i] == '$' && sh->line[*i + 1] > 32)
 		temp = ft_expansion(sh, i, temp);
 	else if (sh->line[*i] > 32 && sh->line[*i] < 127)
 		temp = ft_prep_string(sh, &temp, i);
