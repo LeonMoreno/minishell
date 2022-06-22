@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:49:40 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/22 13:16:37 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/22 17:24:45 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ void	ft_argvec_init(t_tokens *index, t_cmd *this_cmd)
 		ft_attribute_argvec(begin, &is_cmd, this_cmd);
 		if (begin->type == ARG || begin->type == CMD)
 			temp[i++] = begin->str;
-//		if (begin->type == OPER)
-//			this_cmd->n_redir++;
 		begin = begin->next;
 	}
 	this_cmd->argvec = temp;
