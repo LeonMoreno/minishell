@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 19:02:24 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/22 09:23:28 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/22 13:08:53 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_tokens	*ft_create_token(t_sh *sh)
 	t_tokens	*begin;
 
 	token = malloc(sizeof(t_tokens));
+	token->type = ARG;
 	token->next = NULL;
 	token->argve = NULL;
 	token->str = NULL;
@@ -54,12 +55,10 @@ void	ft_next_token(t_sh *sh, int i, char **temp)
 	token = ft_create_token(sh);
 	token->str = *temp;
 	sh->n_tokens++;
-	token->type = ARG;
 	if (ft_parsing_meta(sh, i) || ft_parsing_meta(sh, i - 1))
 		token->type = OPER;
 	if (ft_parsing_meta(sh, i) == 124 && !ft_double_meta(sh, i - 1))
 		token->type = PIPE;
-	//printf("token->str =  [%s] TYPE =  [%d]\n", token->str, token->type);
 	sh->start = -1;
 	*temp = NULL;
 }
@@ -92,7 +91,6 @@ char	*ft_prep_string(t_sh *sh, char **temp, int *i)
 void	ft_parsing(t_sh *sh, int *i)
 {
 	static char	*temp = NULL;
-
 
 	if (sh->line[*i] < 33 && sh->start >= 0)
 		ft_next_token(sh, *i, &temp);

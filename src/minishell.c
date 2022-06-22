@@ -36,16 +36,13 @@ void	start_shell(t_sh *sh)
 		if (sh->line && sh->line[0] != '\0')
 		{
 			line_parser(sh);
-			if (sh->token_lst) //&& ft_parse_err(sh->token_lst))
-			{	
-				//ft_print_cmds(sh);  Print basic info of all cmds in cmd_lst
+			if (sh->token_lst && sh->cmd_lst && sh->cmd_lst->name)
+			{
+				ft_print_cmds(sh); // Print basic info of all cmds in cmd_lst
 				start_exec(sh);
-				//printf("APRES EXEC\n");
 			}
-			free_lst(sh);
 		}
-		else if (sh->line && sh->line[0] == '\0')
-			free(sh->line);
+		free_lst(sh);
 		sh->token_lst = NULL;
 	}
 }
