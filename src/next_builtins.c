@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:50 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/22 15:25:51 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/22 18:27:27 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	ft_export(char *s, t_sh *sh)
 	char	**new_env;
 	char	**key_s;
 
-	if (!s[1])
+	if (!s)
 	{
 		ft_env();
 		return ;
