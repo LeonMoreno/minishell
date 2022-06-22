@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:01 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/22 15:25:03 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/22 15:51:55 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ void	end_fork(t_sh *sh)
 		}
 		i++;
 	}
-	sh->last_re = WEXITSTATUS(status);
+	if (sh->n_forks)
+		sh->last_re = WEXITSTATUS(status);
 	if (sh->id_f)
 		free(sh->id_f);
 	if (sh->n_pipe)
