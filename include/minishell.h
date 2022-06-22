@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:27:01 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/22 17:32:56 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/22 18:31:03 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void		ft_env(void);
 void		ft_unset(char **s, t_sh *sh);
 void		start_env(t_sh *sh);
 int			ft_len_env(char *key_s, t_sh *sh);
+void		ft_cd_home_relativo(char **s, t_sh *sh, char *oldpwd);
 
 //Functions parser
 void		line_parser(t_sh *sh);
