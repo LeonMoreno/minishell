@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   start_builtins.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/22 15:25:47 by lmoreno           #+#    #+#             */
+/*   Updated: 2022/06/22 15:25:48 by lmoreno          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	ft_getpwd(void)
@@ -47,10 +59,28 @@ void	ft_echo(char **s)
 		write(1, "\n", 1);
 }
 
+void	ft_cd_next(char **s, t_sh *sh, char *oldpwd)
+{
+	if (s[1][0] == '-')
+	{
+		if (chdir(getenv("OLDPWD")) == 0)
+			ft_export(oldpwd, sh);
+		else
+			perror("cd");
+	}
+	else
+	{
+		if (chdir(s[1]) == 0)
+			ft_export(oldpwd, sh);
+		else
+			perror("cd");
+	}
+}
+
 void	ft_cd(char **s, t_sh *sh)
 {
-	char *buf;
-	char *oldpwd;
+	char	*buf;
+	char	*oldpwd;
 
 	buf = getcwd(NULL, 0);
 	oldpwd = ft_strjoin("OLDPWD=", buf);
@@ -68,36 +98,8 @@ void	ft_cd(char **s, t_sh *sh)
 		else
 			perror("cd");
 	}
-	else if (s[1][0] == '-')
-	{
-		if (chdir(getenv("OLDPWD")) == 0)
-			ft_export(oldpwd, sh);
-		else
-			perror("cd");
-	}
-	else 
-	{
-		if (chdir(s[1]) == 0)
-			ft_export(oldpwd, sh);
-		else
-			perror("cd");
-	}
+	else
+		ft_cd_next(s, sh, oldpwd);
 	free(buf);
 	free(oldpwd);
-}
-
-/**
- * @brief printf env
- *
- */
-void	ft_env(void)
-{
-	int	i;
-
-	i = 0;
-	while (environ[i] != NULL)
-	{
-		ft_printf("%s\n", environ[i]);
-		i++;
-	}
 }

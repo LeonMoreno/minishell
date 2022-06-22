@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   start_exec.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/22 15:25:38 by lmoreno           #+#    #+#             */
+/*   Updated: 2022/06/22 15:25:39 by lmoreno          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /**
- * @brief: malloc pour les pipes 
+ * @brief: malloc pour les pipes
  * @sh->pip : ptr struct s_pip
  */
 void	start_pipex(t_sh *sh)
@@ -37,7 +49,7 @@ int	init_fork(t_sh *sh)
  * @brief: begin start commands extern & builtins
  * if there pipe || are builtins exec builtins with in fork
  * if no pipe builtins exec without fork
- * if cmd has a fd_in , Dup2 stdin 
+ * if cmd has a fd_in , Dup2 stdin
  */
 void	start_cmd(t_cmd *cm, t_sh *sh, int i)
 {

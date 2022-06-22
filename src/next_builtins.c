@@ -1,33 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   next_builtins.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/22 15:25:50 by lmoreno           #+#    #+#             */
+/*   Updated: 2022/06/22 15:25:51 by lmoreno          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
-
-int	ft_len_env(char *key_s, t_sh *sh)
-{
-	int		i;
-	int		len;
-	int		ctrl;
-	char	**key_env;
-
-	i = 0;
-	ctrl = 0;
-	len = 0;
-	while (sh->env[len] != NULL)
-		len++;
-	while (sh->env[i] != NULL)
-	{
-		key_env = ft_split(sh->env[i], '=');
-		if (!ft_strncmp(key_s, key_env[0], ft_strlen(key_s) + 1))
-		{
-			ctrl = 0;
-			free_doble_arr(key_env);
-			break ;
-		}
-		else
-			ctrl = 1;
-		free_doble_arr(key_env);
-		i++;
-	}
-	return (len = ctrl + len);
-}
 
 void	ft_unset_next(char **s, char **new_env, t_sh *sh)
 {
@@ -73,13 +56,13 @@ void	ft_unset(char **s, t_sh *sh)
 
 /**
  * @brief ft_export: malloc un nuevo espacio de mem para new env
- * y agrego nueva variable, comparando si ya existe o 
- * si no la meto a lo ultimo. 
+ * y agrego nueva variable, comparando si ya existe o
+ * si no la meto a lo ultimo.
  * 1 - Si no hay argumento llamo ft_env() - imprimo env
  * Por ultimo la muevo el ptr de environ al nuevo array.
  * *
  * @key_s: split argu export avec = (leo=uno)
- * @**new_env: Nuevo array 
+ * @**new_env: Nuevo array
  * @**key_s argu de export
  * @**key_env variable de environ donde comparo si existe la variable (leo)
  */
@@ -103,7 +86,7 @@ void	ft_export_last(int ctrl, int i, char **new_env, t_sh *sh)
  * @new_env - malloc temp
  * @s export + argu
  * @key_s: split de s
- * @key_env: var de env -- var=argu -- comparo var 
+ * @key_env: var de env -- var=argu -- comparo var
  */
 void	ft_export_next(char **new_env, char **key_s, t_sh *sh)
 {

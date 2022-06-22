@@ -2,22 +2,22 @@
 # define MINISHELL_H
 
 // Include stddef stdio stlib unistd limits stdarg fcntl
-#include "../libft/include/libft.h"
+# include "../libft/include/libft.h"
 
 // Include readline
-#include <readline/readline.h>
-#include <readline/history.h>
-#include "colours.h"
+# include <readline/readline.h>
+# include <readline/history.h>
+# include "colours.h"
 //Include pout wait
-#include <sys/wait.h>
+# include <sys/wait.h>
 
-#include <stdbool.h>
+# include <stdbool.h>
 //Include pour sigaction
-#include <signal.h>
-#include <termios.h>
+# include <signal.h>
+# include <termios.h>
 
 // Variable global env
-extern char **environ;
+extern char	**environ;
 
 enum
 {
@@ -63,16 +63,16 @@ typedef struct s_sh
 	t_pip		*pipe;
 	pid_t		*id_f;
 
-	int		last_re;
-	int		n_cmd;
-	int		n_pipe;
-	int		n_forks;
-	int		n_tokens;
-	int		start;
-	int		true_fd_out;
-	char	*promt;
-	char	**env;
-	char	*tmp;
+	int			last_re;
+	int			n_cmd;
+	int			n_pipe;
+	int			n_forks;
+	int			n_tokens;
+	int			start;
+	int			true_fd_out;
+	char		*promt;
+	char		**env;
+	char		*tmp;
 }	t_sh;
 
 //Functions builtins
@@ -84,9 +84,9 @@ void	ft_export(char *s, t_sh *sh);
 void	ft_env(void);
 void	ft_unset(char **s, t_sh *sh);
 void	start_env(t_sh *sh);
+int		ft_len_env(char *key_s, t_sh *sh);
 
 //Functions parser
-t_tokens	*ft_create_token(t_sh *sh);
 void	line_parser(t_sh *sh);
 void	ft_parsing(t_sh *sh, int *i);
 int		ft_quote_real(t_sh *sh, int i, int a);
@@ -97,6 +97,7 @@ char	*ft_prep_string(t_sh *sh, char **temp, int *i);
 int		ft_parsing_meta(t_sh *sh, int i);
 int		ft_double_meta(t_sh *sh, int i);
 int		ft_parse_err(t_tokens *list);
+t_tokens	*ft_create_token(t_sh *sh);
 
 //Functions Commands
 int		ft_size(t_tokens *lsist, int mode);

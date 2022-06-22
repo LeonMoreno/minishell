@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   start_childs.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/22 15:25:44 by lmoreno           #+#    #+#             */
+/*   Updated: 2022/06/22 15:25:45 by lmoreno          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /**
- * @brief get variable PATH the env  -- split -- 
+ * @brief get variable PATH the env  -- split --
  * cherche than chaque line path+name_cmd
  *
  * @param cm struct with the info the cmd
@@ -16,7 +28,7 @@ char	*cmd_path(t_cmd *cm)
 
 	i = 0;
 	if (!access(cm->name, X_OK))
-			return (cm->name);
+		return (cm->name);
 	cmd = ft_strjoin("/", cm->name);
 	path_split = ft_split(getenv("PATH"), ':');
 	if (!path_split)
@@ -48,11 +60,11 @@ void	start_child_builtins(t_cmd *cm, t_sh *sh, int i)
 }
 
 /**
- * @brief: execution the commands extern than fork 
+ * @brief: execution the commands extern than fork
  * 1) check path if cmd exist. 2) execute selon ordre
  *
  * @param cm: struct with command and argus
- * @param i: index of interactions the forks -- 
+ * @param i: index of interactions the forks --
  * 1er_cmd i == 0, last_cmd i + 1 == n_forks(number of forks)
  * @param x: index pour le pipex
  */

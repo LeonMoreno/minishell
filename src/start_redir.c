@@ -1,11 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   start_redir.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/22 15:25:33 by lmoreno           #+#    #+#             */
+/*   Updated: 2022/06/22 15:25:34 by lmoreno          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	start_redir_fork(t_cmd *cm, t_sh *sh)
 {
 	(void) sh;
-//	printf("i = %d \n", sh->n_forks);
-	//if (sh->n_forks == 1)
-		start_redir(cm);
+	start_redir(cm);
 }
 
 void	chr_redir_out(t_cmd *cm, char c)
