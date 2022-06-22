@@ -16,11 +16,12 @@ static	void	init_void_env(t_sh *sh, int x)
 	char	*s;
 
 	s = ft_strdup("PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin");
-	sh->env = malloc(sizeof(char *) * (x + 4));
+	sh->env = malloc(sizeof(char *) * (x + 5));
 	sh->env[x] = ft_strdup("HOME=/home");
 	sh->env[x + 1] = ft_strdup("USER=user");
 	sh->env[x + 2] = s;
-	sh->env[x + 3] = NULL;
+	sh->env[x + 3] = ft_strdup("SHLVL=1");
+	sh->env[x + 4] = NULL;
 	environ = sh->env;
 }
 
@@ -38,13 +39,14 @@ static	char	*init_shlvl(char *shlvl)
 	chiffre = ft_itoa(lvl);
 	temp = ft_strjoin("SHLVL=", chiffre);
 	free(chiffre);
-	lvl = 0;
+	free_doble_arr(tab); // Tu peux utiliser pour arr
+	/*lvl = 0;
 	while (tab[lvl])
 	{
 		free(tab[lvl]);
 		lvl++;
 	}
-	free(tab);
+	free(tab);*/
 	return (temp);
 }
 
