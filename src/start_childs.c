@@ -15,8 +15,7 @@ char	*cmd_path(t_cmd *cm)
 	int		i;
 
 	i = 0;
-	if (!ft_strncmp(cm->name, "./", 2))
-		if (!access(cm->name, X_OK))
+	if (!access(cm->name, X_OK))
 			return (cm->name);
 	cmd = ft_strjoin("/", cm->name);
 	path_split = ft_split(getenv("PATH"), ':');
