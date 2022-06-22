@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:47 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/22 15:25:48 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/22 18:15:56 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,9 @@ void	ft_echo(char **s)
 
 void	ft_cd_next(char **s, t_sh *sh, char *oldpwd)
 {
-	if (s[1][0] == '-')
+	if (s[1][0] == '~' && s[1][1] == '/')
+		ft_cd_home_relativo(s, sh, oldpwd);
+	else if (s[1][0] == '-')
 	{
 		if (chdir(getenv("OLDPWD")) == 0)
 			ft_export(oldpwd, sh);
@@ -91,7 +93,7 @@ void	ft_cd(char **s, t_sh *sh)
 		else
 			perror("cd");
 	}
-	else if (s[1][0] == '~')
+	else if (s[1][0] == '~' && s[1][1] == '\0')
 	{
 		if (chdir(getenv("HOME")) == 0)
 			ft_export(oldpwd, sh);
