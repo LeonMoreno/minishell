@@ -53,6 +53,8 @@ clean	:
 fclean	:	clean
 			$(RM) $(NAME)
 			make -C $(LIBFT_DIR) fclean
+val:
+		valgrind   --leak-check=full --track-origins=yes  --trace-children=yes  ./$(NAME)
 
 re		: fclean all
 
