@@ -22,7 +22,7 @@ void	start_readline(t_sh *sh)
 	if (sh->line == NULL)
 	{
 		printf("%s\n", "exit");
-		ft_exit(sh);
+		ft_exit(sh, NULL);
 	}
 }
 

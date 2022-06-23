@@ -26,8 +26,18 @@ void	ft_getpwd(void)
 	}
 }
 
-void	ft_exit(t_sh *sh)
+void	ft_exit(t_sh *sh, char **argv)
 {
+	int i;
+
+	i = 0;
+	while (argv[i])
+		i++;
+	if (i > 2)
+	{
+		ft_printf("MSG EXIT i = %d\n", i);
+		return ;
+	}
 	if (sh->line)
 	{
 		rl_clear_history();
