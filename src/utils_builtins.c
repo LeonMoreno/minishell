@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:29 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/23 12:34:25 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/23 16:35:05 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
  */
 int	check_cmd(char *s)
 {
+	if (!s)
+		return (0);
 	if (!ft_strncmp(s, "exit", 5))
 		return (1);
 	if (!ft_strncmp(s, "pwd", 4))

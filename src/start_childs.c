@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:44 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/23 15:48:20 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/23 17:13:10 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,22 +73,28 @@ void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i)
 	char	*path;
 
 	ft_sig_cancel();
-	path = cmd_path(cm);
-	if (!path)
-		msg_stderr("miniShell: command not found: ", cm);
-	if (!check_cmd(sh->cmd_lst->name) && sh->n_pipe > 0 && (i == 0))
-		dup_stdout(sh, i);
-	else if (sh->n_pipe && sh->n_forks != (i + 1))
+	if (cm->name)
 	{
-		if (!cm->fd_in)
+		path = cmd_path(cm);
+		if (!check_cmd(sh->cmd_lst->name) && sh->n_pipe > 0 && (i == 0))
+			dup_stdout(sh, i);
+		else if (sh->n_pipe && sh->n_forks != (i + 1))
+		{
+			if (!cm->fd_in)
+				dup_stdin(sh, i);
+			dup_stdout(sh, i);
+		}
+		else if (!cm->fd_in && sh->n_pipe && sh->n_forks == (i + 1))
 			dup_stdin(sh, i);
-		dup_stdout(sh, i);
 	}
-	else if (!cm->fd_in && sh->n_pipe && sh->n_forks == (i + 1))
-		dup_stdin(sh, i);
 	if (cm->n_r_out > 0)
 		start_redir_fork(cm, sh);
-	execve(path, cm->argvec, environ);
-	perror("execve");
-	exit(EXIT_FAILURE);
+	if (cm->name)
+	{
+		if (!path)
+			msg_stderr("miniShell: command not found: ", cm);
+		execve(path, cm->argvec, environ);
+		perror("execve");
+	}
+	ft_exit(sh, cm->argvec);
 }

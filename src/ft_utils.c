@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 13:15:28 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/23 12:37:37 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/23 17:10:52 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,5 +115,5 @@ void	msg_stderr(char *str, t_cmd *cm)
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(cm->name, 2);
 	ft_putchar_fd('\n', 2);
-	exit(EXIT_FAILURE);
+	exit(1);
 }

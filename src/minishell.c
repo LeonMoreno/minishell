@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:36:28 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/23 12:36:43 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/23 16:47:38 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	start_shell(t_sh *sh)
 		if (sh->line && sh->line[0] != '\0')
 		{
 			line_parser(sh);
-			if (sh->token_lst && sh->cmd_lst && sh->cmd_lst->name)
+//			ft_print_cmds(sh);
+			if (sh->token_lst && sh->cmd_lst)// sh->cmd_lst->name)
 				start_exec(sh);
 		}
 		free_lst(sh);
