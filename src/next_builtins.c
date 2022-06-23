@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:50 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/22 18:28:02 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/22 19:34:13 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	ft_unset(char **s, t_sh *sh)
 	}
 	while (sh->env[i] != NULL)
 		i++;
+	if (i != ft_len_env(s[1], sh))
+		return ;
 	new_env = malloc(sizeof(char *) * (i));
 	ft_unset_next(s, new_env, sh);
 }
