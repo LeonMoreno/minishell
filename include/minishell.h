@@ -88,16 +88,16 @@ typedef struct s_sh
 }	t_sh;
 
 //Functions builtins
-void		ft_exit(t_sh *sh);
-void		ft_getpwd(void);
-void		ft_echo(char **s);
-void		ft_cd(char **s, t_sh *sh);
-void		ft_export(char *s, t_sh *sh);
-void		ft_env(void);
-void		ft_unset(char **s, t_sh *sh);
-void		start_env(t_sh *sh);
-int			ft_len_env(char *key_s, t_sh *sh);
-void		ft_cd_home_relativo(char **s, t_sh *sh, char *oldpwd);
+void	ft_exit(t_sh *sh, char **argv);
+void	ft_getpwd(void);
+void	ft_echo(char **s);
+void	ft_cd(char **s, t_sh *sh);
+void	ft_export(char *s, t_sh *sh);
+void	ft_env(void);
+void	ft_unset(char **s, t_sh *sh);
+void	start_env(t_sh *sh);
+int		ft_len_env(char *key_s, t_sh *sh);
+void	ft_cd_home_relativo(char **s, t_sh *sh, char *oldpwd);
 
 //Functions parser
 void		line_parser(t_sh *sh);

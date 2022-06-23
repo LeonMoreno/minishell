@@ -54,7 +54,7 @@ void	start_builtins(t_cmd *cm, t_sh *sh)
 		start_redir(cm);
 	}
 	if (!ft_strncmp(cm->name, "exit", 5))
-		ft_exit(sh);
+		ft_exit(sh, argv);
 	else if (argv[0] && !ft_strncmp(argv[0], "pwd", 4))
 		ft_getpwd();
 	else if (argv[0] && !ft_strncmp(argv[0], "echo", 5))
