@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:18:57 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/22 10:24:16 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/23 11:21:04 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ char	*ft_heredoc(char *operand, t_sh *sh)
 		temp = ft_strjoin(end, "\n");
 		free(end);
 	}
+	temp = ft_expand_here(sh, temp);
 	free(new_str);
 	return (temp);
 }

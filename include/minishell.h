@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:27:01 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/22 18:47:17 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/23 11:08:09 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ char		*ft_heredoc(char *operand, t_sh *sh);
 void		ft_check_redir_input(t_sh *sh);
 void		ft_exit_here(char *temp, t_sh *sh);
 void		child_here(int *i_pipe, t_sh *sh, char *operand);
+char		*ft_expand_here(t_sh *sh, char *line);
 
 //Functions Sigaction
 void		ft_sigaction(void);
