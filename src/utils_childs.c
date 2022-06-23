@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:01 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/22 18:39:55 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/23 16:01:17 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ void	end_fork(t_sh *sh)
 	j = 0;
 	while (i < sh->n_forks)
 	{
+		ft_silence();
 		waitpid(sh->id_f[i], &status, 0);
+		ft_sigaction();
 		if (sh->pipe && (j < sh->n_pipe))
 		{
 			close(sh->pipe[j].p[OUT]);
