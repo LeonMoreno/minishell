@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agrenon <agrenon@42quebec.com>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/22 17:36:28 by agrenon           #+#    #+#             */
+/*   Updated: 2022/06/22 17:47:50 by agrenon          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	start_readline(t_sh *sh)
@@ -37,10 +49,7 @@ void	start_shell(t_sh *sh)
 		{
 			line_parser(sh);
 			if (sh->token_lst && sh->cmd_lst && sh->cmd_lst->name)
-			{
-				//ft_print_cmds(sh);//  Print basic info of all cmds in cmd_lst
 				start_exec(sh);
-			}
 		}
 		free_lst(sh);
 		sh->token_lst = NULL;

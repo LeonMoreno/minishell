@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:33 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/22 15:25:34 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/22 18:47:10 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,14 @@ void	chr_redir_out(t_cmd *cm, char c)
 	int			n;
 	int			i;
 
+
 	i = 0;
 	n = 0;
 	t = cm->token_tab;
 	while (t[i])
 	{
 		if (ft_strchr(t[i]->str, c))
-				n++;
+			n++;
 		i++;
 	}
 	cm->n_r_out = n;
