@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:47 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/23 12:32:36 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/23 13:17:26 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	ft_exit(t_sh *sh, char **argv)
 	}
 	if (sh->line)
 	{
-		rl_clear_history();
 		free_lst(sh);
 		free_doble_arr(sh->env);
 	}
+	rl_clear_history();
 	exit (EXIT_SUCCESS);
 }
 
