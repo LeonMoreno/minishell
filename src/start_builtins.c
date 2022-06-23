@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:47 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/23 12:25:35 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/23 12:32:36 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_getpwd(void)
 
 void	ft_exit(t_sh *sh, char **argv)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (argv && argv[i])

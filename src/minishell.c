@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:36:28 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/23 12:25:38 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/23 12:36:43 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	start_readline(t_sh *sh)
 
 void	start_shell(t_sh *sh)
 {
-	ft_printf("\n\t\t %s ** PROC INI PID %d ** %s\n\n", UBLU, getpid(), RESET);
+	ft_printf("\n\t\t %s *** PROC INI PID %d *** %s\n\n", UBLU, getpid(), RESET);
 	while (1)
 	{
 		init_var(sh);

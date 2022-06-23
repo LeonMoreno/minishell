@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:29 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/22 18:28:00 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/23 12:34:25 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,6 @@ void	ft_cd_home_relativo(char **s, t_sh *sh, char *oldpwd)
 
 	h_rel = NULL;
 	tmp = NULL;
-
 	h_rel = ft_substr(s[1], 1, (ft_strlen(s[1]) - 1));
 	tmp = ft_strjoin(getenv("HOME"), h_rel);
 	if (chdir(tmp) == 0)
