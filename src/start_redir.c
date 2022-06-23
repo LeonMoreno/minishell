@@ -51,10 +51,10 @@ void	start_redir(t_cmd *cm)
 	while (t[i])
 	{
 		if (!ft_strncmp(t[i]->str, ">", 2))
-		{
-			cm->fd_out[j] = open(t[i + 1]->str, O_CREAT | O_RDWR, 0000644);
-			j++;
-		}
+			cm->fd_out[j++] = open(t[i + 1]->str, O_CREAT | O_RDWR, 0000644);
+		if (!ft_strncmp(t[i]->str, ">>", 3))
+			cm->fd_out[j++] = open(t[i + 1]->str, O_CREAT | O_RDWR | O_APPEND, 0000644);
+
 		i++;
 	}
 	dup2(cm->fd_out[j - 1], STDOUT_FILENO);
