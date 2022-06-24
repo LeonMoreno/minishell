@@ -23,7 +23,7 @@ SRC_FILES =	minishell ft_expansion ft_parsing_meta ft_reading\
 			ft_quoting start_builtins utils_builtins start_exec\
 			ft_utils ft_init_cmd start_childs utils_childs ft_sigaction \
 			ft_utils_token start_redir next_builtins ft_heredoc start_env \
-			ft_utils_here ft_expansion_here \
+			ft_utils_here ft_expansion_here utils_2buil \
 
 #SRC
 SRC		=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))

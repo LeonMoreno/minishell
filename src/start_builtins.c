@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:47 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/23 17:02:43 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/24 12:19:33 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,18 @@ void	ft_exit(t_sh *sh, char **argv)
 
 void	ft_echo(char **s)
 {
-	int	i;
+	int		i;
+	int		ctr;
 
+	ctr = 0;
 	i = 1;
 	if (!s[i])
 	{
 		write(1, "\n", 1);
 		return ;
 	}
+	if (!ft_strncmp(s[1], "-n", 2))
+		ft_chr_n(s[1], &i, &ctr);
 	while (s[i] != NULL)
 	{
 		if (ft_strncmp(s[i], "-n", 3))
@@ -65,7 +69,7 @@ void	ft_echo(char **s)
 			ft_printf(" ");
 		i++;
 	}
-	if (ft_strncmp(s[1], "-n", 3))
+	if (ft_strncmp(s[1], "-n", 3) && ctr == 0)
 		write(1, "\n", 1);
 }
 
