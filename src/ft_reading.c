@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 19:02:24 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/24 12:52:14 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/24 14:15:52 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	ft_next_token(t_sh *sh, int i, char **temp)
 		token->type = OPER;
 	if (ft_parsing_meta(sh, i) == 124 && !ft_double_meta(sh, i - 1))
 		token->type = PIPE;
+	if (oper_meta(token->str, 0))
+		token->type = PIPE;
 	sh->start = -1;
 	*temp = NULL;
 }
@@ -87,7 +89,6 @@ char	*ft_prep_string(t_sh *sh, char **temp, int *i)
 // - Checks for quoting rules. " = 34 '= 39
 //Cases for next_token: 1. End of word 2. Presence of an operator.
 // 3. end of line. 
-
 void	ft_parsing(t_sh *sh, int *i)
 {
 	static char	*temp = NULL;

@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:27:01 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/24 13:16:36 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/24 13:50:28 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,17 +91,17 @@ typedef struct s_sh
 }	t_sh;
 
 //Functions builtins
-void	ft_exit(t_sh *sh, char **argv);
-void	ft_getpwd(void);
-void	ft_echo(char **s);
-void	ft_cd(char **s, t_sh *sh);
-void	ft_export(char *s, t_sh *sh);
-void	ft_env(void);
-void	ft_unset(char **s, t_sh *sh);
-void	start_env(t_sh *sh);
-int		ft_len_env(char *key_s, t_sh *sh);
-void	ft_cd_home_relativo(char **s, t_sh *sh, char *oldpwd);
-void	ft_chr_n(char *s, int *n, int *ctr);
+void		ft_exit(t_sh *sh, char **argv);
+void		ft_getpwd(void);
+void		ft_echo(char **s);
+void		ft_cd(char **s, t_sh *sh);
+void		ft_export(char *s, t_sh *sh);
+void		ft_env(void);
+void		ft_unset(char **s, t_sh *sh);
+void		start_env(t_sh *sh);
+int			ft_len_env(char *key_s, t_sh *sh);
+void		ft_cd_home_relativo(char **s, t_sh *sh, char *oldpwd);
+void		ft_chr_n(char *s, int *n, int *ctr);
 
 //Functions parser
 void		line_parser(t_sh *sh);
@@ -113,6 +113,7 @@ char		*ft_single_quoting(t_sh *sh, int *i, char *temp);
 char		*ft_prep_string(t_sh *sh, char **temp, int *i);
 int			ft_parsing_meta(t_sh *sh, int i);
 int			ft_double_meta(t_sh *sh, int i);
+int			oper_meta(char *str, int i);
 int			ft_parse_err(t_tokens *list);
 t_tokens	*ft_create_token(t_sh *sh);
 

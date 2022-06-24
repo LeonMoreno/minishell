@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:49:40 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/22 17:24:45 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/24 15:14:42 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,10 @@ void	ft_argvec_init(t_tokens *index, t_cmd *this_cmd)
 		begin = begin->next;
 	}
 	this_cmd->argvec = temp;
+	if (begin && begin->type == PIPE && oper_meta(begin->str, 0) == 38)
+		this_cmd->oper = AND;
+	if (begin && begin->type == PIPE && oper_meta(begin->str, 0) == 124)
+		this_cmd->oper = OR;
 }
 
 void	ft_init_cmd(t_cmd *cmd, t_tokens *index)
@@ -78,6 +82,7 @@ void	ft_create_cmd(t_sh *sh, bool *is_cmd, t_tokens *index)
 	cmd = malloc(sizeof(t_cmd));
 	cmd->next = NULL;
 	cmd->name = NULL;
+	cmd->oper = 0;
 	*is_cmd = false;
 	if (!sh->cmd_lst)
 	{
