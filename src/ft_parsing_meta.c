@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 10:28:36 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/23 11:27:32 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/24 13:17:18 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ int	ft_double_meta(t_sh *sh, int i)
 	if (sh->line[i] == 124 && sh->line[i + 1] == 124)
 		return (124);
 	if (sh->line[i] == 38 && sh->line[i + 1] == 38)
+	{
+		sh->oper_and = 38;
 		return (38);
+	}
 	return (0);
 }
 

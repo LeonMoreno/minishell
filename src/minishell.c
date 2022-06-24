@@ -4,6 +4,7 @@
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agrenon <agrenon@42quebec.com>             +#+  +:+       +#+        */
+/*   By: lmoreno <lmoreno@42quebec.com>            +#+  +:+       +#+         */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:36:28 by agrenon           #+#    #+#             */
 /*   Updated: 2022/06/23 16:47:38 by agrenon          ###   ########.fr       */

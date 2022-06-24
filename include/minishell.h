@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:27:01 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/24 12:20:05 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/24 13:16:36 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ enum
 	OPER,
 	OPERD,
 	PIPE,
+	AND,
+	OR,
 	OUT = 0,
 	IN
 };
@@ -64,6 +66,7 @@ typedef struct s_cmd
 	int				fd_in;
 	char			*fdin_str;
 	int				*fd_out;
+	int				oper;
 	struct s_cmd	*next;
 }	t_cmd;
 

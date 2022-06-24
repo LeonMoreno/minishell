@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:44 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/23 17:13:10 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/24 13:11:03 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,22 @@ void	start_child_builtins(t_cmd *cm, t_sh *sh, int i)
 	exit (0);
 }
 
+void	start_child_next(t_cmd *cm, t_sh *sh)
+{
+	char	*path;
+
+	if (cm->n_r_out > 0)
+		start_redir_fork(cm, sh);
+	if (cm->name)
+	{
+		path = cmd_path(cm);
+		if (!path)
+			msg_stderr("miniShell: command not found: ", cm);
+		execve(path, cm->argvec, environ);
+		perror("execve");
+	}
+}
+
 /**
  * @brief: execution the commands extern than fork
  * 1) check path if cmd exist. 2) execute selon ordre
@@ -70,12 +86,9 @@ void	start_child_builtins(t_cmd *cm, t_sh *sh, int i)
  */
 void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i)
 {
-	char	*path;
-
 	ft_sig_cancel();
 	if (cm->name)
 	{
-		path = cmd_path(cm);
 		if (!check_cmd(sh->cmd_lst->name) && sh->n_pipe > 0 && (i == 0))
 			dup_stdout(sh, i);
 		else if (sh->n_pipe && sh->n_forks != (i + 1))
@@ -87,14 +100,6 @@ void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i)
 		else if (!cm->fd_in && sh->n_pipe && sh->n_forks == (i + 1))
 			dup_stdin(sh, i);
 	}
-	if (cm->n_r_out > 0)
-		start_redir_fork(cm, sh);
-	if (cm->name)
-	{
-		if (!path)
-			msg_stderr("miniShell: command not found: ", cm);
-		execve(path, cm->argvec, environ);
-		perror("execve");
-	}
+	start_child_next(cm, sh);
 	ft_exit(sh, cm->argvec);
 }
