@@ -6,44 +6,48 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:49:40 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/24 15:20:31 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/24 17:59:35 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_attribute_argvec(t_tokens *begin, bool *is_cmd, t_cmd *this_cmd)
+t_tokens	*ft_attribute_argvec(t_tokens *begin, t_cmd *this_cmd, char **temp)
 {
-	if (begin->type == ARG && *is_cmd == false)
-	{
-		*is_cmd = true;
-		this_cmd->name = begin->str;
-		begin->type = CMD;
+	int	i;
+	bool	is_cmd;
+
+	is_cmd = false;
+	i = 0;
+	while (begin)
+	{	
+		if (begin->type == PIPE)
+			break ;
+		if (begin->type == ARG && is_cmd == false)
+		{
+			is_cmd = true;
+			this_cmd->name = begin->str;
+			begin->type = CMD;
+		}
+		if (begin->type == ARG && check_wild(begin->str))
+			openthydir(temp, begin->str);
+		if (begin->type == ARG || begin->type == CMD)
+			temp[i++] = begin->str;
+		begin = begin->next;
 	}
+	this_cmd->argvec = temp;
+	return (begin);
 }
 
 void	ft_argvec_init(t_tokens *index, t_cmd *this_cmd)
 {
 	t_tokens	*begin;
 	char		**temp;
-	int			i;
-	bool		is_cmd;
 
-	is_cmd = false;
 	begin = index;
-	i = 0;
 	temp = malloc(sizeof(char *) * (ft_size(index, 0) + 1));
 	temp[ft_size(index, 0)] = NULL;
-	while (begin)
-	{	
-		if (begin->type == PIPE)
-			break ;
-		ft_attribute_argvec(begin, &is_cmd, this_cmd);
-		if (begin->type == ARG || begin->type == CMD)
-			temp[i++] = begin->str;
-		begin = begin->next;
-	}
-	this_cmd->argvec = temp;
+	begin = ft_attribute_argvec(begin, this_cmd, temp);
 	if (begin && begin->type == PIPE && oper_meta(begin->str, 0) == 38)
 		this_cmd->oper = AND;
 	if (begin && begin->type == PIPE && oper_meta(begin->str, 0) == 124)
