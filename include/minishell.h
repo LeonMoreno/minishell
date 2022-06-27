@@ -127,15 +127,19 @@ t_tokens	*ft_create_token(t_sh *sh);
 //Functions Commands
 int			ft_size(t_tokens *lsist, int mode);
 void		ft_argvec_init(t_tokens *index, t_cmd *this_cmd);
+void		ft_argvec_zero(char **argvec, int len);
 void		ft_init_cmd_lst(t_sh *sh);
+
 
 //Functions Wildcards
 int			check_wild(char *str);
-int			openthydir(char **argvec, char *wild_str);
+char		**openthydir(char **argvec, char *wild_str, int len_argve, int *i);
 t_argve		*argve_lst(t_argve *lst, char *str);
 int			size_alst(t_argve *lst);
-char		**new_argve_tab(char **argvec, t_argve *st);
+char		**new_argve_tab(char **argvec, t_argve *st, int old, char *ws);
 int			ft_is_accepted(char *wild_str, char *str);
+int			ft_wild_next(char *wild_str, int j);
+int			ft_wild_split_ncmp(char *wild, char *str);
 
 //Functions Heredoc
 char		*ft_heredoc(char *operand, t_sh *sh);

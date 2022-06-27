@@ -2,14 +2,18 @@
 
 int	size_alst(t_argve *lst)
 {
-	int	i;
+	int		i;
+	t_argve	*begin;
 
-	i = 1;
-	if (!lst)
+	begin = lst;
+	if (!begin)
 		return (0);
-	while (lst->next)
+	i = 0;
+	while (begin)
 	{
-		lst = lst->next;
+		if (begin->str[0] == '\0')
+			break ;
+		begin = begin->next;
 		i++;
 	}
 	return (i);
@@ -38,20 +42,16 @@ int		ft_is_accepted(char *wild_str, char *str)
 
 	j = 0;
 	i = 0;
-	while (str[i])
-	{
-		while (wild_str[i] == '*' && wild_str[i + 1] == '*')
-			j++;
-		if (wild_str[j] != '*' && str[i] != wild_str[j])
-			return (0);
-		if (wild_str[j] == '*' && str[i] == wild_str[j + 1] && str[i])
-			j++;
-		else if (wild_str[j] == str[i])
-			j++;
-		printf("CHAR WILD: %c CHAR str: %c\n", wild_str[j], str[i]); 
-		i++;
-	}
-	return (1);
+	(void) j;
+	(void) i;
+	if (wild_str[0] != '.' && (!ft_strncmp(str, ".", 2) || !ft_strncmp(str, "..", 3)))
+		return (0);
+	if (wild_str[0] != '.' && str[0] == '.')
+		return (0);
+
+	if (ft_wild_split_ncmp(wild_str, str))
+		return (1);
+	return (0);
 }
 
 t_argve	*argve_lst(t_argve *lst, char *str)
@@ -69,7 +69,6 @@ t_argve	*argve_lst(t_argve *lst, char *str)
 		begin = lst;
 		while (begin)
 		{
-			printf("Argve list str-> %s\n", begin->str);
 			if (!begin->next)
 				break ;
 			begin = begin->next;
@@ -79,33 +78,37 @@ t_argve	*argve_lst(t_argve *lst, char *str)
 	return (lst);
 }
 
-char	**new_argve_tab(char **argvec, t_argve *lst)
+char	**new_argve_tab(char **argvec, t_argve *lst, int old, char *ws)
 {
-	int	len;
+	int		len;
 	char	**new_argvec;
 	int		i;
+	t_argve *begin;
 
+	len = ft_size_arr(argvec) + size_alst(lst) - 1;
+	i = len + old - 1; 
+	if (!lst)
+		i++;
+	new_argvec = malloc(sizeof(char *) * (i + 1));
+	printf("new argvec size: %d\n", i + 1);
+	ft_argvec_zero(new_argvec, i + 1);
+	begin = lst;
 	i = 0;
-	len = ft_size_arr(argvec) + size_alst(lst);
-	printf("len: %d\n", len);
-	new_argvec = malloc(sizeof(char *) * (len + 1));
-	new_argvec[len] = NULL;
-	while (i < ft_size_arr(argvec))
+	while (i < ft_size_arr(argvec))//-1)
 	{
 		new_argvec[i] = ft_strdup(argvec[i]);
-		printf("ancient argve: %s\n", new_argvec[i]);
 		i++;
 	}
-	//free_doble_arr(argvec);
-	while (i < len)
+	while (i < len + 1 && lst)
 	{
-		if (!lst)
+		if (!begin)
 			break ;
-		if (lst->str)
-			new_argvec[i] = ft_strdup(lst->str);
-		printf("list str: %s\n", new_argvec[i++]);
-		lst = lst->next;
+		new_argvec[i] = ft_strdup(begin->str);
+		begin = begin->next;
 		i++;
 	}
+	if (!lst)
+		new_argvec[i++] = ft_strdup(ws);
+	new_argvec[i] = NULL;
 	return (new_argvec);
 }

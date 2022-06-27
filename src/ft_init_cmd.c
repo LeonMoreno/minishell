@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-t_tokens	*ft_attribute_argvec(t_tokens *begin, t_cmd *this_cmd, char **temp)
+t_tokens	*ft_attribute_argvec(t_tokens *begin, t_cmd *this_cmd, char **temp, int len_argv)
 {
 	int	i;
 	bool	is_cmd;
@@ -30,8 +30,8 @@ t_tokens	*ft_attribute_argvec(t_tokens *begin, t_cmd *this_cmd, char **temp)
 			begin->type = CMD;
 		}
 		if (begin->type == ARG && check_wild(begin->str))
-			openthydir(temp, begin->str);
-		if (begin->type == ARG || begin->type == CMD)
+			temp = openthydir(temp, begin->str, len_argv, &i);
+		else if (begin->type == ARG || begin->type == CMD)
 			temp[i++] = begin->str;
 		begin = begin->next;
 	}
@@ -43,11 +43,14 @@ void	ft_argvec_init(t_tokens *index, t_cmd *this_cmd)
 {
 	t_tokens	*begin;
 	char		**temp;
+	int			len;
 
+	len = ft_size(index,0);
 	begin = index;
 	temp = malloc(sizeof(char *) * (ft_size(index, 0) + 1));
-	temp[ft_size(index, 0)] = NULL;
-	begin = ft_attribute_argvec(begin, this_cmd, temp);
+	ft_argvec_zero(temp,len + 1);
+	//temp[ft_size(index, 0)] = NULL;
+	begin = ft_attribute_argvec(begin, this_cmd, temp, ft_size(index, 0));
 	if (begin && begin->type == PIPE && oper_meta(begin->str, 0) == 38)
 		this_cmd->oper = AND;
 	if (begin && begin->type == PIPE && oper_meta(begin->str, 0) == 124)

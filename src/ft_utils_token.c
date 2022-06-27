@@ -12,6 +12,19 @@
 
 #include "minishell.h"
 
+void	ft_argvec_zero(char **argvec, int len)
+{
+	int	i;
+
+	i = 0;
+	while (i < len)
+	{
+		argvec[i] = NULL;
+		i++;
+	}
+	return ;
+}
+
 int	ft_size(t_tokens *lsist, int mode)
 {
 	t_tokens	*begin;

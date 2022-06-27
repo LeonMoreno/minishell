@@ -19,7 +19,7 @@ int	ft_size_arr(char **tab)
 	if (!tab)
 		return (0);
 	i = 0;
-	while (tab[i])
+	while (tab[i] && tab[i][0])
 		i++;
 	return (i);
 }
