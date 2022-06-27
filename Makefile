@@ -25,6 +25,7 @@ SRC_FILES =	minishell ft_expansion ft_parsing_meta ft_reading\
 			ft_utils_token start_redir next_builtins ft_heredoc start_env \
 			ft_utils_here ft_expansion_here utils_2buil \
 
+
 #SRC
 SRC		=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJ		=	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))

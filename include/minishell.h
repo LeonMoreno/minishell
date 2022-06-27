@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:27:01 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/24 13:50:28 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/27 19:51:09 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_sh
 	int			n_tokens;
 	int			start;
 	int			true_fd_out;
+	int			last_oper;
 	char		*promt;
 	char		**env;
 	char		*tmp;

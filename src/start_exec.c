@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:38 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/24 12:40:04 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/27 19:42:32 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,24 @@ void	close_pipes(t_sh *sh, int i, int *pi)
 	}
 }
 
+int	chr_pipe(t_cmd *cm)
+{
+	int		i;
+	t_cmd	*t;
+
+	t = cm;
+	i = 0;
+	while (cm)
+	{
+		if (cm->name && !cm->oper && cm->next)
+			i++;
+		if (cm->oper)
+			break ;
+		cm = cm->next;
+	}
+	return (i);
+}
+
 /**
  * @brief: start fork/pipes/commands/EndForks
  * @i: use for index var sh->id_f: fork
@@ -107,6 +125,7 @@ void	start_exec(t_sh *sh)
 	i = 0;
 	pi = 0;
 	cm = sh->cmd_lst;
+	sh->n_pipe = chr_pipe(sh->cmd_lst);
 	start_pipex(sh);
 	sh->n_forks = init_fork(sh);
 	while (cm)
