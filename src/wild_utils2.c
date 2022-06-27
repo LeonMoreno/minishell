@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wild_utils2.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agrenon <agrenon@42quebec.com>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/27 13:29:13 by agrenon           #+#    #+#             */
+/*   Updated: 2022/06/27 18:52:57 by agrenon          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	ft_wild_next(char *wild_str, int j)
@@ -33,7 +45,7 @@ int	wild_str_good(char *wstr, char *str, int index)
 	return (i);
 }
 
-int	ft_check_last(char **split,char *str)
+int	ft_check_last(char **split, char *str)
 {
 	int	last_len;
 	int	len;
@@ -53,14 +65,15 @@ int	ft_wild_good(char **split, bool first, bool last, char *str)
 	i = 0;
 	a = 0;
 	if (!first && !wild_str_good(split[0], str, 0))
-			return (0);
+		return (0);
 	if (!last && !ft_check_last(split, str))
-			return (0);
-	while(str[i])
+		return (0);
+	while (str[i])
 	{
-		if (split[a] && str[i] == split[a][0] && wild_str_good(split[a], str, i))
+		if (split[a] && str[i] == split[a][0]
+				&& wild_str_good(split[a], str, i))
 		{
-			i = i + wild_str_good(split[a], str, i) - 1; //+ 1;
+			i = i + wild_str_good(split[a], str, i) - 1;
 			a++;
 		}
 		i++;
@@ -93,5 +106,6 @@ int	ft_wild_split_ncmp(char *wild, char *str)
 		free_doble_arr(wsplit);
 		return (1);
 	}
+	free_doble_arr(wsplit);
 	return (0);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wildcards.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agrenon <agrenon@42quebec.com>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/27 13:37:30 by agrenon           #+#    #+#             */
+/*   Updated: 2022/06/27 17:04:33 by agrenon          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	**join_path(char **split, char **tab)
@@ -8,7 +20,7 @@ char	**join_path(char **split, char **tab)
 
 	path = NULL;
 	i = 0;
-	while(i < ft_size_arr(split) - 2) 
+	while (i < ft_size_arr(split) - 2)
 	{
 		if (i == 0)
 			temp = ft_strjoin(split[i], "/");
@@ -20,15 +32,19 @@ char	**join_path(char **split, char **tab)
 		free(temp);
 		i++;
 	}
-	tab[0] = path;
+	temp = ft_strjoin(path, "/");
+	free(path);
+	tab[0] = temp;
 	tab[1] = ft_strdup(split[ft_size_arr(split) - 1]);
 	free_doble_arr(split);
 	return (tab);
 }
+
 char	**str_folder(char *str)
 {
 	char	**temp;
 	char	**tab;
+	char	*only_two;
 
 	tab = malloc(sizeof(char *) * 3);
 	tab[2] = NULL;
@@ -43,33 +59,33 @@ char	**str_folder(char *str)
 	else if (temp[2])
 		return (join_path(temp, tab));
 	free(tab);
+	only_two = ft_strjoin(temp[0], "/");
+	free(temp[0]);
+	temp[0] = only_two;
 	return (temp);
 }
 
-char	**ft_add_argvec(char **argvec, char *wild_str, DIR *d, int len)
+char	**ft_add_argvec(char **argvec, char **tab, DIR *d, int len)
 {
-	struct dirent *dir;
-	t_argve		*wild_lst;
-	char		**new_argvec;
-	int	i;
+	struct dirent	*dir;
+	t_argve			*wild_lst;
+	char			**new_argvec;
 
 	wild_lst = NULL;
-	while ((dir = readdir(d)))
+	dir = readdir(d);
+	while (dir)
 	{	
-		if (ft_is_accepted(wild_str, dir->d_name))
-		{
-			printf("Arguments from readdir: %s\n", dir->d_name);
+		if (ft_is_accepted(tab[1], dir->d_name))
 			wild_lst = argve_lst(wild_lst, dir->d_name);
-		}
+		dir = readdir(d);
 	}
-	new_argvec = new_argve_tab(argvec, wild_lst, len, wild_str);
-	i = 0;
-	while (new_argvec[i])
+	if (!ft_strncmp(tab[0], ".", 2))
 	{
-		printf("New Argvec element %d: %s\n", i, new_argvec[i]);
-		i++;
+		free(tab[0]);
+		tab[0] = ft_strdup("\0");
 	}
-	//free_doble_arr(argvec);
+	new_argvec = new_argve_tab(argvec, wild_lst, len, tab);
+	ft_free_argve_lst(wild_lst);
 	return (new_argvec);
 }
 
@@ -85,16 +101,17 @@ char	**openthydir(char **argvec, char *wild_str, int len_argve, int *i)
 	d = opendir(split[0]);
 	if (!d)
 	{
-		perror("minishell: ");
-		return (0);
+		argvec[*i] = wild_str;
+		*i = *i + 1;
+		free_doble_arr(split);
+		return (argvec);
 	}
-	new_argvec = ft_add_argvec(argvec, split[1], d, len_argve);
+	new_argvec = ft_add_argvec(argvec, split, d, len_argve);
 	j = 0;
 	while (new_argvec[j])
 		j++;
 	*i = j;
 	free_doble_arr(split);
-	//free_doble_arr(argvec);
 	closedir(d);
 	return (new_argvec);
 }

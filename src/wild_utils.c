@@ -1,54 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wild_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agrenon <agrenon@42quebec.com>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/27 13:38:39 by agrenon           #+#    #+#             */
+/*   Updated: 2022/06/27 18:44:43 by agrenon          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int	size_alst(t_argve *lst)
+int	ft_is_accepted(char *wild_str, char *str)
 {
-	int		i;
-	t_argve	*begin;
-
-	begin = lst;
-	if (!begin)
-		return (0);
-	i = 0;
-	while (begin)
-	{
-		if (begin->str[0] == '\0')
-			break ;
-		begin = begin->next;
-		i++;
-	}
-	return (i);
-}
-
-int	check_wild(char *str)
-{
-	int i;
-
-	i = 0;
-	if (!str)
-		return (0);
-	while (str[i])
-	{
-		if (str[i] == '*')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int		ft_is_accepted(char *wild_str, char *str)
-{
-	int	i;
-	int	j;
-
-	j = 0;
-	i = 0;
-	(void) j;
-	(void) i;
-	if (wild_str[0] != '.' && (!ft_strncmp(str, ".", 2) || !ft_strncmp(str, "..", 3)))
+	if (wild_str[0] != '.' && (!ft_strncmp(str, ".", 2)
+			|| !ft_strncmp(str, "..", 3)))
 		return (0);
 	if (wild_str[0] != '.' && str[0] == '.')
 		return (0);
-
 	if (ft_wild_split_ncmp(wild_str, str))
 		return (1);
 	return (0);
@@ -78,37 +48,40 @@ t_argve	*argve_lst(t_argve *lst, char *str)
 	return (lst);
 }
 
-char	**new_argve_tab(char **argvec, t_argve *lst, int old, char *ws)
+int	keep_traditions(char **argvec, int old, int i, char **new_argvec)
+{
+	i = 0;
+	while (i < old)
+	{
+		new_argvec[i] = ft_strdup(argvec[i]);
+		free(argvec[i]);
+		i++;
+	}
+	free(argvec);
+	return (i);
+}
+
+char	**new_argve_tab(char **argvec, t_argve *lst, int old, char **tab)
 {
 	int		len;
 	char	**new_argvec;
 	int		i;
-	t_argve *begin;
+	t_argve	*begin;
 
 	len = ft_size_arr(argvec) + size_alst(lst) - 1;
-	i = len + old - 1; 
+	i = len + old - 1;
 	if (!lst)
 		i++;
 	new_argvec = malloc(sizeof(char *) * (i + 1));
-	printf("new argvec size: %d\n", i + 1);
 	ft_argvec_zero(new_argvec, i + 1);
 	begin = lst;
-	i = 0;
-	while (i < ft_size_arr(argvec))//-1)
-	{
-		new_argvec[i] = ft_strdup(argvec[i]);
-		i++;
-	}
+	i = keep_traditions(argvec, ft_size_arr(argvec), i, new_argvec);
 	while (i < len + 1 && lst)
 	{
-		if (!begin)
-			break ;
-		new_argvec[i] = ft_strdup(begin->str);
+		new_argvec[i++] = ft_strjoin(tab[0], begin->str);
 		begin = begin->next;
-		i++;
 	}
 	if (!lst)
-		new_argvec[i++] = ft_strdup(ws);
-	new_argvec[i] = NULL;
+		new_argvec[i++] = ft_strjoin(tab[0], tab[1]);
 	return (new_argvec);
 }

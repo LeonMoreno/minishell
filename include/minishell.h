@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:27:01 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/24 20:36:13 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/27 19:08:21 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ enum
 	PIPE,
 	AND,
 	OR,
+	QUOTE,
 	OUT = 0,
 	IN
 };
@@ -68,6 +69,7 @@ typedef struct s_cmd
 {
 	t_tokens		**token_tab;
 	char			**argvec;
+	char			argvec_count;
 	char			*name;
 	int				n_r_out;
 	int				fd_in;
@@ -135,11 +137,13 @@ void		ft_init_cmd_lst(t_sh *sh);
 int			check_wild(char *str);
 char		**openthydir(char **argvec, char *wild_str, int len_argve, int *i);
 t_argve		*argve_lst(t_argve *lst, char *str);
+void		ft_free_argve_lst(t_argve *lst);
 int			size_alst(t_argve *lst);
-char		**new_argve_tab(char **argvec, t_argve *st, int old, char *ws);
+char		**new_argve_tab(char **argvec, t_argve *st, int old, char **tab);
 int			ft_is_accepted(char *wild_str, char *str);
 int			ft_wild_next(char *wild_str, int j);
 int			ft_wild_split_ncmp(char *wild, char *str);
+
 
 //Functions Heredoc
 char		*ft_heredoc(char *operand, t_sh *sh);
