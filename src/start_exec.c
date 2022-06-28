@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:38 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/28 18:44:33 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/28 19:03:47 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,10 @@ t_cmd	*exec_intern(t_sh *sh, t_cmd *cm)
 	i = 0;
 	pi = 0;
 	sh->n_pipe = chr_pipe(cm);
-	printf("PIE  = %d\n", sh->n_pipe); 
 	start_pipex(sh);
 	sh->n_forks = init_fork(sh, cm);
-	printf("FORKS = %d\n", sh->n_forks); 
 	while (tmp && sh->last_oper == 0)
-	//while (tmp && tmp->oper == 0)
 	{
-		printf("HERE cmd = %s i = %d\n", tmp->name, i); 
 		chr_redir_out(tmp, '>');
 		if (i < sh->n_pipe)
 			pipe(sh->pipe[i].p);
