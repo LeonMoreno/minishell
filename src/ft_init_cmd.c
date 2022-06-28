@@ -6,44 +6,50 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:49:40 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/24 15:20:31 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/27 19:08:28 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_attribute_argvec(t_tokens *begin, bool *is_cmd, t_cmd *this_cmd)
+t_tokens	*ft_fill_args(t_tokens *begin, t_cmd *cm, char **temp, int len_a)
 {
-	if (begin->type == ARG && *is_cmd == false)
-	{
-		*is_cmd = true;
-		this_cmd->name = begin->str;
-		begin->type = CMD;
+	int		i;
+	bool	is_cmd;
+
+	is_cmd = false;
+	i = 0;
+	while (begin)
+	{	
+		if (begin->type == PIPE)
+			break ;
+		if (begin->type == ARG && is_cmd == false)
+		{
+			is_cmd = true;
+			cm->name = begin->str;
+			begin->type = CMD;
+		}
+		if (begin->type == ARG && check_wild(begin->str))
+			temp = openthydir(temp, begin->str, len_a, &i);
+		else if (begin->type == ARG || begin->type == CMD)
+			temp[i++] = ft_strdup(begin->str);
+		begin = begin->next;
 	}
+	cm->argvec = temp;
+	return (begin);
 }
 
 void	ft_argvec_init(t_tokens *index, t_cmd *this_cmd)
 {
 	t_tokens	*begin;
 	char		**temp;
-	int			i;
-	bool		is_cmd;
+	int			len;
 
-	is_cmd = false;
+	len = ft_size(index, 0);
 	begin = index;
-	i = 0;
 	temp = malloc(sizeof(char *) * (ft_size(index, 0) + 1));
-	temp[ft_size(index, 0)] = NULL;
-	while (begin)
-	{	
-		if (begin->type == PIPE)
-			break ;
-		ft_attribute_argvec(begin, &is_cmd, this_cmd);
-		if (begin->type == ARG || begin->type == CMD)
-			temp[i++] = begin->str;
-		begin = begin->next;
-	}
-	this_cmd->argvec = temp;
+	ft_argvec_zero(temp, len + 1);
+	begin = ft_fill_args(begin, this_cmd, temp, ft_size(index, 0));
 	if (begin && begin->type == PIPE && oper_meta(begin->str, 0) == 38)
 		this_cmd->oper = AND;
 	if (begin && begin->type == PIPE && oper_meta(begin->str, 0) == 124)

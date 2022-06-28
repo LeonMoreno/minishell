@@ -6,11 +6,24 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 19:18:08 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/22 13:08:47 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/27 12:31:50 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_argvec_zero(char **argvec, int len)
+{
+	int	i;
+
+	i = 0;
+	while (i < len)
+	{
+		argvec[i] = NULL;
+		i++;
+	}
+	return ;
+}
 
 int	ft_size(t_tokens *lsist, int mode)
 {

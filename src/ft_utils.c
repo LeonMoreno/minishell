@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 13:15:28 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/27 19:41:44 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/27 19:58:36 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	free_cmd_lst(t_sh *sh)
 		if (begin->fd_in > 2)
 			close(begin->fd_in);
 		if (begin->argvec)
-			free(begin->argvec);
+			free_doble_arr(begin->argvec);
 		if (begin->fdin_str)
 			unlink(begin->fdin_str);
 		if (begin->fdin_str)
@@ -100,9 +100,11 @@ void	free_doble_arr(char **s)
 	while (s[i] && s)
 	{
 		free(s[i]);
+		s[i] = NULL;
 		i++;
 	}
-	free(s);
+	if (s)
+		free(s);
 }
 
 /**

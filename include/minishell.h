@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:27:01 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/27 19:51:09 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/27 19:59:40 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 //Include pour sigaction
 # include <signal.h>
 # include <termios.h>
+# include <dirent.h>
 
 // Variable global env
 extern char	**environ;
@@ -40,6 +41,7 @@ enum
 	PIPE,
 	AND,
 	OR,
+	QUOTE,
 	OUT = 0,
 	IN
 };
@@ -48,6 +50,12 @@ typedef struct s_pip
 {
 	int		p[2];
 }	t_pip;
+
+typedef struct s_argve
+{
+	char			*str;
+	struct s_argve	*next;
+}	t_argve;
 
 typedef struct s_tokens
 {
@@ -61,6 +69,7 @@ typedef struct s_cmd
 {
 	t_tokens		**token_tab;
 	char			**argvec;
+	char			argvec_count;
 	char			*name;
 	int				n_r_out;
 	int				fd_in;
@@ -121,7 +130,21 @@ t_tokens	*ft_create_token(t_sh *sh);
 //Functions Commands
 int			ft_size(t_tokens *lsist, int mode);
 void		ft_argvec_init(t_tokens *index, t_cmd *this_cmd);
+void		ft_argvec_zero(char **argvec, int len);
 void		ft_init_cmd_lst(t_sh *sh);
+
+
+//Functions Wildcards
+int			check_wild(char *str);
+char		**openthydir(char **argvec, char *wild_str, int len_argve, int *i);
+t_argve		*argve_lst(t_argve *lst, char *str);
+void		ft_free_argve_lst(t_argve *lst);
+int			size_alst(t_argve *lst);
+char		**new_argve_tab(char **argvec, t_argve *st, int old, char **tab);
+int			ft_is_accepted(char *wild_str, char *str);
+int			ft_wild_next(char *wild_str, int j);
+int			ft_wild_split_ncmp(char *wild, char *str);
+
 
 //Functions Heredoc
 char		*ft_heredoc(char *operand, t_sh *sh);
@@ -140,6 +163,7 @@ void		free_lst(t_sh *sh);
 void		ft_print_cmds(t_sh *sh);
 void		free_doble_arr(char **s);
 void		init_var(t_sh *sh);
+int			ft_size_arr(char **tab);
 
 //Functions excec_cmd
 void		start_exec(t_sh *sh);
