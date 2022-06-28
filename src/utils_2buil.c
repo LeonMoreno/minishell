@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 12:19:45 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/28 13:09:25 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/28 16:23:50 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	init_fork(t_sh *sh)
 	i = 0;
 	while (cm)
 	{
-		if (!check_cmd(sh->cmd_lst->name) || sh->n_pipe > 0)
+		if (!check_cmd(cm->name) || sh->n_pipe > 0)
 			i++;
 		cm = cm->next;
 	}

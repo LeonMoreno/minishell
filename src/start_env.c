@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:41 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/28 12:04:40 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/28 16:04:35 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_var(t_sh *sh)
 {
-	sh->id_f = 0;
+	sh->id_f = NULL;
 	sh->n_cmd = 0;
 	sh->n_pipe = 0;
 	sh->n_forks = 0;
