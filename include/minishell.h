@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:27:01 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/28 16:04:17 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/28 18:43:23 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ void		start_builtins(t_cmd *cm, t_sh *sh);
 int			check_cmd(char *s); //int check_builtins(char *s);
 void		end_fork(t_sh *sh);
 void		start_pipex(t_sh *sh);
-int			init_fork(t_sh *sh);
+int			init_fork(t_sh *sh, t_cmd *top);
 
 //Functions childs fork and pipes
 void		start_child_builtins(t_cmd *cm, t_sh *sh, int i);
@@ -180,7 +180,7 @@ void		dup_stdin(t_sh *sh, int x);
 void		dup_stdout_un(t_sh *sh, int x);
 void		dup_stdout_dos(t_sh *sh, int x);
 void		dup_stdout(t_sh *sh, int x);
-void		msg_stderr(char *str, t_cmd *cm);
+void		msg_stderr(char *str, t_cmd *cm, t_sh *sh);
 
 //Functions redir
 void		start_redir(t_cmd *cm);

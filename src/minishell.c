@@ -49,6 +49,7 @@ void	start_shell(t_sh *sh)
 		if (sh->line && sh->line[0] != '\0')
 		{
 			line_parser(sh);
+			//ft_print_cmds(sh);
 			if (sh->token_lst && sh->cmd_lst)
 				start_exec(sh);
 		}
