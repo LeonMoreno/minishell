@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:38 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/28 15:43:59 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/28 16:52:49 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,8 @@ t_cmd	*exec_intern(t_sh *sh, t_cmd *cm)
 	{
 		chr_redir_out(tmp, '>');
 		if (i < sh->n_pipe)
-		{
 			pipe(sh->pipe[i].p);
-			close_pipes(sh, i, &pi);
-		}
+		close_pipes(sh, i, &pi);
 		start_cmd(tmp, sh, i);
 		sh->last_oper = tmp->oper;
 		tmp = tmp->next;
