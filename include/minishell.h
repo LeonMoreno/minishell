@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:27:01 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/27 19:59:40 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/28 13:13:21 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,6 @@ void		ft_argvec_init(t_tokens *index, t_cmd *this_cmd);
 void		ft_argvec_zero(char **argvec, int len);
 void		ft_init_cmd_lst(t_sh *sh);
 
-
 //Functions Wildcards
 int			check_wild(char *str);
 char		**openthydir(char **argvec, char *wild_str, int len_argve, int *i);
@@ -144,7 +143,6 @@ char		**new_argve_tab(char **argvec, t_argve *st, int old, char **tab);
 int			ft_is_accepted(char *wild_str, char *str);
 int			ft_wild_next(char *wild_str, int j);
 int			ft_wild_split_ncmp(char *wild, char *str);
-
 
 //Functions Heredoc
 char		*ft_heredoc(char *operand, t_sh *sh);
@@ -170,6 +168,8 @@ void		start_exec(t_sh *sh);
 void		start_builtins(t_cmd *cm, t_sh *sh);
 int			check_cmd(char *s); //int check_builtins(char *s);
 void		end_fork(t_sh *sh);
+void		start_pipex(t_sh *sh);
+int			init_fork(t_sh *sh);
 
 //Functions childs fork and pipes
 void		start_child_builtins(t_cmd *cm, t_sh *sh, int i);

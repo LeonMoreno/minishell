@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:44 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/27 20:49:40 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/28 13:12:44 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,6 @@ void	start_child_next(t_cmd *cm, t_sh *sh)
 		start_redir_fork(cm, sh);
 	if (cm->name)
 	{
-		printf("last_oper exit = %d last_re = %d\n", sh->last_oper, sh->last_re);
-		if (sh->last_oper == 5 && sh->last_re != 0)
-			ft_exit(sh, cm->argvec);
 		path = cmd_path(cm);
 		if (!path)
 			msg_stderr("miniShell: command not found: ", cm);
@@ -90,7 +87,6 @@ void	start_child_next(t_cmd *cm, t_sh *sh)
 void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i)
 {
 	ft_sig_cancel();
-	//printf("CMName = %s Oper = %d pipe = %d redir = %d\n", cm->name, cm->oper, sh->n_pipe, cm->n_r_out);
 	if (cm->name)
 	{
 		if (!check_cmd(sh->cmd_lst->name) && sh->n_pipe > 0 && (i == 0))

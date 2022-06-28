@@ -6,44 +6,11 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:38 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/27 21:25:57 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/28 13:09:17 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/**
- * @brief: malloc pour les pipes
- * @sh->pip : ptr struct s_pip
- */
-void	start_pipex(t_sh *sh)
-{
-	if (sh->n_pipe)
-		sh->pipe = malloc(sizeof(t_pip) * sh->n_pipe);
-}
-
-/**
- * @brief: start and malloc var sh->id_f aka var_forks
- * @i : incrementa solo si hay pipex
- * Return : number forks malloces
- */
-int	init_fork(t_sh *sh)
-{
-	int		i;
-	t_cmd	*cm;
-
-	cm = sh->cmd_lst;
-	i = 0;
-	while (cm)
-	{
-		if (!check_cmd(sh->cmd_lst->name) || sh->n_pipe > 0)
-			i++;
-		cm = cm->next;
-	}
-	if (i > 0)
-		sh->id_f = malloc(sizeof(pid_t) * i);
-	return (i);
-}
 
 /**
  * @brief: begin start commands extern & builtins
@@ -53,7 +20,7 @@ int	init_fork(t_sh *sh)
  */
 void	start_cmd(t_cmd *cm, t_sh *sh, int i)
 {
-	if (!check_cmd(sh->cmd_lst->name) || sh->n_pipe > 0)
+	if (!check_cmd(cm->name) || sh->n_pipe > 0)
 	{
 		sh->id_f[i] = fork();
 		if (sh->id_f[i] == 0)
@@ -116,34 +83,47 @@ int	chr_pipe(t_cmd *cm)
  * @n_f: number of forks
  * @x: index number pipex, increment chaque 2 commands
  */
-void	start_exec(t_sh *sh)
+t_cmd	*exec_intern(t_sh *sh, t_cmd *cm)
 {
-	t_cmd	*cm;
 	int		i;
 	int		pi;
-	int		status;
+	t_cmd	*tmp;
 
+	tmp = cm;
 	i = 0;
 	pi = 0;
-	cm = sh->cmd_lst;
 	sh->n_pipe = chr_pipe(sh->cmd_lst);
 	start_pipex(sh);
 	sh->n_forks = init_fork(sh);
-	while (cm)
+	while (tmp && sh->last_oper == 0)
 	{
-		chr_redir_out(cm, '>');
+		chr_redir_out(tmp, '>');
 		if (i < sh->n_pipe)
-			pipe(sh->pipe[i].p);
-		close_pipes(sh, i, &pi);
-		start_cmd(cm, sh, i);
-		sh->last_oper = cm->oper;
-		if (sh->n_forks)
 		{
-			waitpid(sh->id_f[i], &status, 0);
-			sh->last_re = WEXITSTATUS(status);
+			pipe(sh->pipe[i].p);
+			close_pipes(sh, i, &pi);
 		}
-		cm = cm->next;
+		start_cmd(tmp, sh, i);
+		sh->last_oper = tmp->oper;
+		tmp = tmp->next;
 		i++;
 	}
-	//end_fork(sh);
+	end_fork(sh);
+	return (tmp);
+}
+
+void	start_exec(t_sh *sh)
+{
+	t_cmd	*cm;
+
+	cm = sh->cmd_lst;
+	while (cm)
+	{
+		cm = exec_intern(sh, cm);
+		if (sh->last_oper == 5 && sh->last_re != 0)
+			break ;
+		if (sh->last_oper == 6 && sh->last_re == 0)
+			break ;
+		sh->last_oper = 0;
+	}
 }
