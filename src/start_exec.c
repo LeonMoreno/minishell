@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:38 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/27 19:42:32 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/27 21:25:57 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ void	start_exec(t_sh *sh)
 	t_cmd	*cm;
 	int		i;
 	int		pi;
+	int		status;
 
 	i = 0;
 	pi = 0;
@@ -135,8 +136,14 @@ void	start_exec(t_sh *sh)
 			pipe(sh->pipe[i].p);
 		close_pipes(sh, i, &pi);
 		start_cmd(cm, sh, i);
+		sh->last_oper = cm->oper;
+		if (sh->n_forks)
+		{
+			waitpid(sh->id_f[i], &status, 0);
+			sh->last_re = WEXITSTATUS(status);
+		}
 		cm = cm->next;
 		i++;
 	}
-	end_fork(sh);
+	//end_fork(sh);
 }
