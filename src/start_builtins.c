@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:47 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/28 18:52:34 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/28 19:44:04 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void	ft_exit(t_sh *sh, char **argv)
 	}
 	rl_clear_history();
 	free(sh);
-	exit (EXIT_SUCCESS);
+	//exit (EXIT_SUCCESS);
+	exit (7);
 }
 
 void	ft_echo(char **s)
@@ -83,14 +84,14 @@ void	ft_cd_next(char **s, t_sh *sh, char *oldpwd)
 		if (chdir(getenv("OLDPWD")) == 0)
 			ft_export(oldpwd, sh);
 		else
-			perror("cd");
+			ft_perror("cd", sh);
 	}
 	else
 	{
 		if (chdir(s[1]) == 0)
 			ft_export(oldpwd, sh);
 		else
-			perror("cd");
+			ft_perror("cd", sh);
 	}
 }
 
@@ -106,14 +107,14 @@ void	ft_cd(char **s, t_sh *sh)
 		if (chdir(getenv("HOME")) == 0)
 			ft_export(oldpwd, sh);
 		else
-			perror("cd");
+			ft_perror("cd", sh);
 	}
 	else if (s[1][0] == '~' && s[1][1] == '\0')
 	{
 		if (chdir(getenv("HOME")) == 0)
 			ft_export(oldpwd, sh);
 		else
-			perror("cd");
+			ft_perror("cd", sh);
 	}
 	else
 		ft_cd_next(s, sh, oldpwd);

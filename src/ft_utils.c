@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agrenon <agrenon@42quebec.com>             +#+  +:+       +#+        */
+/*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 13:15:28 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/28 18:48:19 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/28 19:48:40 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,5 +120,5 @@ void	msg_stderr(char *str, t_cmd *cm, t_sh *sh)
 	if (sh->n_pipe)
 		free(sh->pipe);
 	free(sh->id_f);
-	ft_exit(sh, NULL);
+	ft_exit_fail(sh, NULL);
 }

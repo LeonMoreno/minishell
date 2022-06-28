@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:01 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/28 19:13:33 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/28 19:48:06 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,26 @@ void	end_fork(t_sh *sh)
 	}
 	if (sh->n_pipe)
 		free(sh->pipe);
+}
+
+void	ft_exit_fail(t_sh *sh, char **argv)
+{
+	int	i;
+
+	i = 0;
+	while (argv && argv[i])
+		i++;
+	if (i > 2)
+	{
+		ft_printf("exit: too many arguments\n");
+		return ;
+	}
+	if (sh->line)
+	{
+		free_lst(sh);
+		free_doble_arr(sh->env);
+	}
+	rl_clear_history();
+	free(sh);
+	exit (EXIT_FAILURE);
 }
