@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:38 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/28 20:24:31 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/28 20:48:44 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	start_exec(t_sh *sh)
 			break ;
 		if (go == 7)
 		{
-			cm = cm->next; NEX:
+			NEX:
 			cm = cm->next;
 		}
 		sh->last_oper = 0;
