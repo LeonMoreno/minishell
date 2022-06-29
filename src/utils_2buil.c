@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 12:19:45 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/28 16:54:15 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/28 19:30:22 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,20 +62,28 @@ void	start_pipex(t_sh *sh)
  * @i : incrementa solo si hay pipex
  * Return : number forks malloces
  */
-int	init_fork(t_sh *sh)
+int	init_fork(t_sh *sh, t_cmd *top)
 {
 	int		i;
 	t_cmd	*cm;
 
-	cm = sh->cmd_lst;
+	cm = top;
 	i = 0;
 	while (cm)
 	{
-		if (!check_cmd(cm->name) || sh->n_pipe > 0)
-			i++;
+		if ((!check_cmd(cm->name) || sh->n_pipe > 0))
+				i++;
+		if (cm->oper)
+			break ;
 		cm = cm->next;
 	}
 	if (i > 0)
 		sh->id_f = malloc(sizeof(pid_t) * i);
 	return (i);
+}
+
+void	ft_perror(char *s, t_sh *sh)
+{
+	sh->last_re = 1;
+	perror(s);
 }

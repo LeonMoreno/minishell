@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:38 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/28 16:55:42 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/28 20:48:44 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ int	chr_pipe(t_cmd *cm)
 
 	t = cm;
 	i = 0;
-	while (cm)
+	while (t)
 	{
-		if (cm->name && !cm->oper && cm->next)
+		if (t->name && !t->oper && t->next)
 			i++;
-		if (cm->oper)
+		if (t->oper)
 			break ;
-		cm = cm->next;
+		t = t->next;
 	}
 	return (i);
 }
@@ -92,9 +92,9 @@ t_cmd	*exec_intern(t_sh *sh, t_cmd *cm)
 	tmp = cm;
 	i = 0;
 	pi = 0;
-	sh->n_pipe = chr_pipe(sh->cmd_lst);
+	sh->n_pipe = chr_pipe(cm);
 	start_pipex(sh);
-	sh->n_forks = init_fork(sh);
+	sh->n_forks = init_fork(sh, cm);
 	while (tmp && sh->last_oper == 0)
 	{
 		chr_redir_out(tmp, '>');
@@ -119,7 +119,7 @@ void	start_exec(t_sh *sh)
 	{
 		cm = exec_intern(sh, cm);
 		if (sh->last_oper == 5 && sh->last_re != 0)
-			break ;
+			cm = cm->next;
 		if (sh->last_oper == 6 && sh->last_re == 0)
 			break ;
 		sh->last_oper = 0;

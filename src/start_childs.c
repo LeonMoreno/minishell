@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:44 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/28 14:22:29 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/28 20:06:25 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,9 @@ void	start_child_next(t_cmd *cm, t_sh *sh)
 	{
 		path = cmd_path(cm);
 		if (!path)
-			msg_stderr("miniShell: command not found: ", cm);
+			msg_stderr("miniShell: command not found: ", cm, sh);
 		execve(path, cm->argvec, environ);
 		perror("execve");
-		ft_exit(sh, cm->argvec);
 	}
 }
 
@@ -90,7 +89,7 @@ void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i)
 	ft_sig_cancel();
 	if (cm->name)
 	{
-		if (!check_cmd(sh->cmd_lst->name) && sh->n_pipe > 0 && (i == 0))
+		if (!check_cmd(cm->name) && sh->n_pipe > 0 && (i == 0))
 			dup_stdout(sh, i);
 		else if (sh->n_pipe && sh->n_forks != (i + 1))
 		{
@@ -102,5 +101,5 @@ void	start_child_cmdext(t_cmd *cm, t_sh *sh, int i)
 			dup_stdin(sh, i);
 	}
 	start_child_next(cm, sh);
-	ft_exit(sh, cm->argvec);
+	ft_exit_fail(sh, cm->argvec);
 }

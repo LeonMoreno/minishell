@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:01 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/28 16:54:51 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/28 19:48:06 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,42 @@ void	end_fork(t_sh *sh)
 	while (i < sh->n_forks)
 	{
 		ft_silence();
-		waitpid(sh->id_f[i], &status, 0);
+		waitpid(sh->id_f[i++], &status, 0);
 		ft_sigaction();
 		if (sh->pipe && (j < sh->n_pipe))
 		{
 			close(sh->pipe[j].p[OUT]);
-			close(sh->pipe[j].p[IN]);
-			j++;
+			close(sh->pipe[j++].p[IN]);
 		}
-		i++;
 	}
 	if (sh->n_forks)
+	{
 		sh->last_re = WEXITSTATUS(status);
-	if (sh->id_f)
 		free(sh->id_f);
+		sh->id_f = NULL;
+	}
 	if (sh->n_pipe)
 		free(sh->pipe);
+}
+
+void	ft_exit_fail(t_sh *sh, char **argv)
+{
+	int	i;
+
+	i = 0;
+	while (argv && argv[i])
+		i++;
+	if (i > 2)
+	{
+		ft_printf("exit: too many arguments\n");
+		return ;
+	}
+	if (sh->line)
+	{
+		free_lst(sh);
+		free_doble_arr(sh->env);
+	}
+	rl_clear_history();
+	free(sh);
+	exit (EXIT_FAILURE);
 }

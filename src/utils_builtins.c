@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:29 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/28 14:41:41 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/28 19:48:02 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void	ft_cd_home_relativo(char **s, t_sh *sh, char *oldpwd)
 	if (chdir(tmp) == 0)
 		ft_export(oldpwd, sh);
 	else
-		perror("cd");
+		ft_perror("cd", sh);
 	free(tmp);
 	free(h_rel);
 }
