@@ -66,13 +66,13 @@ int	chr_pipe(t_cmd *cm)
 
 	t = cm;
 	i = 0;
-	while (cm)
+	while (t)
 	{
-		if (cm->name && !cm->oper && cm->next)
+		if (t->name && !t->oper && t->next)
 			i++;
-		if (cm->oper)
+		if (t->oper)
 			break ;
-		cm = cm->next;
+		t = t->next;
 	}
 	return (i);
 }
@@ -113,22 +113,15 @@ t_cmd	*exec_intern(t_sh *sh, t_cmd *cm)
 void	start_exec(t_sh *sh)
 {
 	t_cmd	*cm;
-	int		go;
 
-	go = 0;
 	cm = sh->cmd_lst;
 	while (cm)
 	{
 		cm = exec_intern(sh, cm);
 		if (sh->last_oper == 5 && sh->last_re != 0)
-			goto NEX;
+			cm = cm->next;
 		if (sh->last_oper == 6 && sh->last_re == 0)
 			break ;
-		if (go == 7)
-		{
-			NEX:
-			cm = cm->next;
-		}
 		sh->last_oper = 0;
 	}
 }
