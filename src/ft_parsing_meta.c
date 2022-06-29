@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 10:28:36 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/24 15:19:53 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/29 15:36:02 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,9 @@ int	ft_parsing_meta(t_sh *sh, int i)
 		return (124);
 	if (sh->line[i] == 38 && sh->line[i + 1] == 38)
 		return (38);
+	if (sh->line[i] == 40)
+		return (40);
+	if (sh->line[i] == 41)
+		return (41);
 	return (0);
 }
