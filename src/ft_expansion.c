@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:29:45 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/22 09:32:37 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/29 11:34:12 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ char	*ft_compare_env(t_sh *sh, int start, int end)
 
 	expan = ft_substr(sh->line, start + 1, end - start - 1);
 	if (expan[0] == '?')
-		found = ft_strdup(ft_itoa(sh->last_re));
+		found = ft_itoa(sh->last_re);
 	else
 	{
 		found = getenv(expan);
 		if (found)
 			found = ft_strdup(found);
-		free(expan);
 	}
+	free(expan);
 	return (found);
 }
 
