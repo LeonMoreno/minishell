@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:49:40 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/27 19:08:28 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/29 18:26:53 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,23 @@ t_tokens	*ft_fill_args(t_tokens *begin, t_cmd *cm, char **temp, int len_a)
 	i = 0;
 	while (begin)
 	{	
-		if (begin->type == PIPE)
+		if ((begin->type == PIPE) || (begin->type == PARE && is_cmd))
 			break ;
-		if (begin->type == ARG && is_cmd == false)
+		if ((begin->type == PARE || begin->type == ARG) && is_cmd == false)
 		{
 			is_cmd = true;
 			cm->name = begin->str;
-			begin->type = CMD;
+			if (begin->type != PARE)
+				begin->type = CMD;
 		}
 		if (begin->type == ARG && check_wild(begin->str))
 			temp = openthydir(temp, begin->str, len_a, &i);
 		else if (begin->type == ARG || begin->type == CMD)
 			temp[i++] = ft_strdup(begin->str);
+		if (cm->name && (cm->name[0] == '(' || cm->name[0] == ')'))
+			break ;
 		begin = begin->next;
+		
 	}
 	cm->argvec = temp;
 	return (begin);
@@ -117,13 +121,16 @@ void	ft_init_cmd_lst(t_sh *sh)
 	begin = sh->token_lst;
 	while (begin)
 	{
-		if (begin->type != PIPE && is_cmd)
+//		if (is_cmd && begin->type && begin->type != PARE)
+		if (is_cmd && begin->type)
 			ft_create_cmd(sh, &is_cmd, begin);
-		else if (begin->type == PIPE)
+		else if (begin->type == PIPE)//|| begin->type == PARE)
 		{
 			sh->n_pipe++;
 			is_cmd = true;
 		}
+		if (begin->type == PARE)
+			is_cmd = true;
 		begin = begin->next;
 	}
 	ft_check_redir_input(sh);
