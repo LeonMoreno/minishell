@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:38 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/28 19:03:47 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/28 20:24:31 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,15 +113,22 @@ t_cmd	*exec_intern(t_sh *sh, t_cmd *cm)
 void	start_exec(t_sh *sh)
 {
 	t_cmd	*cm;
+	int		go;
 
+	go = 0;
 	cm = sh->cmd_lst;
 	while (cm)
 	{
 		cm = exec_intern(sh, cm);
 		if (sh->last_oper == 5 && sh->last_re != 0)
-			break ;
+			goto NEX;
 		if (sh->last_oper == 6 && sh->last_re == 0)
 			break ;
+		if (go == 7)
+		{
+			cm = cm->next; NEX:
+			cm = cm->next;
+		}
 		sh->last_oper = 0;
 	}
 }
