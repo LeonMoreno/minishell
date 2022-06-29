@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 12:19:45 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/28 19:30:22 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/29 11:28:58 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,27 +24,21 @@ int	ft_size_arr(char **tab)
 	return (i);
 }
 
-void	ft_chr_n(char *s, int *n, int *ctr)
+int	ft_chr_n(char *s, int *ctr)
 {
 	int	i;
-	int	ch;
 
-	ch = 0;
 	i = 1;
+	if (s[i] == '\0')
+		return (1);
 	while (s[i])
 	{
 		if (s[i] != 'n')
-		{
-			ch = 7;
-			break ;
-		}
+			return (1);
 		i++;
 	}
-	if (ch == 0)
-	{
-		*n = 2;
-		*ctr = 1;
-	}
+	*ctr = *ctr + 1;
+	return (0);
 }
 
 /**

@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 10:30:35 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/27 18:27:43 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/29 11:21:42 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,5 @@ void	child_here(int *i_pipe, t_sh *sh, char *operand)
 	write(i_pipe[1], temp, ft_strlen(temp));
 	free(temp);
 	close(i_pipe[1]);
-	rl_clear_history();
-	free_doble_arr(sh->env);
-	free_lst(sh);
-	exit(0);
+	ft_exit(sh, NULL);
 }

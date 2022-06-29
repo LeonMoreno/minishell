@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:47 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/29 11:39:11 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/29 11:42:40 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ void	ft_echo(char **s)
 {
 	int		i;
 	int		ctr;
+	bool	skip;
 
+	skip = true;
 	ctr = 0;
 	i = 1;
 	if (!s[i])
@@ -60,14 +62,15 @@ void	ft_echo(char **s)
 		write(1, "\n", 1);
 		return ;
 	}
-	if (!ft_strncmp(s[1], "-n", 2))
-		ft_chr_n(s[1], &i, &ctr);
 	while (s[i] != NULL)
-	{
-		if (ft_strncmp(s[i], "-n", 3))
+	{	
+		if (!skip || ft_chr_n(s[i], &ctr))
+		{
 			ft_printf("%s", s[i]);
-		if (ft_strncmp(s[i], "-n", 3) && s[i + 1] != NULL)
-			ft_printf(" ");
+			if (s[i + 1] != NULL)
+				ft_printf(" ");
+			skip = false;
+		}
 		i++;
 	}
 	if (ft_strncmp(s[1], "-n", 3) && ctr == 0)
