@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	ft_argvec_pare(t_cmd *cm_pare)
+void	ft_argvec_pare(t_cmd *cm_pare, t_tokens *n)
 {
 	cm_pare->name = cm_pare->token_tab[0]->str;
 	if (cm_pare->name[0] == '(')
@@ -16,6 +16,10 @@ void	ft_argvec_pare(t_cmd *cm_pare)
 		cm_pare->argvec[0] = cm_pare->name;
 		cm_pare->argvec[1] = NULL;
 	}	
+	if (n && n->type == PIPE && oper_meta(n->str, 0) == 38)
+		cm_pare->oper = AND;
+	if (n && n->type == PIPE && oper_meta(n->str, 0) == 124)
+		cm_pare->oper = OR;
 }
 
 int		ft_len_pare(t_sh *sh, char *str, int index)

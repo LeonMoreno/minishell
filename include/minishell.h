@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:27:01 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/30 12:45:17 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/30 13:38:29 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ t_tokens	*ft_create_token(t_sh *sh);
 
 //Functions Parenthesis
 void		ft_substract_pare(t_sh *sh, t_tokens *token, int *i);
-void		ft_argvec_pare(t_cmd *cm_pare);
+void		ft_argvec_pare(t_cmd *cm_pare, t_tokens *n);
 
 //Functions Commands
 int			ft_size(t_tokens *lsist, int mode);

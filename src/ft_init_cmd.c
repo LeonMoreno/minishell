@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:49:40 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/30 12:51:43 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/30 13:41:36 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_argvec_init(t_tokens *index, t_cmd *this_cmd)
 	len = ft_size(index, 0);
 	begin = index;
 	if (this_cmd->token_tab[0]->type == PARE)
-		ft_argvec_pare(this_cmd);
+		ft_argvec_pare(this_cmd, index->next);
 	else
 	{
 		temp = malloc(sizeof(char *) * (ft_size(index, 0) + 1));
