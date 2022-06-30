@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:27:01 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/29 20:14:43 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/30 11:18:17 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void		ft_unset(char **s, t_sh *sh);
 void		start_env(t_sh *sh);
 int			ft_len_env(char *key_s, t_sh *sh);
 void		ft_cd_home_relativo(char **s, t_sh *sh, char *oldpwd);
-int			ft_chr_n(char *s, int *ctr);
+int			ft_chr_n(char *s, int *ctr, t_sh *sh);
 void		ft_perror(char *s, t_sh *sh);
 
 //Functions parser

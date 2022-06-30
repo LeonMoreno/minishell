@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:47 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/29 20:05:45 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/30 11:17:06 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	ft_echo(char **s, t_sh *sh)
 	}
 	while (s[i] != NULL)
 	{
-		if (!skip || ft_chr_n(s[i], &ctr))
+		if (!skip || ft_chr_n(s[i], &ctr, sh))
 		{
 			ft_printf("%s", s[i]);
 			if (s[i + 1] != NULL)
@@ -82,7 +82,6 @@ void	ft_echo(char **s, t_sh *sh)
 	}
 	if (ft_strncmp(s[1], "-n", 3) && ctr == 0)
 		write(1, "\n", 1);
-	sh->last_re = 0;
 }
 
 void	ft_cd_next(char **s, t_sh *sh, char *oldpwd)
