@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:49:40 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/30 10:54:56 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/30 13:41:36 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,14 @@ void	ft_argvec_init(t_tokens *index, t_cmd *this_cmd)
 
 	len = ft_size(index, 0);
 	begin = index;
-	temp = malloc(sizeof(char *) * (ft_size(index, 0) + 1));
-	ft_argvec_zero(temp, len + 1);
-	begin = ft_fill_args(begin, this_cmd, temp, ft_size(index, 0));
+	if (this_cmd->token_tab[0]->type == PARE)
+		ft_argvec_pare(this_cmd, index->next);
+	else
+	{
+		temp = malloc(sizeof(char *) * (ft_size(index, 0) + 1));
+		ft_argvec_zero(temp, len + 1);
+		begin = ft_fill_args(begin, this_cmd, temp, ft_size(index, 0));
+	}
 	if (begin && begin->type == PIPE && oper_meta(begin->str, 0) == 38)
 		this_cmd->oper = AND;
 	if (begin && begin->type == PIPE && oper_meta(begin->str, 0) == 124)

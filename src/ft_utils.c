@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 13:15:28 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/29 15:52:05 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/30 12:58:13 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,11 @@ void	ft_print_cmds(t_sh *sh)
 		j = 0;
 		while (begin->token_tab[j])
 		{
-			printf("Token this: %s\n", begin->token_tab[j]->str);
+			printf("Token this: %s is type: %d\n", begin->token_tab[j]->str, begin->token_tab[j]->type);
 			j++;
 		}
+		if (begin->token_tab[0]->type == PARE && begin->name[0] == '(')
+			printf("In Parenthesis--> ( %s )\n", begin->argvec[1]);
 		printf("CMD %d: [ %s ]  has %d args and finishes with %d\n",
 			i, begin->name, j - 1, begin->oper);
 		i++;
