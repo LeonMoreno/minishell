@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:49:40 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/30 10:42:38 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/30 10:54:56 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ t_tokens	*ft_fill_args(t_tokens *begin, t_cmd *cm, char **temp, int len_a)
 			temp = openthydir(temp, begin->str, len_a, &i);
 		else if (begin->type == ARG || begin->type == CMD)
 			temp[i++] = ft_strdup(begin->str);
-		//if (cm->name && (cm->name[0] == '(' || cm->name[0] == ')'))
-		//	break ;
 		begin = begin->next;
 		
 	}
@@ -121,10 +119,9 @@ void	ft_init_cmd_lst(t_sh *sh)
 	begin = sh->token_lst;
 	while (begin)
 	{
-//		if (is_cmd && begin->type && begin->type != PARE)
 		if (is_cmd && (begin->type == ARG || begin->type == PARE || begin->type == OPER))
 			ft_create_cmd(sh, &is_cmd, begin);
-		else if (begin->type == PIPE)//|| begin->type == PARE)
+		else if (begin->type == PIPE)
 		{
 			sh->n_pipe++;
 			is_cmd = true;

@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:27:01 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/30 09:33:11 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/30 10:53:15 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ enum
 	OPER,
 	OPERD,
 	PIPE,
+	PARE,
 	AND,
 	OR,
-	PARE,
 	QUOTE,
 	OUT = 0,
 	IN
