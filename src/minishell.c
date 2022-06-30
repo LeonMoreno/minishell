@@ -49,10 +49,11 @@ void	start_shell(t_sh *sh)
 		if (sh->line && sh->line[0] != '\0')
 		{
 			line_parser(sh);
-			if (sh->token_lst && sh->cmd_lst)
-				start_exec(sh);
+			ft_print_cmds(sh);
+//			if (sh->token_lst && sh->cmd_lst)
+//				start_exec(sh);
 		}
-		free_lst(sh);
+//		free_lst(sh);
 		sh->token_lst = NULL;
 	}
 }
@@ -62,8 +63,8 @@ int	main(void)
 	t_sh	*sh;
 
 	sh = malloc(sizeof(t_sh));
-	ft_sigaction();
 	start_env(sh);
+	ft_sigaction();
 	start_shell(sh);
 	return (0);
 }

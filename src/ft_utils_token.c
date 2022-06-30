@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 19:18:08 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/27 12:31:50 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/30 10:55:19 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,14 @@ int	ft_size(t_tokens *lsist, int mode)
 
 	i = 0;
 	begin = lsist;
+	if (begin->type == PARE)
+		return (1);
 	while (begin)
 	{
-		if (begin->type == PIPE)
+		if (begin->type == PIPE || begin->type == PARE)
 			break ;
-		if (begin->next && begin->next->type != PIPE && begin->type == OPER)
+		if (begin->next && begin->next->type != PIPE && begin->type == OPER
+			&& begin->next->type != PARE)
 			begin->next->type = OPERD;
 		if (mode)
 			i++;
