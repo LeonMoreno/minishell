@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:50 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/29 20:08:32 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/29 20:17:47 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void	ft_export(char *s, t_sh *sh)
 
 	if (!s)
 	{
-		ft_env();
+		ft_env(sh);
 		return ;
 	}
 	sh->tmp = s;
