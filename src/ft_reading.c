@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 19:02:24 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/29 15:40:27 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/30 12:03:08 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_tokens	*ft_create_token(t_sh *sh)
 	token->next = NULL;
 	token->argve = NULL;
 	token->str = NULL;
+	token->cm_line = NULL;
 	if (!sh->token_lst)
 		sh->token_lst = token;
 	else
@@ -43,7 +44,7 @@ t_tokens	*ft_create_token(t_sh *sh)
 
 //Initiate a token. Newly created token receives :
 //1. Its String : token->str  2.Its Type  a:arg b:oper c.pipe 
-void	ft_next_token(t_sh *sh, int i, char **temp)
+void	ft_next_token(t_sh *sh, int i, char **temp, int *sub)
 {
 	t_tokens	*token;
 
@@ -62,7 +63,10 @@ void	ft_next_token(t_sh *sh, int i, char **temp)
 	if (oper_meta(token->str, 0))
 		token->type = PIPE;
 	if (token->type == OPER && (sh->line[i] == 41 || sh->line[i] == 40))
-		token->type = PARE;
+	{
+		ft_substract_pare(sh, token, sub);
+		//token->type = PARE;
+	}
 	sh->start = -1;
 	*temp = NULL;
 }
@@ -96,7 +100,7 @@ void	ft_parsing(t_sh *sh, int *i)
 	static char	*temp = NULL;
 
 	if (sh->line[*i] < 33 && sh->start >= 0)
-		ft_next_token(sh, *i, &temp);
+		ft_next_token(sh, *i, &temp, i);
 	else if (sh->line[*i] == 39 && ft_quote_real(sh, *i, 0))
 		temp = ft_single_quoting(sh, i, temp);
 	else if (sh->line[*i] == 34 && ft_quote_real(sh, *i, 1))
@@ -113,11 +117,11 @@ void	ft_parsing(t_sh *sh, int *i)
 			*i = *i + 1;
 			temp = ft_prep_string(sh, &temp, i);
 		}
-		ft_next_token(sh, *i, &temp);
+		ft_next_token(sh, *i, &temp, i);
 	}
 	else if (sh->line[*i + 1] == '\0' && sh->line[*i] > 32
 		&& sh->line[*i] < 127)
-		ft_next_token(sh, *i + 1, &temp);
+		ft_next_token(sh, *i + 1, &temp, i);
 }
 
 //Loops and parse the line received and stored in sh->line.
