@@ -50,21 +50,41 @@ void	start_shell(t_sh *sh)
 		{
 			line_parser(sh);
 			ft_print_cmds(sh);
-//			if (sh->token_lst && sh->cmd_lst)
-//				start_exec(sh);
+			if (sh->token_lst && sh->cmd_lst)
+				start_exec(sh);
 		}
 //		free_lst(sh);
 		sh->token_lst = NULL;
 	}
 }
 
-int	main(void)
+void	start_shell_bonus(t_sh *sh, char **argv)
+{
+	ft_printf("\n\t\t %s *** BONUS PID %d *** %s\n\n", UBLU, getpid(), RESET);
+	init_var(sh);
+	sh->line = ft_strdup(argv[1]);
+	//start_readline(sh);
+	if (sh->line && sh->line[0] != '\0')
+	{
+		line_parser(sh);
+		ft_print_cmds(sh);
+		if (sh->token_lst && sh->cmd_lst)
+			start_exec(sh);
+	}
+//	free_lst(sh);
+	sh->token_lst = NULL;
+}
+
+int	main(int argc, char **argv)
 {
 	t_sh	*sh;
 
 	sh = malloc(sizeof(t_sh));
 	start_env(sh);
 	ft_sigaction();
-	start_shell(sh);
+	if (argc == 1)
+		start_shell(sh);
+	else
+		start_shell_bonus(sh, argv);
 	return (0);
 }
