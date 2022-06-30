@@ -6,38 +6,45 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:47 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/29 11:42:40 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/29 20:05:45 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_getpwd(void)
+int	ft_arg_valid(char *s)
 {
-	char	*buf;
+	int	i;
 
-	buf = getcwd(NULL, 0);
-	if (buf == NULL)
-		perror("pwd ");
-	else
+	i = 0;
+	while (s[i])
 	{
-		ft_printf("%s\n", buf);
-		free(buf);
+		if (!ft_isdigit(s[i]))
+			return (0);
+		i++;
 	}
+	return (1);
 }
 
 void	ft_exit(t_sh *sh, char **argv)
 {
 	int	i;
+	int	e;
 
 	i = 0;
+	e = 0;
 	while (argv && argv[i])
 		i++;
-	if (i > 2)
+	if (argv[1] && ft_arg_valid(argv[1]) && i > 2)
 	{
-		ft_printf("exit: too many arguments\n");
+		ft_printf("miniShell: exit too many arguments\n");
 		return ;
 	}
+	if (argv[1] && !ft_arg_valid(argv[1]))
+		ft_printf("miniShell: exit: %s: numeric argument required\n", argv[1]);
+	if (argv[1])
+		e = ft_atoi(argv[1]);
+	ft_printf("exit\n");
 	if (sh->line)
 	{
 		free_lst(sh);
@@ -45,10 +52,10 @@ void	ft_exit(t_sh *sh, char **argv)
 	}
 	rl_clear_history();
 	free(sh);
-	exit (EXIT_SUCCESS);
+	exit (e);
 }
 
-void	ft_echo(char **s)
+void	ft_echo(char **s, t_sh *sh)
 {
 	int		i;
 	int		ctr;
@@ -63,7 +70,7 @@ void	ft_echo(char **s)
 		return ;
 	}
 	while (s[i] != NULL)
-	{	
+	{
 		if (!skip || ft_chr_n(s[i], &ctr))
 		{
 			ft_printf("%s", s[i]);
@@ -75,6 +82,7 @@ void	ft_echo(char **s)
 	}
 	if (ft_strncmp(s[1], "-n", 3) && ctr == 0)
 		write(1, "\n", 1);
+	sh->last_re = 0;
 }
 
 void	ft_cd_next(char **s, t_sh *sh, char *oldpwd)

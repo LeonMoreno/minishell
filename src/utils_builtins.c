@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:29 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/29 10:49:54 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/06/29 20:14:27 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,15 @@ void	start_builtins(t_cmd *cm, t_sh *sh)
 	if (!ft_strncmp(cm->name, "exit", 5))
 		ft_exit(sh, argv);
 	else if (argv[0] && !ft_strncmp(argv[0], "pwd", 4))
-		ft_getpwd();
+		ft_getpwd(sh);
 	else if (argv[0] && !ft_strncmp(argv[0], "echo", 5))
-		ft_echo(argv);
+		ft_echo(argv, sh);
 	else if (argv[0] && !ft_strncmp(argv[0], "cd", 3))
 		ft_cd(argv, sh);
 	else if (argv[0] && !ft_strncmp(argv[0], "export", 7))
 		ft_export(argv[1], sh);
 	else if (argv[0] && !ft_strncmp(argv[0], "env", 4))
-		ft_env();
+		ft_env(sh);
 	else if (argv[0] && !ft_strncmp(argv[0], "unset", 5))
 		ft_unset(argv, sh);
 	if (cm->n_r_out > 0 && sh->n_forks == 0)
@@ -115,7 +115,7 @@ int	ft_len_env(char *key_s, t_sh *sh)
  * @brief printf env
  *
  */
-void	ft_env(void)
+void	ft_env(t_sh *sh)
 {
 	int	i;
 
@@ -125,6 +125,7 @@ void	ft_env(void)
 		ft_printf("%s\n", environ[i]);
 		i++;
 	}
+	sh->last_re = 0;
 }
 
 void	ft_cd_home_relativo(char **s, t_sh *sh, char *oldpwd)

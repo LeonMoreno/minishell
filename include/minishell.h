@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:27:01 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/29 11:43:15 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/29 20:14:43 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,11 @@ typedef struct s_sh
 
 //Functions builtins
 void		ft_exit(t_sh *sh, char **argv);
-void		ft_getpwd(void);
-void		ft_echo(char **s);
+void		ft_getpwd(t_sh *sh);
+void		ft_echo(char **s, t_sh *sh);
 void		ft_cd(char **s, t_sh *sh);
 void		ft_export(char *s, t_sh *sh);
-void		ft_env(void);
+void		ft_env(t_sh *sh);
 void		ft_unset(char **s, t_sh *sh);
 void		start_env(t_sh *sh);
 int			ft_len_env(char *key_s, t_sh *sh);

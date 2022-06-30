@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   utils_3buil.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/01 14:18:23 by LeoMoreno         #+#    #+#             */
-/*   Updated: 2022/06/29 19:02:35 by lmoreno          ###   ########.fr       */
+/*   Created: 2022/06/29 19:33:10 by lmoreno           #+#    #+#             */
+/*   Updated: 2022/06/29 20:11:14 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-int	ft_isdigit(int c)
+void	ft_getpwd(t_sh *sh)
 {
-	if (c >= 48 && c <= 57)
-		return (1);
-	return (0);
+	char	*buf;
+
+	buf = getcwd(NULL, 0);
+	if (buf == NULL)
+		perror("pwd ");
+	else
+	{
+		ft_printf("%s\n", buf);
+		free(buf);
+	}
+	sh->last_re = 0;
 }
