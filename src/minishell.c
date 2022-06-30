@@ -42,6 +42,7 @@ void	start_readline(t_sh *sh)
 void	start_shell(t_sh *sh)
 {
 	ft_printf("\n\t\t %s *** PROC INI PID %d *** %s\n\n", UBLU, getpid(), RESET);
+	ft_printf("last_re =  %d \n", sh->last_re);
 	while (1)
 	{
 		init_var(sh);
@@ -49,7 +50,7 @@ void	start_shell(t_sh *sh)
 		if (sh->line && sh->line[0] != '\0')
 		{
 			line_parser(sh);
-			ft_print_cmds(sh);
+		//	ft_print_cmds(sh);
 			if (sh->token_lst && sh->cmd_lst)
 				start_exec(sh);
 		}
@@ -67,7 +68,7 @@ void	start_shell_bonus(t_sh *sh, char **argv)
 	if (sh->line && sh->line[0] != '\0')
 	{
 		line_parser(sh);
-		ft_print_cmds(sh);
+	//	ft_print_cmds(sh);
 		if (sh->token_lst && sh->cmd_lst)
 			start_exec(sh);
 	}
@@ -86,5 +87,5 @@ int	main(int argc, char **argv)
 		start_shell(sh);
 	else
 		start_shell_bonus(sh, argv);
-	return (0);
+	return (sh->last_re);
 }

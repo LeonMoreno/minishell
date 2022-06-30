@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:38 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/28 20:48:44 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/06/30 18:22:17 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,10 @@ t_cmd	*exec_intern(t_sh *sh, t_cmd *cm)
 	sh->n_pipe = chr_pipe(cm);
 	start_pipex(sh);
 	sh->n_forks = init_fork(sh, cm);
+	sh->last_oper = 0;
 	while (tmp && sh->last_oper == 0)
 	{
+		printf("Estoy en EXEC_INTER i = %d\n", i);
 		chr_redir_out(tmp, '>');
 		if (i < sh->n_pipe)
 			pipe(sh->pipe[i].p);
@@ -110,18 +112,83 @@ t_cmd	*exec_intern(t_sh *sh, t_cmd *cm)
 	return (tmp);
 }
 
+void	subexec(t_sh *sh, t_cmd *cm, int *pi)
+{
+	char 	*path;
+	char 	*join;
+	int		status;
+	pid_t 	pid;
+
+	printf("SUBeXEC pid = %d\n", getpid());
+	pid = fork();
+	if (pid == 0)
+	{
+		(void) cm;
+		(void) sh;
+		(void) pi;
+		path = getenv("PWD");
+		join = ft_strjoin(path, "/");
+		path = ft_strjoin(join, "./minishell");
+		free(join);
+		//close (pi[OUT]);
+		//dup2(pi[IN], STDOUT_FILENO);
+		//close (pi[IN]);
+		execve(path, cm->argvec, environ);
+		printf("AQUI SIGO = %d\n", getpid());
+		perror("exc: ");
+		ft_exit_fail(sh, NULL);
+	}
+	close(pi[IN]);
+	waitpid(pid, &status, 0);
+	sh->last_re = WEXITSTATUS(status);
+}	
+
+void	sub_cat(int *pi)
+{
+	pid_t 	pid;
+	char	*arg[2] = {"cat", NULL};
+
+	pid = fork();
+	if (pid == 0)
+	{
+		close (pi[IN]);
+		dup2(pi[OUT], STDIN_FILENO);
+		close (pi[OUT]);
+		execve("/bin/cat", arg, NULL);
+		perror("exc: ");
+	}
+	wait(NULL);
+	close(pi[OUT]);
+}
+
 void	start_exec(t_sh *sh)
 {
-	t_cmd	*cm;
+	t_cmd		*cm;
+	t_tokens	*t;
+	int			pi[2];
 
 	cm = sh->cmd_lst;
 	while (cm)
 	{
-		cm = exec_intern(sh, cm);
-		if (sh->last_oper == 5 && sh->last_re != 0)
+		printf("last_re = %d pid = %d, cmd = %s \n", sh->last_re, getpid(), cm->name);
+		t = cm->token_tab[0];
+		if (cm->token_tab[0]->type != PARE)
+			cm = exec_intern(sh, cm);
+		else
+		{
+			if (cm->token_tab[0]->str[0] == '(' && sh->last_re == 0)
+			{
+				pipe(pi);
+				subexec(sh, cm, pi);
+			}
+			//if (cm->token_tab[0]->str[0] == ')' && (cm->oper != 0 || !cm->next))
+			//	sub_cat(pi);
 			cm = cm->next;
-		if (sh->last_oper == 6 && sh->last_re == 0)
+		}
+		//if (sh->last_oper == AND && sh->last_re != 0 && t->type != PARE && t->str[0] != '(')
+		if (sh->last_oper == AND && sh->last_re != 0)
+			cm = cm->next;
+		if (sh->last_oper == OR && sh->last_re == 0)
 			break ;
-		sh->last_oper = 0;
 	}
 }
