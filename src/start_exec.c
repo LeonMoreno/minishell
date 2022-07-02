@@ -98,7 +98,7 @@ t_cmd	*exec_intern(t_sh *sh, t_cmd *cm)
 	sh->last_oper = 0;
 	while (tmp && sh->last_oper == 0)
 	{
-		printf("Estoy en EXEC_INTER i = %d\n", i);
+	//	printf("Estoy en EXEC_INTER i = %d\n", i);
 		chr_redir_out(tmp, '>');
 		if (i < sh->n_pipe)
 			pipe(sh->pipe[i].p);
@@ -119,7 +119,7 @@ void	subexec(t_sh *sh, t_cmd *cm, int *pi)
 	int		status;
 	pid_t 	pid;
 
-	printf("SUBeXEC pid = %d\n", getpid());
+	//printf("SUBeXEC pid = %d\n", getpid());
 	pid = fork();
 	if (pid == 0)
 	{
@@ -130,11 +130,11 @@ void	subexec(t_sh *sh, t_cmd *cm, int *pi)
 		join = ft_strjoin(path, "/");
 		path = ft_strjoin(join, "./minishell");
 		free(join);
-		//close (pi[OUT]);
-		//dup2(pi[IN], STDOUT_FILENO);
-		//close (pi[IN]);
+		close (pi[OUT]);
+		dup2(pi[IN], STDOUT_FILENO);
+		close (pi[IN]);
 		execve(path, cm->argvec, environ);
-		printf("AQUI SIGO = %d\n", getpid());
+		//printf("AQUI SIGO = %d\n", getpid());
 		perror("exc: ");
 		ft_exit_fail(sh, NULL);
 	}
@@ -164,14 +164,14 @@ void	sub_cat(int *pi)
 void	start_exec(t_sh *sh)
 {
 	t_cmd		*cm;
-	t_tokens	*t;
+	//t_tokens	*t;
 	int			pi[2];
 
 	cm = sh->cmd_lst;
 	while (cm)
 	{
-		printf("last_re = %d pid = %d, cmd = %s \n", sh->last_re, getpid(), cm->name);
-		t = cm->token_tab[0];
+		//printf("last_re = %d pid = %d, cmd = %s \n", sh->last_re, getpid(), cm->name);
+	//	t = cm->token_tab[0];
 		if (cm->token_tab[0]->type != PARE)
 			cm = exec_intern(sh, cm);
 		else
@@ -181,8 +181,8 @@ void	start_exec(t_sh *sh)
 				pipe(pi);
 				subexec(sh, cm, pi);
 			}
-			//if (cm->token_tab[0]->str[0] == ')' && (cm->oper != 0 || !cm->next))
-			//	sub_cat(pi);
+			if (cm->token_tab[0]->str[0] == ')' && (cm->oper != 0 || !cm->next))
+				sub_cat(pi);
 			cm = cm->next;
 		}
 		//if (sh->last_oper == AND && sh->last_re != 0 && t->type != PARE && t->str[0] != '(')
