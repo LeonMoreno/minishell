@@ -7,13 +7,13 @@ void	ft_argvec_pare(t_cmd *cm_pare, t_tokens *n)
 	{
 		cm_pare->argvec = malloc(sizeof(char *) * 3);
 		cm_pare->argvec[0] = ft_strdup("./minishell");
-		cm_pare->argvec[1] = cm_pare->token_tab[0]->cm_line;
+		cm_pare->argvec[1] = ft_strdup(cm_pare->token_tab[0]->cm_line);
 		cm_pare->argvec[2] = NULL;
 	}
 	else
 	{
 		cm_pare->argvec = malloc(sizeof(char *) *2);
-		cm_pare->argvec[0] = cm_pare->name;
+		cm_pare->argvec[0] = ft_strdup(cm_pare->name);
 		cm_pare->argvec[1] = NULL;
 	}	
 	if (n && n->type == PIPE && oper_meta(n->str, 0) == 38)
