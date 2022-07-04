@@ -6,10 +6,9 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2022/07/04 15:39:28 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/07/04 19:11:25 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -49,7 +48,6 @@ void	start_shell(t_sh *sh)
 		if (sh->line && sh->line[0] != '\0')
 		{
 			line_parser(sh);
-			ft_print_cmds(sh);
 			if (sh->token_lst && sh->cmd_lst)
 				start_exec(sh);
 		}
@@ -60,14 +58,11 @@ void	start_shell(t_sh *sh)
 
 void	start_shell_bonus(t_sh *sh, char **argv)
 {
-//	ft_printf("\n\t\t %s *** BONUS PID %d *** %s\n\n", UBLU, getpid(), RESET);
 	init_var(sh);
 	sh->line = ft_strdup(argv[1]);
-	//start_readline(sh);
 	if (sh->line && sh->line[0] != '\0')
 	{
 		line_parser(sh);
-	//	ft_print_cmds(sh);
 		if (sh->token_lst && sh->cmd_lst)
 			start_exec(sh);
 	}

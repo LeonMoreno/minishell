@@ -25,6 +25,7 @@ SRC_FILES =	minishell ft_expansion ft_parsing_meta ft_reading\
 			ft_utils_token start_redir next_builtins ft_heredoc start_env \
 			ft_utils_here ft_expansion_here utils_2buil wildcards \
 			wild_utils wild_utils2 wild_utils3 utils_3buil ft_utils_2token \
+			next_start_exec \
 #SRC
 SRC		=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJ		=	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
@@ -43,7 +44,7 @@ $(OBJ_DIR)%.o : $(SRC_DIR)%.c | $(OBJF)
 
 
 $(OBJF)	:
-			mkdir -p $(OBJ_DIR)
+			@mkdir -p $(OBJ_DIR)
 
 clean	:
 			$(RM) -r $(OBJ_DIR)
