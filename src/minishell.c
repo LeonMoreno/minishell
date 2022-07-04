@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agrenon <agrenon@42quebec.com>             +#+  +:+       +#+        */
-/*   By: lmoreno <lmoreno@42quebec.com>            +#+  +:+       +#+         */
+/*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/22 17:36:28 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/23 16:47:38 by agrenon          ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2022/07/03 09:12:42 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -42,7 +42,6 @@ void	start_readline(t_sh *sh)
 void	start_shell(t_sh *sh)
 {
 	ft_printf("\n\t\t %s *** PROC INI PID %d *** %s\n\n", UBLU, getpid(), RESET);
-	ft_printf("last_re =  %d \n", sh->last_re);
 	while (1)
 	{
 		init_var(sh);
@@ -61,7 +60,7 @@ void	start_shell(t_sh *sh)
 
 void	start_shell_bonus(t_sh *sh, char **argv)
 {
-	ft_printf("\n\t\t %s *** BONUS PID %d *** %s\n\n", UBLU, getpid(), RESET);
+//	ft_printf("\n\t\t %s *** BONUS PID %d *** %s\n\n", UBLU, getpid(), RESET);
 	init_var(sh);
 	sh->line = ft_strdup(argv[1]);
 	//start_readline(sh);

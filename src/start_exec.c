@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:38 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/06/30 18:22:17 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/03 23:01:05 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ t_cmd	*exec_intern(t_sh *sh, t_cmd *cm)
 	sh->last_oper = 0;
 	while (tmp && sh->last_oper == 0)
 	{
-		printf("Estoy en EXEC_INTER i = %d\n", i);
+	//	printf("EXEC_INTER i = %d pid = %d cmD %s\n", i, getpid(), cm->name);
 		chr_redir_out(tmp, '>');
 		if (i < sh->n_pipe)
 			pipe(sh->pipe[i].p);
@@ -119,29 +119,28 @@ void	subexec(t_sh *sh, t_cmd *cm, int *pi)
 	int		status;
 	pid_t 	pid;
 
-	printf("SUBeXEC pid = %d\n", getpid());
+	//printf("SUBeXEC pid = %d\n", getpid());
 	pid = fork();
 	if (pid == 0)
 	{
 		(void) cm;
 		(void) sh;
-		(void) pi;
 		path = getenv("PWD");
 		join = ft_strjoin(path, "/");
 		path = ft_strjoin(join, "./minishell");
 		free(join);
-		//close (pi[OUT]);
-		//dup2(pi[IN], STDOUT_FILENO);
-		//close (pi[IN]);
+		close (pi[OUT]);
+		dup2(pi[IN], STDOUT_FILENO);
+		close (pi[IN]);
 		execve(path, cm->argvec, environ);
-		printf("AQUI SIGO = %d\n", getpid());
+		//printf("AQUI SIGO = %d\n", getpid());
 		perror("exc: ");
 		ft_exit_fail(sh, NULL);
 	}
 	close(pi[IN]);
 	waitpid(pid, &status, 0);
 	sh->last_re = WEXITSTATUS(status);
-}	
+}
 
 void	sub_cat(int *pi)
 {
@@ -158,7 +157,7 @@ void	sub_cat(int *pi)
 		perror("exc: ");
 	}
 	wait(NULL);
-	close(pi[OUT]);
+	//close(pi[OUT]);
 }
 
 void	start_exec(t_sh *sh)
@@ -170,25 +169,34 @@ void	start_exec(t_sh *sh)
 	cm = sh->cmd_lst;
 	while (cm)
 	{
-		printf("last_re = %d pid = %d, cmd = %s \n", sh->last_re, getpid(), cm->name);
+
 		t = cm->token_tab[0];
-		if (cm->token_tab[0]->type != PARE)
+		if (cm && t->type != PARE)
 			cm = exec_intern(sh, cm);
-		else
+		else if (cm)
 		{
-			if (cm->token_tab[0]->str[0] == '(' && sh->last_re == 0)
+			if (t->str[0] == '(' && sh->last_re == 0)
 			{
 				pipe(pi);
 				subexec(sh, cm, pi);
 			}
-			//if (cm->token_tab[0]->str[0] == ')' && (cm->oper != 0 || !cm->next))
-			//	sub_cat(pi);
+			if (t->str[0] == ')' && (cm->oper != 0 || !cm->next))
+				sub_cat(pi);
+			if (t->str[0] == ')' && (cm->oper == 0 && cm->next))
+			{
+				dup2(pi[OUT], STDIN_FILENO);
+				//close(pi[OUT]);
+			}
 			cm = cm->next;
 		}
-		//if (sh->last_oper == AND && sh->last_re != 0 && t->type != PARE && t->str[0] != '(')
 		if (sh->last_oper == AND && sh->last_re != 0)
+		{
+			printf("aqui estoy\n");
 			cm = cm->next;
+		}
+
 		if (sh->last_oper == OR && sh->last_re == 0)
 			break ;
+
 	}
 }
