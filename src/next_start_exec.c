@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 16:12:05 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/04 16:12:06 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/04 17:47:07 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ t_cmd	*exec_intern(t_sh *sh, t_cmd *cm, int fd_in)
 void	subexec(t_sh *sh, t_cmd *cm, int *pi)
 {
 	char	*path;
-	char	*join;
 	int		status;
 	pid_t	pid;
 
@@ -60,9 +59,8 @@ void	subexec(t_sh *sh, t_cmd *cm, int *pi)
 		(void) cm;
 		(void) sh;
 		path = getenv("PWD");
-		join = ft_strjoin(path, "/");
-		path = ft_strjoin(join, "./minishell");
-		free(join);
+		path = ft_strjoin(path, "/minishell");
+		printf("shell = %s\n", path);
 		close (pi[OUT]);
 		dup2(pi[IN], STDOUT_FILENO);
 		close (pi[IN]);
