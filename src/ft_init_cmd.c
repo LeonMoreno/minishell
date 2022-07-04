@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:49:40 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/30 13:41:36 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/07/04 16:14:39 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_tokens	*ft_fill_args(t_tokens *begin, t_cmd *cm, char **temp, int len_a)
 	is_cmd = false;
 	i = 0;
 	while (begin)
-	{	
+	{
 		if ((begin->type == PIPE) || (begin->type == PARE && is_cmd))
 			break ;
 		if ((begin->type == PARE || begin->type == ARG) && is_cmd == false)
@@ -35,7 +35,6 @@ t_tokens	*ft_fill_args(t_tokens *begin, t_cmd *cm, char **temp, int len_a)
 		else if (begin->type == ARG || begin->type == CMD)
 			temp[i++] = ft_strdup(begin->str);
 		begin = begin->next;
-		
 	}
 	cm->argvec = temp;
 	return (begin);
@@ -124,7 +123,8 @@ void	ft_init_cmd_lst(t_sh *sh)
 	begin = sh->token_lst;
 	while (begin)
 	{
-		if (is_cmd && (begin->type == ARG || begin->type == PARE || begin->type == OPER))
+		if (is_cmd && (begin->type == ARG || begin->type == PARE
+				|| begin->type == OPER))
 			ft_create_cmd(sh, &is_cmd, begin);
 		else if (begin->type == PIPE)
 		{

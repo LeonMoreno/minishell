@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2022/07/04 14:25:37 by lmoreno          ###   ########.fr       */
+/*   Created: 2022/07/04 16:17:58 by lmoreno           #+#    #+#             */
+/*   Updated: 2022/07/04 16:18:02 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -49,7 +48,6 @@ void	start_shell(t_sh *sh)
 		if (sh->line && sh->line[0] != '\0')
 		{
 			line_parser(sh);
-			ft_print_cmds(sh);
 			if (sh->token_lst && sh->cmd_lst)
 				start_exec(sh);
 		}
@@ -60,18 +58,15 @@ void	start_shell(t_sh *sh)
 
 void	start_shell_bonus(t_sh *sh, char **argv)
 {
-//	ft_printf("\n\t\t %s *** BONUS PID %d *** %s\n\n", UBLU, getpid(), RESET);
 	init_var(sh);
 	sh->line = ft_strdup(argv[1]);
-	//start_readline(sh);
 	if (sh->line && sh->line[0] != '\0')
 	{
 		line_parser(sh);
-	//	ft_print_cmds(sh);
 		if (sh->token_lst && sh->cmd_lst)
 			start_exec(sh);
 	}
-//	free_lst(sh);
+	free_lst(sh);
 	sh->token_lst = NULL;
 }
 

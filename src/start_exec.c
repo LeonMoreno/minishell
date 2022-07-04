@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:38 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/04 15:26:04 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/04 16:06:14 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	start_cmd(t_cmd *cm, t_sh *sh, int i, int fd_in)
 				start_child_builtins(cm, sh, i);
 			else if (cm->fd_in != -1)
 				start_child_cmdext(cm, sh, i);
-			exit(0);
 		}
 	}
 	else
@@ -82,129 +81,29 @@ int	chr_pipe(t_cmd *cm)
 	return (i);
 }
 
-/**
- * @brief: start fork/pipes/commands/EndForks
- * @i: use for index var sh->id_f: fork
- * @n_f: number of forks
- * @x: index number pipex, increment chaque 2 commands
- */
-t_cmd	*exec_intern(t_sh *sh, t_cmd *cm, int fd_in)
+t_cmd	*start_exec_next(t_tokens *t, t_sh *sh, t_cmd *cm)
 {
-	int		i;
-	int		pi;
-	t_cmd	*tmp;
+	int	pi[2];
 
-	tmp = cm;
-	i = 0;
-	pi = 0;
-	sh->n_pipe = chr_pipe(cm);
-	start_pipex(sh);
-	sh->n_forks = init_fork(sh, cm);
-	sh->last_oper = 0;
-	while (tmp && sh->last_oper == 0)
+	if (t->str[0] == '(' && sh->last_re == 0)
 	{
-		chr_redir_out(tmp, '>');
-		if (i < sh->n_pipe)
-			pipe(sh->pipe[i].p);
-		close_pipes(sh, i, &pi);
-		start_cmd(tmp, sh, i, fd_in);
-		sh->last_oper = tmp->oper;
-		tmp = tmp->next;
-		i++;
-		fd_in = 0;
+		pipe(pi);
+		subexec(sh, cm, pi);
+		cm = cm->next;
 	}
-	end_fork(sh);
-	return (tmp);
-}
-
-void	subexec(t_sh *sh, t_cmd *cm, int *pi)
-{
-	char 	*path;
-	char 	*join;
-	int		status;
-	pid_t 	pid;
-
-	pid = fork();
-	if (pid == 0)
-	{
-		(void) cm;
-		(void) sh;
-		path = getenv("PWD");
-		join = ft_strjoin(path, "/");
-		path = ft_strjoin(join, "./minishell");
-		free(join);
-		close (pi[OUT]);
-		dup2(pi[IN], STDOUT_FILENO);
-		close (pi[IN]);
-		execve(path, cm->argvec, environ);
-		perror("exc: ");
-		ft_exit_fail(sh, NULL);
-	}
-	close(pi[IN]);
-	waitpid(pid, &status, 0);
-	sh->last_re = WEXITSTATUS(status);
-}
-
-t_cmd	*sub_cat(int *pi, t_cmd *cm)
-{
-	pid_t 	pid;
-	char	*arg[2] = {"cat", NULL};
-
-	pid = fork();
-	if (pid == 0)
-	{
-		close (pi[IN]);
-		dup2(pi[OUT], STDIN_FILENO);
-		close (pi[OUT]);
-		execve("/bin/cat", arg, NULL);
-		perror("exc: ");
-	}
-	wait(NULL);
-return (cm->next);
-}
-
-t_cmd	*skip_job(t_cmd *cm, int OP)
-{
-	t_cmd	*begin;
-
-	begin = cm;
-	while (begin)
-	{
-		if (OP == OR && begin->oper == AND)
-			return (begin->next);
-		else if (OP == AND && begin->oper == OR)
-			return (begin->next);
-		begin = begin->next;
-	}
-	return (begin);
-}
-
-t_cmd	*special_redir(t_cmd *cm, int fd_pipe)
-{
-	char	buf[10000];
-	int		i;
-	int 	file;
-
-	i = 0;
-	ft_bzero(buf, 9999);
-	read(fd_pipe, buf, 10000);
-	while (cm->token_tab[i])
-	{
-		if (cm->token_tab[i]->type == OPER)
-			file = open(cm->token_tab[i + 1]->str, O_CREAT | O_RDWR, 0000777); 
-		if (cm->token_tab[i + 1] == NULL)
-			break;
-		i++;
-	}
-	write(file, buf, ft_strlen(buf));
-	return (cm->next);
+	else if (t->str[0] == ')' && (cm->oper != 0 || !cm->next))
+		cm = sub_cat(pi, cm);
+	else if (t->str[0] == ')' && (cm->oper == 0 && !cm->next->name))
+		cm = special_redir(cm->next, pi[OUT]);
+	else if (t->str[0] == ')' && (cm->oper == 0 && cm->next))
+		cm = exec_intern(sh, cm->next, pi[OUT]);
+	return (cm);
 }
 
 void	start_exec(t_sh *sh)
 {
 	t_cmd		*cm;
 	t_tokens	*t;
-	int			pi[2];
 
 	sh->last_re = 0;
 	cm = sh->cmd_lst;
@@ -215,20 +114,7 @@ void	start_exec(t_sh *sh)
 		if (cm && t->type != PARE)
 			cm = exec_intern(sh, cm, 0);
 		else if (cm)
-		{
-			if (t->str[0] == '(' && sh->last_re == 0)
-			{
-				pipe(pi);
-				subexec(sh, cm, pi);
-				cm = cm->next;
-			}
-			else if (t->str[0] == ')' && (cm->oper != 0 || !cm->next))
-				cm = sub_cat(pi, cm);
-			else if (t->str[0] == ')' && (cm->oper == 0 && !cm->next->name))
-				cm = special_redir(cm->next, pi[OUT]);
-			else if (t->str[0] == ')' && (cm->oper == 0 && cm->next))
-				cm = exec_intern(sh, cm->next, pi[OUT]);
-		}
+			cm = start_exec_next (t, sh, cm);
 		if (sh->last_oper == AND && sh->last_re != 0)
 			cm = skip_job(cm, AND);
 		if (sh->last_oper == OR && sh->last_re == 0)
