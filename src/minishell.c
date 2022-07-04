@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2022/07/04 14:25:37 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/04 15:39:28 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ void	start_shell_bonus(t_sh *sh, char **argv)
 		if (sh->token_lst && sh->cmd_lst)
 			start_exec(sh);
 	}
-//	free_lst(sh);
+	free_lst(sh);
+	free_doble_arr(sh->env);
+	rl_clear_history();
+	free(sh);
 	sh->token_lst = NULL;
 }
 

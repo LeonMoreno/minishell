@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 19:18:08 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/30 11:03:38 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/07/04 18:47:48 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	ft_parse_err(t_tokens *list)
 	begin = list;
 	while (begin)
 	{
-		if (ft_message_err(begin, i))
+		if (ft_message_err(begin, i))// || ft_messa_pare(begin))
 			return (0);
 		i++;
 		begin = begin->next;
