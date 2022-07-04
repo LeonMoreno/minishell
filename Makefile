@@ -44,7 +44,7 @@ $(OBJ_DIR)%.o : $(SRC_DIR)%.c | $(OBJF)
 
 
 $(OBJF)	:
-			mkdir -p $(OBJ_DIR)
+			@mkdir -p $(OBJ_DIR)
 
 clean	:
 			$(RM) -r $(OBJ_DIR)
