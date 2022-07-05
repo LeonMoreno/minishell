@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:38 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/05 13:31:19 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/05 14:22:07 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,8 @@ int	chr_pipe(t_cmd *cm)
 	return (i);
 }
 
-t_cmd	*start_exec_next(t_tokens *t, t_sh *sh, t_cmd *cm)
+t_cmd	*start_exec_next(t_tokens *t, t_sh *sh, t_cmd *cm, int *pi)
 {
-	int	pi[2];
 
 	if (t->str[0] == '(')
 	{
@@ -104,6 +103,7 @@ void	start_exec(t_sh *sh)
 {
 	t_cmd		*cm;
 	t_tokens	*t;
+	int			pi[2];
 
 	sh->last_re = 0;
 	cm = sh->cmd_lst;
@@ -114,7 +114,7 @@ void	start_exec(t_sh *sh)
 		if (cm && t->type != PARE)
 			cm = exec_intern(sh, cm, 0);
 		else if (cm)
-			cm = start_exec_next (t, sh, cm);
+			cm = start_exec_next (t, sh, cm, pi);
 		if (sh->last_oper == AND && sh->last_re != 0)
 			cm = skip_job(cm, AND);
 		if (sh->last_oper == OR && sh->last_re == 0)
