@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:38 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/04 19:43:38 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/04 20:36:06 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ t_cmd	*start_exec_next(t_tokens *t, t_sh *sh, t_cmd *cm)
 {
 	int	pi[2];
 
-	if (t->str[0] == '(' && sh->last_re == 0)
+	if (t->str[0] == '(')
 	{
 		pipe(pi);
 		subexec(sh, cm, pi);
