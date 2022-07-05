@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:44 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/05 17:03:39 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/05 17:08:24 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void	start_child_next(t_cmd *cm, t_sh *sh)
 		path = cmd_path(cm);
 		if (!path)
 			msg_stderr("miniShell: command not found: ", cm, sh);
+		free(sh->pipe);
+		free(sh->id_f);
 		execve(path, cm->argvec, environ);
 		perror("execve");
 	}

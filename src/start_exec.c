@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:38 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/05 17:03:48 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/05 17:08:46 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ int	chr_pipe(t_cmd *cm)
 
 t_cmd	*start_exec_next(t_tokens *t, t_sh *sh, t_cmd *cm, int *pi)
 {
-
 	if (t->str[0] == '(')
 	{
 		pipe(pi);

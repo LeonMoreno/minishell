@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:01 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/05 17:04:08 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/05 17:07:41 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	end_fork(t_sh *sh)
 		free(sh->id_f);
 		sh->id_f = NULL;
 	}
-	if (sh->n_pipe)
+	if (sh->pipe)
 		free(sh->pipe);
 }
 
