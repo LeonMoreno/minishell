@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:44 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/05 16:08:54 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/05 16:40:24 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ char	*cmd_path(t_cmd *cm)
 	int		i;
 
 	i = 0;
-	if (!access(cm->name, X_OK))
+	if (!ft_strncmp(cm->name, "./", 2))
+		return (cm->name);
+	if (!ft_strncmp(cm->name, "/", 1) && !access(cm->name, X_OK))
 		return (cm->name);
 	path_split = ft_split(getenv("PATH"), ':');
 	if (!path_split)
