@@ -33,7 +33,10 @@ void	start_readline(t_sh *sh)
 	if (sh->line != 0)
 		add_history(sh->line);
 	if (sh->line == NULL)
+	{
+		ft_printf("exit\n");
 		ft_exit(sh, NULL);
+	}
 }
 
 void	start_shell(t_sh *sh)
