@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expansion_here.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agrenon <agrenon@42quebec.com>             +#+  +:+       +#+        */
+/*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 10:42:16 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/28 14:42:31 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/07/05 17:02:12 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 static int	ft_end_expansion(char *line, int i)
 {

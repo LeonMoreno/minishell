@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_sigaction.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:55:38 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/24 12:47:05 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/05 17:02:58 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 void	ft_handler(int sig)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_reading.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 19:02:24 by agrenon           #+#    #+#             */
-/*   Updated: 2022/07/05 12:31:34 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/07/05 17:02:40 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 //Create a token and puts it at the end of the list
 t_tokens	*ft_create_token(t_sh *sh)
@@ -43,7 +43,7 @@ t_tokens	*ft_create_token(t_sh *sh)
 }
 
 //Initiate a token. Newly created token receives :
-//1. Its String : token->str  2.Its Type  a:arg b:oper c.pipe 
+//1. Its String : token->str  2.Its Type  a:arg b:oper c.pipe
 void	ft_next_token(t_sh *sh, int i, char **temp, int *sub)
 {
 	t_tokens	*token;
@@ -91,7 +91,7 @@ char	*ft_prep_string(t_sh *sh, char **temp, int *i)
 //FT_PARSING :- Increments string temp and creates new token with it.
 // - Checks for quoting rules. " = 34 '= 39
 //Cases for next_token: 1. End of word 2. Presence of an operator.
-// 3. end of line. 
+// 3. end of line.
 void	ft_parsing(t_sh *sh, int *i)
 {
 	static char	*temp = NULL;
@@ -122,7 +122,7 @@ void	ft_parsing(t_sh *sh, int *i)
 }
 
 //Loops and parse the line received and stored in sh->line.
-//Initialize the start of a word 
+//Initialize the start of a word
 void	line_parser(t_sh *sh)
 {
 	int		i;

@@ -6,11 +6,11 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 13:15:28 by agrenon           #+#    #+#             */
-/*   Updated: 2022/07/05 12:14:36 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/07/05 17:03:10 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 //Prints info on all commands
 void	ft_print_cmds(t_sh *sh)

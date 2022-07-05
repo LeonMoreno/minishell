@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils_2token.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agrenon <agrenon@42quebec.com>             +#+  +:+       +#+        */
+/*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 11:38:18 by agrenon           #+#    #+#             */
-/*   Updated: 2022/07/05 12:31:19 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/07/05 17:03:01 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 int	ft_error_cmd(t_cmd *top)
 {
@@ -69,7 +69,7 @@ void	ft_argvec_pare(t_cmd *cm_pare, t_tokens *n)
 		cm_pare->argvec = malloc(sizeof(char *) * 2);
 		cm_pare->argvec[0] = ft_strdup(cm_pare->name);
 		cm_pare->argvec[1] = NULL;
-	}	
+	}
 	if (n && n->type == PIPE && oper_meta(n->str, 0) == 38)
 		cm_pare->oper = AND;
 	if (n && n->type == PIPE && oper_meta(n->str, 0) == 124)

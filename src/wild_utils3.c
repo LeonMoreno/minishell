@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   wild_utils3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agrenon <agrenon@42quebec.com>             +#+  +:+       +#+        */
+/*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 13:33:14 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/27 18:21:52 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/07/05 17:04:17 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 int	size_alst(t_argve *lst)
 {

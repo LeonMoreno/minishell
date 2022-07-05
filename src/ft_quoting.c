@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_quoting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:54:11 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/30 12:34:28 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/07/05 17:02:35 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 //Increments token string according to the double quoting Rule
 char	*ft_double_quoting(t_sh *sh, int *i, char *temp)
@@ -30,7 +30,7 @@ char	*ft_double_quoting(t_sh *sh, int *i, char *temp)
 		else if (sh->line[*i] != 34)
 			new_temp = ft_prep_string(sh, &new_temp, i);
 		*i = *i + 1;
-	}	
+	}
 	return (new_temp);
 }
 
@@ -54,7 +54,7 @@ char	*ft_single_quoting(t_sh *sh, int *i, char *temp)
 	return (new_temp);
 }
 
-//Search for next " or ' index. Returns 0 if none.  
+//Search for next " or ' index. Returns 0 if none.
 int	ft_quote_real(t_sh *sh, int i, int a)
 {
 	i = i + 1;

@@ -6,11 +6,11 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 16:12:05 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/05 14:14:21 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/07/05 17:03:22 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 /**
  * @brief: start fork/pipes/commands/EndForks

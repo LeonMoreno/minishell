@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   wildcards.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agrenon <agrenon@42quebec.com>             +#+  +:+       +#+        */
+/*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 13:37:30 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/27 17:04:33 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/07/05 17:04:21 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 char	**join_path(char **split, char **tab)
 {
@@ -74,7 +74,7 @@ char	**ft_add_argvec(char **argvec, char **tab, DIR *d, int len)
 	wild_lst = NULL;
 	dir = readdir(d);
 	while (dir)
-	{	
+	{
 		if (ft_is_accepted(tab[1], dir->d_name))
 			wild_lst = argve_lst(wild_lst, dir->d_name);
 		dir = readdir(d);

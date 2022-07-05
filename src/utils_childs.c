@@ -6,11 +6,11 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:01 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/05 16:06:18 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/05 17:04:08 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 /**
  * @brief: cambio stdOUT CMD envio info al IN DEL PIPE_i

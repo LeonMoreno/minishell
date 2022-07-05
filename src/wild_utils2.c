@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   wild_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agrenon <agrenon@42quebec.com>             +#+  +:+       +#+        */
+/*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 13:29:13 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/27 18:52:57 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/07/05 17:04:14 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
 int	ft_wild_next(char *wild_str, int j)
 {
