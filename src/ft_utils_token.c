@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 19:18:08 by agrenon           #+#    #+#             */
-/*   Updated: 2022/07/04 18:47:48 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/07/04 20:13:05 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,15 +80,24 @@ int	ft_parse_err(t_tokens *list)
 {
 	t_tokens	*begin;
 	int			i;
+	int			left;
+	int			right;
 
 	i = 0;
+	left = 0;
+	right = 0;
 	begin = list;
 	while (begin)
 	{
-		if (ft_message_err(begin, i))// || ft_messa_pare(begin))
+		if (ft_message_err(begin, i) || ft_messa_pare(begin, &left, &right))
 			return (0);
 		i++;
 		begin = begin->next;
+	}
+	if (left != right)
+	{
+		write(2, "syntax error: parenthesis can't be closed -> )", 45);
+		return (0);
 	}
 	return (1);
 }

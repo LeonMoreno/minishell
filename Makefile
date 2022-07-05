@@ -1,4 +1,5 @@
-#Variables
+bonjour
+es
 NAME	= minishell
 SRC_DIR	= src/
 OBJ_DIR	= obj/

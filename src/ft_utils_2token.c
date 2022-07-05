@@ -1,15 +1,27 @@
 #include "minishell.h"
 
-int		ft_messa_pare(t_tokens *begin)
+int		ft_messa_pare(t_tokens *begin, int *left, int *right)
 {
 	int	a;
 
 	a = 0;
-	if (!begin->next && begin->next->type == PARE && begin->str[0] != begin->next->str[0])
-		a = write(2, "syntax error: parenthesis misusage ->", 43);	
-	if (a && begin->next)
+	if (begin->type == PARE && begin->str[0] == '(')
+		*left = *left + 1;
+	else if (begin->type == PARE && begin->str[0] == ')')
+		*right = *right + 1;
+	if (*right > *left)
+		a = write(2, "syntax error: parenthesis can't be closed-> ", 45);
+	else if (begin->type == PARE && begin->str[0] == '('
+		&& (!begin->cm_line || !begin->cm_line[0]))
+		a = write(2, "parse error: parenthesis is misuse-> ", 36);
+	else if (begin->type == PARE && begin->str[0] == ')' && begin->next
+		&& (begin->next->type == ARG || begin->next->type == PARE))
+		a = write(2, "parse error: parenthesis needs operator-> ", 40);	
+	if (a)
 	{
-		write(2, begin->next->str, 1);
+		write(2, begin->str, 1);
+		if (a == 36 && begin->next)
+			write(2, begin->next->str, ft_strlen(begin->next->str));
 		write(2, "\n", 1);
 	}
 	return (a);

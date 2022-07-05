@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:27:01 by agrenon           #+#    #+#             */
-/*   Updated: 2022/07/04 19:11:56 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/07/04 19:38:58 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int			ft_parsing_meta(t_sh *sh, int i);
 int			ft_double_meta(t_sh *sh, int i);
 int			oper_meta(char *str, int i);
 int			ft_parse_err(t_tokens *list);
-int			ft_messa_pare(t_tokens *begin);
+int			ft_messa_pare(t_tokens *begin, int *left, int *right);
 t_tokens	*ft_create_token(t_sh *sh);
 
 //Functions Parenthesis
