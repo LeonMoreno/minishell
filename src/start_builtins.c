@@ -6,7 +6,8 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:47 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/05 09:46:08 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/07/05 13:32:03 by lmoreno          ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +25,12 @@ int	ft_arg_valid(char *s)
 		i++;
 	}
 	return (1);
+}
+
+void	msg_exit(char **argv)
+{
+	if (argv)
+		ft_printf("exit\n");
 }
 
 void	ft_exit(t_sh *sh, char **argv)
@@ -44,7 +51,7 @@ void	ft_exit(t_sh *sh, char **argv)
 		ft_printf("miniShell: exit: %s: numeric argument required\n", argv[1]);
 	if (argv && argv[1])
 		e = ft_atoi(argv[1]);
-	ft_printf("exit\n");
+	msg_exit(argv);
 	if (sh->line)
 	{
 		free_lst(sh);
@@ -53,35 +60,6 @@ void	ft_exit(t_sh *sh, char **argv)
 	rl_clear_history();
 	free(sh);
 	exit (e);
-}
-
-void	ft_echo(char **s, t_sh *sh)
-{
-	int		i;
-	int		ctr;
-	bool	skip;
-
-	skip = true;
-	ctr = 0;
-	i = 1;
-	if (!s[i])
-	{
-		write(1, "\n", 1);
-		return ;
-	}
-	while (s[i] != NULL)
-	{
-		if (!skip || ft_chr_n(s[i], &ctr, sh))
-		{
-			ft_printf("%s", s[i]);
-			if (s[i + 1] != NULL)
-				ft_printf(" ");
-			skip = false;
-		}
-		i++;
-	}
-	if (ft_strncmp(s[1], "-n", 3) && ctr == 0)
-		write(1, "\n", 1);
 }
 
 void	ft_cd_next(char **s, t_sh *sh, char *oldpwd)
