@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:44 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/05 12:22:29 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/05 13:49:23 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,18 @@ char	*cmd_path(t_cmd *cm)
 	i = 0;
 	if (!access(cm->name, X_OK))
 		return (cm->name);
-	cmd = ft_strjoin("/", cm->name);
 	path_split = ft_split(getenv("PATH"), ':');
 	if (!path_split)
 		return (NULL);
+	cmd = ft_strjoin("/", cm->name);
 	while (path_split[i] != NULL)
 	{
 		path = ft_strjoin(path_split[i], cmd);
 		if (!access(path, X_OK))
+		{
+			free(cmd);
 			return (path);
+		}
 		free(path);
 		i++;
 	}
