@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 12:19:45 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/05 12:34:28 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/05 15:35:24 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,11 @@ int	ft_size_arr(char **tab)
 void	start_pipex(t_sh *sh)
 {
 	if (sh->n_pipe)
+	{
+		if (sh->pipe)
+			free(sh->pipe);
 		sh->pipe = malloc(sizeof(t_pip) * sh->n_pipe);
+	}
 }
 
 /**
@@ -55,7 +59,11 @@ int	init_fork(t_sh *sh, t_cmd *top)
 		cm = cm->next;
 	}
 	if (i > 0)
+	{
+		if (sh->id_f)
+			free(sh->id_f);
 		sh->id_f = malloc(sizeof(pid_t) * i);
+	}
 	return (i);
 }
 

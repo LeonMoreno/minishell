@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:44 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/05 14:29:56 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/05 16:21:52 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,13 @@ char	*cmd_path(t_cmd *cm)
 	{
 		path = ft_strjoin(path_split[i++], cmd);
 		if (!access(path, X_OK))
-		{
-			free(cmd);
-			return (path);
-		}
+			break ;
 		free(path);
+		path = NULL;
 	}
 	free_doble_arr(path_split);
 	free(cmd);
-	return (NULL);
+	return (path);
 }
 
 /**
@@ -72,6 +70,8 @@ void	start_child_next(t_cmd *cm, t_sh *sh)
 		path = cmd_path(cm);
 		if (!path)
 			msg_stderr("miniShell: command not found: ", cm, sh);
+		free(sh->pipe);
+		free(sh->id_f);
 		execve(path, cm->argvec, environ);
 		perror("execve");
 	}
