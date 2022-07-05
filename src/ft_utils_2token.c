@@ -1,6 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_utils_2token.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agrenon <agrenon@42quebec.com>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/05 11:38:18 by agrenon           #+#    #+#             */
+/*   Updated: 2022/07/05 12:31:19 by agrenon          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int		ft_messa_pare(t_tokens *begin, int *left, int *right)
+int	ft_error_cmd(t_cmd *top)
+{
+	int			a;
+
+	a = 0;
+	while (top)
+	{
+		if (top->next && top->next->token_tab[0]->type == PARE
+			&& top->next->token_tab[0]->str[0] == '(' && !top->oper)
+		a = write(2, "parse error: missing operator before (\n", 39);
+		top = top->next;
+	}
+	return (a);
+}
+
+int	ft_messa_pare(t_tokens *begin, int *left, int *right)
 {
 	int	a;
 
@@ -10,13 +37,13 @@ int		ft_messa_pare(t_tokens *begin, int *left, int *right)
 	else if (begin->type == PARE && begin->str[0] == ')')
 		*right = *right + 1;
 	if (*right > *left)
-		a = write(2, "syntax error: parenthesis can't be closed-> ", 45);
+		a = write(2, "syntax error: parenthesis can't be closed -> ", 46);
 	else if (begin->type == PARE && begin->str[0] == '('
 		&& (!begin->cm_line || !begin->cm_line[0]))
-		a = write(2, "parse error: parenthesis is misuse-> ", 36);
+		a = write(2, "parse error: parenthesis misuage -> ", 36);
 	else if (begin->type == PARE && begin->str[0] == ')' && begin->next
 		&& (begin->next->type == ARG || begin->next->type == PARE))
-		a = write(2, "parse error: parenthesis needs operator-> ", 40);	
+		a = write(2, "parse error: parenthesis needs operator -> ", 43);
 	if (a)
 	{
 		write(2, begin->str, 1);
@@ -39,7 +66,7 @@ void	ft_argvec_pare(t_cmd *cm_pare, t_tokens *n)
 	}
 	else
 	{
-		cm_pare->argvec = malloc(sizeof(char *) *2);
+		cm_pare->argvec = malloc(sizeof(char *) * 2);
 		cm_pare->argvec[0] = ft_strdup(cm_pare->name);
 		cm_pare->argvec[1] = NULL;
 	}	
@@ -49,9 +76,9 @@ void	ft_argvec_pare(t_cmd *cm_pare, t_tokens *n)
 		cm_pare->oper = OR;
 }
 
-int		ft_len_pare(t_sh *sh, char *str, int index)
+int	ft_len_pare(t_sh *sh, char *str, int index)
 {
-	int i;
+	int	i;
 	int	p_count;
 
 	p_count = 0;
@@ -59,7 +86,7 @@ int		ft_len_pare(t_sh *sh, char *str, int index)
 	while (str[i])
 	{
 		if (str[i] == 39)
-			i = ft_quote_real(sh, index, 0);	
+			i = ft_quote_real(sh, index, 0);
 		if (str[i] == 34)
 			i = ft_quote_real(sh, index, 1);
 		if (str[i] == '(')
@@ -76,7 +103,7 @@ int		ft_len_pare(t_sh *sh, char *str, int index)
 void	ft_substract_pare(t_sh *sh, t_tokens *pare, int *i)
 {
 	int		len;
-	
+
 	pare->type = PARE;
 	if (pare->str[0] == '(')
 	{

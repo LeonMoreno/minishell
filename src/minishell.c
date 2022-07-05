@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: agrenon <agrenon@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2022/07/04 19:11:25 by agrenon          ###   ########.fr       */
+/*   Created: 2022/07/05 11:40:49 by agrenon           #+#    #+#             */
+/*   Updated: 2022/07/05 11:49:39 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	start_shell(t_sh *sh)
 		if (sh->line && sh->line[0] != '\0')
 		{
 			line_parser(sh);
-			if (sh->token_lst && sh->cmd_lst)
+			if (sh->token_lst && sh->cmd_lst && !ft_error_cmd(sh->cmd_lst))
 				start_exec(sh);
 		}
 		free_lst(sh);

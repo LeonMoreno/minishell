@@ -1,11 +1,10 @@
-bonjour
-es
 NAME	= minishell
 SRC_DIR	= src/
 OBJ_DIR	= obj/
 CFLAGS	=  -g -Werror -Wall -Wextra -I include/
 CC		= gcc
 RM		= rm -f
+INCLUDE = include/
 
 #Libft
 LIBFT_A		= libft.a
@@ -34,7 +33,7 @@ OBJF	=	.cache_exists
 
 ####
 
-all	: $(NAME)
+all	:		 $(NAME)
 
 $(NAME):	$(OBJ)
 			make -C $(LIBFT_DIR)
@@ -42,7 +41,6 @@ $(NAME):	$(OBJ)
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c | $(OBJF)
 				$(CC) $(CFLAGS) -c $< -o $@
-
 
 $(OBJF)	:
 			@mkdir -p $(OBJ_DIR)
@@ -55,8 +53,12 @@ clean	:
 fclean	:	clean
 			$(RM) $(NAME)
 			make -C $(LIBFT_DIR) fclean
+
 val:
-		valgrind   --leak-check=full --track-origins=yes --show-leak-kinds=all --trace-children=yes  ./$(NAME)
+		valgrind   --leak-check=full --track-origins=yes --show-reachable=yes --show-leak-kinds=all --trace-children=yes  ./$(NAME)
+
+norm:
+		norminette $(SRC) $(LIBFT_DIR)src/* $(INCLUDE)c* $(INCLUDE)m*
 
 re		: fclean all
 

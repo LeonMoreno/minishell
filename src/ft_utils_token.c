@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 19:18:08 by agrenon           #+#    #+#             */
-/*   Updated: 2022/07/04 20:13:05 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/07/05 12:32:20 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,27 +50,28 @@ int	ft_size(t_tokens *lsist, int mode)
 	return (i);
 }
 
-int	ft_message_err(t_tokens *begin, int n)
+int	ft_message_err(t_tokens *b, int n)
 {
 	int		a;
-	char	*str;
 
-	str = begin->str;
 	a = 0;
-	if (n == 0 && (begin->type == PIPE))
+	if (n == 0 && (b->type == PIPE))
 		a = write(2, "syntax error: line starts with operator -> ", 43);
-	else if (n == 0 && begin->str[0] == '|' && begin->str[1] == '|')
+	else if (n == 0 && b->str[0] == '|' && b->str[1] == '|')
 		a = write(2, "syntax error: line starts with operator -> ", 43);
-	else if (n == 0 && begin->str[0] == '&' && begin->str[1] == '&')
+	else if (n == 0 && b->str[0] == '&' && b->str[1] == '&')
 		a = write(2, "syntax error: line starts with operator -> ", 43);
-	else if ((begin->type == PIPE || begin->type == OPER) && !begin->next)
+	else if ((b->type == PIPE || b->type == OPER) && !b->next)
 		a = write(2, "parse error: operator has no argument -> ", 41);
-	else if (begin->type == OPER && (begin->next->type == OPER
-			|| begin->next->type == PIPE))
+	else if (b->type == OPER && (b->next->type == OPER
+			|| b->next->type == PIPE))
 		a = write(2, "parse error: too many operators in a row -> ", 44);
+	else if (b->type == OPER && (b->str[0] == '>' || b->str[0] == '<')
+		&& (!b->next || b->next->type == PIPE || b->next->type == PARE))
+		a = write(2, "parse error: redirection has no operand -> ", 43);
 	if (a)
 	{
-		write(2, str, ft_strlen(str));
+		write(2, b->str, ft_strlen(b->str));
 		write(2, "\n", 1);
 	}
 	return (a);

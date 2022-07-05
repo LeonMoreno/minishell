@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 13:15:28 by agrenon           #+#    #+#             */
-/*   Updated: 2022/07/04 19:42:59 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/05 12:14:36 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ void	free_lst(t_sh *sh)
 		temp = begin;
 		if (begin->str)
 			free(begin->str);
+		if (begin->cm_line)
+			free(begin->cm_line);
 		if (begin->argve)
 		{
 			while (begin->argve[i])

@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 19:02:24 by agrenon           #+#    #+#             */
-/*   Updated: 2022/07/05 09:46:56 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/07/05 12:31:34 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,7 @@ void	ft_next_token(t_sh *sh, int i, char **temp, int *sub)
 	if (oper_meta(token->str, 0))
 		token->type = PIPE;
 	if (token->type == OPER && (sh->line[i] == 41 || sh->line[i] == 40))
-	{
 		ft_substract_pare(sh, token, sub);
-		//token->type = PARE;
-	}
 	sh->start = -1;
 	*temp = NULL;
 }
