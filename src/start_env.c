@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:41 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/03 22:56:31 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/04 19:41:57 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,10 @@ static	void	init_env(t_sh *sh, int x)
 
 void	start_env(t_sh *sh)
 {
-	int	i;
+	int		i;
+	char	*path;
+	char	*shell;
+	char	*tmp;
 
 	i = 0;
 	while (environ[i] != NULL)
@@ -90,4 +93,11 @@ void	start_env(t_sh *sh)
 		init_env(sh, i);
 	else
 		init_void_env(sh, i);
+	tmp = getcwd(NULL, 0);
+	path = ft_strjoin(tmp, "/minishell");
+	shell = ft_strjoin("SHELL=", path);
+	ft_export(shell, sh);
+	free(tmp);
+	free(path);
+	free(shell);
 }
