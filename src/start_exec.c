@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:38 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/05 13:31:19 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/05 16:06:04 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	start_cmd(t_cmd *cm, t_sh *sh, int i, int fd_in)
 				start_child_builtins(cm, sh, i);
 			else if (cm->fd_in != -1)
 				start_child_cmdext(cm, sh, i);
+			exit(0);
 		}
 	}
 	else
