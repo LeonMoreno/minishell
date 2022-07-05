@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 16:12:05 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/04 17:47:07 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/04 19:59:11 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ t_cmd	*exec_intern(t_sh *sh, t_cmd *cm, int fd_in)
 
 void	subexec(t_sh *sh, t_cmd *cm, int *pi)
 {
-	char	*path;
 	int		status;
 	pid_t	pid;
 
@@ -58,13 +57,10 @@ void	subexec(t_sh *sh, t_cmd *cm, int *pi)
 	{
 		(void) cm;
 		(void) sh;
-		path = getenv("PWD");
-		path = ft_strjoin(path, "/minishell");
-		printf("shell = %s\n", path);
 		close (pi[OUT]);
 		dup2(pi[IN], STDOUT_FILENO);
 		close (pi[IN]);
-		execve(path, cm->argvec, environ);
+		execve(getenv("SHELL"), cm->argvec, environ);
 		perror("exc: ");
 		ft_exit_fail(sh, NULL);
 	}
@@ -77,6 +73,7 @@ t_cmd	*sub_cat(int *pi, t_cmd *cm)
 {
 	pid_t	pid;
 	char	*arg[2];
+	int		status;
 
 	arg[0] = "cat";
 	arg[1] = NULL;
@@ -89,7 +86,7 @@ t_cmd	*sub_cat(int *pi, t_cmd *cm)
 		execve("/bin/cat", arg, NULL);
 		perror("exc: ");
 	}
-	wait(NULL);
+	waitpid(pid, &status, 0);
 	return (cm->next);
 }
 
