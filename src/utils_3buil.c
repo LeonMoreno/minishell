@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:33:10 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/06 16:50:26 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/07/06 17:38:31 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,18 @@ void	ft_getpwd(t_sh *sh)
 		free(buf);
 	}
 	sh->last_re = 0;
+}
+
+void	ft_export_pwd(t_sh *sh)
+{
+	char	*buf;
+	char	*pwd;
+
+	buf = getcwd(NULL, 0);
+	pwd = ft_strjoin("PWD=", buf);
+	ft_export(pwd, sh);
+	free(buf);
+	free(pwd);
 }
 
 int	ft_chr_n(char *s, int *ctr, t_sh *sh)
