@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:29 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/06 17:38:14 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/07/06 18:06:53 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ void	start_builtins(t_cmd *cm, t_sh *sh)
 	else if (argv[0] && !ft_strncmp(argv[0], "cd", 3))
 		ft_cd(argv, sh);
 	else if (argv[0] && !ft_strncmp(argv[0], "export", 7))
-		ft_export(argv[1], sh);
+		unset_export(0, argv, sh);
 	else if (argv[0] && !ft_strncmp(argv[0], "env", 4))
 		ft_env(sh);
 	else if (argv[0] && !ft_strncmp(argv[0], "unset", 5))
-		ft_unset(argv, sh);
+		unset_export(1, argv, sh);
 	if (cm->n_r_out > 0 && sh->n_forks == 0)
 		close_redir_buil(sh, cm);
 }

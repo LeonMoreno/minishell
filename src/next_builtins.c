@@ -6,13 +6,13 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:50 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/06 17:39:43 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/07/06 18:07:53 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_bonus.h"
 
-void	ft_unset_next(char **s, char **new_env, t_sh *sh)
+void	ft_unset_next(char *s, char **new_env, t_sh *sh)
 {
 	int		i;
 	int		j;
@@ -23,7 +23,7 @@ void	ft_unset_next(char **s, char **new_env, t_sh *sh)
 	while (sh->env[i] != NULL)
 	{
 		key_env = ft_split(sh->env[i], '=');
-		if (ft_strncmp(s[1], key_env[0], ft_strlen(s[1] + 1)))
+		if (ft_strncmp(s, key_env[0], ft_strlen(s) + 1))
 		{
 			new_env[j] = ft_strdup(sh->env[i]);
 			j++;
@@ -38,20 +38,20 @@ void	ft_unset_next(char **s, char **new_env, t_sh *sh)
 	environ = sh->env;
 }
 
-void	ft_unset(char **s, t_sh *sh)
+void	ft_unset(char *s, t_sh *sh)
 {
 	int		i;
 	char	**new_env;
 
 	i = 0;
-	if (!s[1])
+	if (!s)
 	{
 		ft_printf("unset: not enough arguments\n");
 		return ;
 	}
 	while (sh->env[i] != NULL)
 		i++;
-	if (i != ft_len_env(s[1], sh))
+	if (i != ft_len_env(s, sh))
 		return ;
 	new_env = malloc(sizeof(char *) * (i));
 	ft_unset_next(s, new_env, sh);
@@ -134,8 +134,11 @@ void	ft_export(char *s, t_sh *sh)
 		return ;
 	}
 	sh->tmp = s;
+	if (!ft_strchr(s, '='))
+		return ;
 	key_s = ft_split(s, '=');
-	if (key_s[0] == NULL)
+	if (key_s[0] == NULL || !ft_strncmp(s, "=", 1)
+		|| !ft_strncmp(s, "*=", 2) || !ft_strncmp(s, "-=", 2))
 	{
 		ft_printf("miniShell: export: %s invalid identifier\n", s);
 		free_doble_arr(key_s);
