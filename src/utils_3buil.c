@@ -6,11 +6,31 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:33:10 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/06 12:47:46 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/06 15:38:56 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	unset_export(int f, char **s, t_sh *sh)
+{
+	int	i;
+
+	i = 1;
+	if (!s[i] && f == 0)
+	{
+		ft_env(sh);
+		return ;
+	}
+	while (s[i])
+	{
+		if (f == 0)
+			ft_export(s[i], sh);
+		if (f == 1)
+			ft_unset(s[i], sh);
+		i++;
+	}
+}
 
 void	ft_getpwd(t_sh *sh)
 {
