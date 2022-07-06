@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:47 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/06 12:16:32 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/06 12:48:09 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void	ft_cd(char **s, t_sh *sh)
 	}
 	else
 		ft_cd_next(s, sh, oldpwd);
+	ft_export_pwd(sh);
 	free(buf);
 	free(oldpwd);
 }
