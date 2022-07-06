@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 19:18:08 by agrenon           #+#    #+#             */
-/*   Updated: 2022/07/05 17:03:07 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/06 17:34:16 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	ft_size(t_tokens *lsist, int mode)
 	return (i);
 }
 
-int	ft_message_err(t_tokens *b, int n)
+int	ft_message_err(t_tokens *b, int n, t_sh *sh)
 {
 	int		a;
 
@@ -71,13 +71,14 @@ int	ft_message_err(t_tokens *b, int n)
 		a = write(2, "parse error: redirection has no operand -> ", 43);
 	if (a)
 	{
+		sh->last_re = 1;
 		write(2, b->str, ft_strlen(b->str));
 		write(2, "\n", 1);
 	}
 	return (a);
 }
 
-int	ft_parse_err(t_tokens *list)
+int	ft_parse_err(t_tokens *list, t_sh *sh)
 {
 	t_tokens	*begin;
 	int			i;
@@ -90,13 +91,15 @@ int	ft_parse_err(t_tokens *list)
 	begin = list;
 	while (begin)
 	{
-		if (ft_message_err(begin, i) || ft_messa_pare(begin, &left, &right))
+		if (ft_message_err(begin, i, sh)
+			|| ft_messa_pare(begin, &left, &right, sh))
 			return (0);
 		i++;
 		begin = begin->next;
 	}
 	if (left != right)
 	{
+		sh->last_re = 1;
 		write(2, "syntax error: parenthesis can't be closed -> )", 45);
 		return (0);
 	}

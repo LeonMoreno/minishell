@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 17:27:01 by agrenon           #+#    #+#             */
-/*   Updated: 2022/07/06 12:24:41 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/07/06 14:34:20 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,10 +127,13 @@ char		*ft_prep_string(t_sh *sh, char **temp, int *i);
 int			ft_parsing_meta(t_sh *sh, int i);
 int			ft_double_meta(t_sh *sh, int i);
 int			oper_meta(char *str, int i);
-int			ft_parse_err(t_tokens *list);
-int			ft_messa_pare(t_tokens *begin, int *left, int *right);
-int			ft_error_cmd(t_cmd *top);
 t_tokens	*ft_create_token(t_sh *sh);
+
+//Functions Errors
+int			ft_parse_err(t_tokens *list, t_sh *sh);
+int			ft_messa_pare(t_tokens *begin, int *left, int *right, t_sh *sh);
+int			ft_error_cmd(t_cmd *top, t_sh *sh);
+int			ft_pare_check(t_sh *sh);
 
 //Functions Parenthesis
 void		ft_substract_pare(t_sh *sh, t_tokens *token, int *i);

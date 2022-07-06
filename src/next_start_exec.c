@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 16:12:05 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/05 17:09:06 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/06 17:32:31 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,7 @@ t_cmd	*exec_intern(t_sh *sh, t_cmd *cm, int fd_in)
 	tmp = cm;
 	i = 0;
 	pi = 0;
-	sh->n_pipe = chr_pipe(cm);
-	start_pipex(sh);
 	sh->n_forks = init_fork(sh, cm);
-	sh->last_oper = 0;
 	while (tmp && sh->last_oper == 0)
 	{
 		chr_redir_out(tmp, '>');
@@ -41,6 +38,8 @@ t_cmd	*exec_intern(t_sh *sh, t_cmd *cm, int fd_in)
 		sh->last_oper = tmp->oper;
 		tmp = tmp->next;
 		i++;
+		if (fd_in)
+			close(fd_in);
 		fd_in = 0;
 	}
 	end_fork(sh);
@@ -60,7 +59,7 @@ void	subexec(t_sh *sh, t_cmd *cm, int *pi)
 		close (pi[OUT]);
 		dup2(pi[IN], STDOUT_FILENO);
 		close (pi[IN]);
-		execve(getenv("SHELL"), cm->argvec, environ);
+		execve(getenv("_"), cm->argvec, environ);
 		perror("exc: ");
 		ft_exit_fail(sh, NULL);
 	}
@@ -80,6 +79,7 @@ t_cmd	*sub_cat(int *pi, t_cmd *cm)
 	pid = fork();
 	if (pid == 0)
 	{
+		ft_sig_cancel();
 		close (pi[IN]);
 		dup2(pi[OUT], STDIN_FILENO);
 		close (pi[OUT]);
@@ -87,6 +87,7 @@ t_cmd	*sub_cat(int *pi, t_cmd *cm)
 		perror("exc: ");
 	}
 	waitpid(pid, &status, 0);
+	close(pi[OUT]);
 	return (cm->next);
 }
 
@@ -124,5 +125,6 @@ t_cmd	*special_redir(t_cmd *cm, int fd_pipe)
 		i++;
 	}
 	write(file, buf, ft_strlen(buf));
+	close(file);
 	return (cm->next);
 }

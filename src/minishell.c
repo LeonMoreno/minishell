@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 11:40:49 by agrenon           #+#    #+#             */
-/*   Updated: 2022/07/05 17:03:13 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/06 16:39:58 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	start_shell(t_sh *sh)
 		if (sh->line && sh->line[0] != '\0')
 		{
 			line_parser(sh);
-			if (sh->token_lst && sh->cmd_lst && !ft_error_cmd(sh->cmd_lst))
+			if (sh->token_lst && sh->cmd_lst && !ft_error_cmd(sh->cmd_lst, sh))
 				start_exec(sh);
 		}
 		free_lst(sh);
@@ -63,7 +63,7 @@ void	start_shell_bonus(t_sh *sh, char **argv)
 	if (sh->line && sh->line[0] != '\0')
 	{
 		line_parser(sh);
-		if (sh->token_lst && sh->cmd_lst)
+		if (sh->token_lst && sh->cmd_lst && !ft_error_cmd(sh->cmd_lst, sh))
 			start_exec(sh);
 	}
 	free_lst(sh);

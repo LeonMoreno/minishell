@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 19:02:24 by agrenon           #+#    #+#             */
-/*   Updated: 2022/07/05 17:02:40 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/06 16:39:56 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ void	line_parser(t_sh *sh)
 		i++;
 	}
 	sh->cmd_lst = NULL;
-	if (sh->token_lst && ft_parse_err(sh->token_lst))
+	if (sh->token_lst && ft_parse_err(sh->token_lst, sh))
 		ft_init_cmd_lst(sh);
 	return ;
 }

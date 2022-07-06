@@ -25,7 +25,7 @@ SRC_FILES =	minishell ft_expansion ft_parsing_meta ft_reading\
 			ft_utils_token start_redir next_builtins ft_heredoc start_env \
 			ft_utils_here ft_expansion_here utils_2buil wildcards \
 			wild_utils wild_utils2 wild_utils3 utils_3buil ft_utils_2token \
-			next_start_exec \
+			next_start_exec ft_utils_3tokens\
 #SRC
 SRC		=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJ		=	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
@@ -55,10 +55,10 @@ fclean	:	clean
 			make -C $(LIBFT_DIR) fclean
 
 val:
-		valgrind   --leak-check=full --track-origins=yes --show-reachable=yes --show-leak-kinds=all --trace-children=yes  ./$(NAME)
+		valgrind   --track-fds=yes --leak-check=full --show-reachable=yes --show-leak-kinds=all --trace-children=yes ./$(NAME)
 
 norm:
-		norminette $(SRC) $(LIBFT_DIR)src/* $(INCLUDE)c* $(INCLUDE)m*
+		@norminette $(SRC) $(LIBFT_DIR)src/* $(INCLUDE)c* $(INCLUDE)m*
 
 re		: fclean all
 

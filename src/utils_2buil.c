@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 12:19:45 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/06 12:21:35 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/07/06 17:34:13 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	init_fork(t_sh *sh, t_cmd *top)
 	int		i;
 	t_cmd	*cm;
 
+	sh->n_pipe = chr_pipe(top);
+	start_pipex(sh);
 	cm = top;
 	i = 0;
 	while (cm)
@@ -64,6 +66,7 @@ int	init_fork(t_sh *sh, t_cmd *top)
 			free(sh->id_f);
 		sh->id_f = malloc(sizeof(pid_t) * i);
 	}
+	sh->last_oper = 0;
 	return (i);
 }
 

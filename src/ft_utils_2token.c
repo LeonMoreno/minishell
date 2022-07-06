@@ -6,13 +6,13 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 11:38:18 by agrenon           #+#    #+#             */
-/*   Updated: 2022/07/05 17:03:01 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/06 16:38:21 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_bonus.h"
 
-int	ft_error_cmd(t_cmd *top)
+int	ft_error_cmd(t_cmd *top, t_sh *sh)
 {
 	int			a;
 
@@ -24,10 +24,14 @@ int	ft_error_cmd(t_cmd *top)
 		a = write(2, "parse error: missing operator before (\n", 39);
 		top = top->next;
 	}
+	if (ft_pare_check(sh))
+		a = write(2, "parse error: missing operator before (\n", 39);
+	if (a)
+		sh->last_re = 1;
 	return (a);
 }
 
-int	ft_messa_pare(t_tokens *begin, int *left, int *right)
+int	ft_messa_pare(t_tokens *begin, int *left, int *right, t_sh *sh)
 {
 	int	a;
 
@@ -46,6 +50,7 @@ int	ft_messa_pare(t_tokens *begin, int *left, int *right)
 		a = write(2, "parse error: parenthesis needs operator -> ", 43);
 	if (a)
 	{
+		sh->last_re = 1;
 		write(2, begin->str, 1);
 		if (a == 36 && begin->next)
 			write(2, begin->next->str, ft_strlen(begin->next->str));
@@ -86,9 +91,9 @@ int	ft_len_pare(t_sh *sh, char *str, int index)
 	while (str[i])
 	{
 		if (str[i] == 39)
-			i = ft_quote_real(sh, index, 0);
+			i = i + ft_quote_real(sh, index, 0);
 		if (str[i] == 34)
-			i = ft_quote_real(sh, index, 1);
+			i = i + ft_quote_real(sh, index, 1);
 		if (str[i] == '(')
 			p_count++;
 		if (str[i] == ')' && !p_count)
@@ -110,7 +115,10 @@ void	ft_substract_pare(t_sh *sh, t_tokens *pare, int *i)
 		len = ft_len_pare(sh, sh->line, *i + 1) - 1 - *i;
 		if (len > 0)
 			pare->cm_line = ft_substr(sh->line, *i + 1, len);
-		*i = *i + len;
+		if (len > 0)
+			*i = *i + len;
+		if (*i == 0)
+			*i = 1;
 	}
 	return ;
 }
