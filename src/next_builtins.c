@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:50 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/06 15:35:45 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/06 18:03:26 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,11 @@ void	ft_export(char *s, t_sh *sh)
 		return ;
 	}
 	sh->tmp = s;
+	if (!ft_strchr(s, '='))
+		return ;
 	key_s = ft_split(s, '=');
-	if (key_s[0] == NULL)
+	if (key_s[0] == NULL || !ft_strncmp(s, "=", 1)
+		|| !ft_strncmp(s, "*=", 2) || !ft_strncmp(s, "-=", 2))
 	{
 		ft_printf("miniShell: export: %s invalid identifier\n", s);
 		free_doble_arr(key_s);
