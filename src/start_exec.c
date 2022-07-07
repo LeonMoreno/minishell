@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:38 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/06 17:23:08 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/07/07 14:07:35 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  */
 void	start_cmd(t_cmd *cm, t_sh *sh, int i, int fd_in)
 {
-	if (!check_cmd(cm->name) || sh->n_pipe > 0)
+	if (sh->n_forks && (!check_cmd(cm->name) || sh->n_pipe > 0))
 	{
 		sh->id_f[i] = fork();
 		if (sh->id_f[i] == 0)
@@ -43,7 +43,7 @@ void	start_cmd(t_cmd *cm, t_sh *sh, int i, int fd_in)
 				start_child_cmdext(cm, sh, i);
 		}
 	}
-	else
+	else if (cm->name)
 		start_builtins(cm, sh);
 }
 

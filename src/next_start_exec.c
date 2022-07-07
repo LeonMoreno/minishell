@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 16:12:05 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/06 17:32:31 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/07/07 14:11:35 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_cmd	*exec_intern(t_sh *sh, t_cmd *cm, int fd_in)
 	sh->n_forks = init_fork(sh, cm);
 	while (tmp && sh->last_oper == 0)
 	{
+		printf("sh->n_forks = %d\n", sh->n_forks);
 		chr_redir_out(tmp, '>');
 		if (i < sh->n_pipe)
 			pipe(sh->pipe[i].p);
