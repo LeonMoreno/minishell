@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:44 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/05 16:39:00 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/07 12:45:42 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	start_child_next(t_cmd *cm, t_sh *sh)
 {
 	char	*path;
 
+	if (cm->fd_in)
+		close(cm->fd_in);
 	if (cm->n_r_out > 0)
 		start_redir_fork(cm, sh);
 	if (cm->name)
