@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 19:18:08 by agrenon           #+#    #+#             */
-/*   Updated: 2022/07/06 17:34:16 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/07/07 15:39:27 by lmoreno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ void	ft_exit_here(char *temp, t_sh *sh)
 		free(temp);
 	free_doble_arr(environ);
 	free_lst(sh);
+	close(3);
 	close(4);
 	exit(0);
 }
