@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:25:47 by lmoreno           #+#    #+#             */
-/*   Updated: 2022/07/06 18:07:35 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/08 11:43:57 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ void	ft_exit(t_sh *sh, char **argv)
 		ft_printf("miniShell: exit too many arguments\n");
 		return ;
 	}
-	if (argv && argv[1] && !ft_arg_valid(argv[1]))
-		ft_printf("miniShell: exit: %s: numeric argument required\n", argv[1]);
 	if (argv && argv[1])
 		e = ft_atoi(argv[1]);
+	if (argv && argv[1] && !ft_arg_valid(argv[1]))
+		e = ft_printf("miniShell:  %s: numeric argument required \n", argv[1]);
 	msg_exit(argv);
 	if (sh->line)
 	{
