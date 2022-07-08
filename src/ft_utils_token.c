@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 19:18:08 by agrenon           #+#    #+#             */
-/*   Updated: 2022/07/07 15:39:27 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/08 11:31:19 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ int	ft_message_err(t_tokens *b, int n, t_sh *sh)
 	else if ((b->type == PIPE || b->type == OPER) && !b->next)
 		a = write(2, "parse error: operator has no argument -> ", 41);
 	else if (b->type == OPER && (b->next->type == OPER
-			|| b->next->type == PIPE))
+			|| b->next->type == PIPE) && (b->str[0] == '<' || b->str[0] == '>')
+		&& (b->next->str[0] == '<' || b->next->str[0] == '>'))
 		a = write(2, "parse error: too many operators in a row -> ", 44);
 	else if (b->type == OPER && (b->str[0] == '>' || b->str[0] == '<')
 		&& (!b->next || b->next->type == PIPE || b->next->type == PARE))
