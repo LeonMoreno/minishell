@@ -6,7 +6,7 @@
 /*   By: lmoreno <lmoreno@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 13:37:30 by agrenon           #+#    #+#             */
-/*   Updated: 2022/07/05 17:04:21 by lmoreno          ###   ########.fr       */
+/*   Updated: 2022/07/16 13:09:49 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ char	**openthydir(char **argvec, char *wild_str, int len_argve, int *i)
 		argvec[*i] = wild_str;
 		*i = *i + 1;
 		free_doble_arr(split);
+		
 		return (argvec);
 	}
 	new_argvec = ft_add_argvec(argvec, split, d, len_argve);

@@ -117,7 +117,7 @@ void	ft_env(t_sh *sh)
 	int	i;
 
 	i = 0;
-	while (environ[i] != NULL)
+	while (sh->env[i] != NULL)
 	{
 		ft_printf("%s\n", environ[i]);
 		i++;
