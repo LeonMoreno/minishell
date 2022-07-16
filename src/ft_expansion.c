@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@student.42quebec.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:29:45 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/29 11:34:12 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/07/08 15:59:03 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@ int	ft_end_expansion(t_sh *sh, int i)
 {
 	while (sh->line[i])
 	{
-		if (sh->line[i] == 39 || sh->line[i] == 34 || sh->line[i] < 33)
+		if (sh->line[i] == 39 || sh->line[i] == 34 || sh->line[i] < 33
+			|| (sh->line[i] > 57 && sh->line[i] < 65))
 			break ;
-		if (sh->line[i + 1] == '$' || sh->line[i] == '?')
+		if (sh->line[i + 1] == '$' || sh->line[i] == '?' || sh->line[i] == 61)
 		{
 			i++;
 			break ;

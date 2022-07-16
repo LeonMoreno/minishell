@@ -6,7 +6,7 @@
 /*   By: agrenon <agrenon@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 13:37:30 by agrenon           #+#    #+#             */
-/*   Updated: 2022/06/27 17:04:33 by agrenon          ###   ########.fr       */
+/*   Updated: 2022/07/08 18:40:48 by agrenon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ char	**ft_add_argvec(char **argvec, char **tab, DIR *d, int len)
 	dir = readdir(d);
 	while (dir)
 	{	
+		printf("in dir %s\n", dir->d_name);
 		if (ft_is_accepted(tab[1], dir->d_name))
 			wild_lst = argve_lst(wild_lst, dir->d_name);
 		dir = readdir(d);
@@ -98,12 +99,14 @@ char	**openthydir(char **argvec, char *wild_str, int len_argve, int *i)
 
 	split = NULL;
 	split = str_folder(wild_str);
+	printf("avan opendir %s\n", split[0]);
 	d = opendir(split[0]);
 	if (!d)
 	{
 		argvec[*i] = wild_str;
 		*i = *i + 1;
 		free_doble_arr(split);
+		
 		return (argvec);
 	}
 	new_argvec = ft_add_argvec(argvec, split, d, len_argve);
