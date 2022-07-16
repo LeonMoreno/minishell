@@ -39,7 +39,7 @@ static	void	init_void_env(t_sh *sh, int x)
 	sh->env[x + 2] = s;
 	sh->env[x + 3] = ft_strdup("SHLVL=1");
 	sh->env[x + 4] = NULL;
-	environ = sh->env;
+	//environ = sh->env;
 }
 
 // Incrémente le niveau du shell
