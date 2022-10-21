@@ -12,6 +12,7 @@
 
 </p>
 
+[![lmoreno's 42 stats](https://badge42.vercel.app/api/v2/cl9iw50pk00410gjruy6yjcvt/stats?cursusId=21&coalitionId=249)](https://github.com/JaeSeoKim/badge42)
 
 ## 💡 About the project
 
