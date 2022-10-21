@@ -1,5 +1,5 @@
 <h1 align="center">
-	🧰 MiniShell
+	🚀 MiniShell
 </h1>
 
 <p align="center">
