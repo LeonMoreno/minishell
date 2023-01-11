@@ -14,7 +14,16 @@
 
 [![lmoreno's 42 minishell Score](https://badge42.vercel.app/api/v2/cl9iw50pk00410gjruy6yjcvt/project/2605116)](https://github.com/JaeSeoKim/badge42)
 
+As beautiful as a shell
+
 
 ## 💡 About the project
 
-	🚀 TLDR: As beautiful as a shell.
+	🚀 TLDR: This project is about creating a simple shell. Yes, your own little bash. 
+	You will learn a lot about processes and file descriptors.
+
+## Screenshots
+
+As beautiful as a shell
+
+<img src="img/minishell.png" width="800"/>
