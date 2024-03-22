@@ -9,13 +9,6 @@
 	<img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/LeonMoreno/minishell?color=yellow" />
 </p>
 
-</p>
-
-[![lmoreno's 42 minishell Score](https://badge42.vercel.app/api/v2/cl9iw50pk00410gjruy6yjcvt/project/2605116)](https://github.com/JaeSeoKim/badge42)
-
-As beautiful as a shell
-
-
 ## 💡 About the project
 
 	🚀 TLDR: This project is about creating a simple shell. Yes, your own little bash. 
